@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.wolf.baseclasses.BillingAccount;
 
+
 public class BillingAccountCRUD {
 	
 	//Return All the bills
@@ -13,7 +14,7 @@ public class BillingAccountCRUD {
 	
 	//Return bill for a  given  billId
 	public BillingAccount viewBillingAccounts(Integer billId){
-		return null;
+		return null;	
 	}
 	
 	//Returns all the bills for a given PatientId

@@ -12,7 +12,7 @@ public class PatientCRUD {
 	}
 	
 	//Returns information of all patients
-	public Patient viewPatient(){
+	public ArrayList<Patient> viewPatient(){
 		return null;
 	}
 	

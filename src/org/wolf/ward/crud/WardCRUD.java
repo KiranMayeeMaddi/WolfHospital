@@ -32,19 +32,51 @@ public class WardCRUD {
 		return null;
 	}
 	
+	//List of available beds in the given ward size
+	ArrayList<Bed> checkAvailableBeds(Integer ward_size){
+		return null;
+	}
+		
 	//Inserts new Ward
 	//Returns the new WardId
 	Boolean insertWard(Integer id,Integer capacity,Double chargesPerDay){
 		return null;
 	}
 	
-	
-	BooleaninsertBedInWard(){
-		
+	//Inserts a Bed in the given ward
+	//Check for the capacity of the ward before inserting
+	//Return BedId of the newly inserted Bed
+	Boolean insertBedInWard(Integer ward_id){
+		return null;
 	}
 	
-	//List of available beds in the given ward size
-	ArrayList<Bed> checkAvailableBeds(Integer ward_size){
+	//Update the ward with the given values
+	//Return true if successful else false
+	Boolean updateWard(Integer ward_id, Integer capacity,Double chargesPerDay){
+		return null;
+	}
+	
+	
+	//Remove bed from the given ward
+	//Return true if successful else false
+	Boolean removeBed(Integer bed_id,Integer ward_id){
+		return null;
+	}
+	
+	//Remove the ward
+	//Also remove all the beds associated with it
+	//Return true if successful else false
+	Boolean removeWard(Integer ward_id){
+		return null;
+	}
+	
+	//Set the availability of the bed to Y
+	Boolean releaseBed(Integer wardId, Integer bedId){
+		return null;
+	}
+	
+	//Set the availability of the bed to N
+	Boolean occupyBed(Integer wardId, Integer bedId){
 		return null;
 	}
 }

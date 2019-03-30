@@ -5,7 +5,7 @@ public class Test {
 	public String test_name;
 	public String labName;
 	public Integer specialized_doctor;
-	public String fees;
+	public Double fees;
 	public Integer getTest_Id() {
 		return test_Id;
 	}
@@ -30,10 +30,10 @@ public class Test {
 	public void setSpecialized_doctor(Integer specialized_doctor) {
 		this.specialized_doctor = specialized_doctor;
 	}
-	public String getFees() {
+	public Double getFees() {
 		return fees;
 	}
-	public void setFees(String fees) {
+	public void setFees(Double fees) {
 		this.fees = fees;
 	}
 	@Override

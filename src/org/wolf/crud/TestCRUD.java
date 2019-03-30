@@ -4,25 +4,25 @@ import java.util.ArrayList;
 
 import org.wolf.baseclasses.Test;
 
-public class TestCRUD {
+public final class TestCRUD {
 
-	public Test viewTest(Integer test_id){
+	public static Test viewTest(Integer test_id){
 		return null;
 	}
 	
-	public ArrayList<Test> viewTest(){
+	public static ArrayList<Test> viewTest(){
 		return null;
 	}
 	
-	public Boolean insertTest(String test_name, String lab_name, Integer specialized_doctor, String fees){
+	public static Integer insertTest(String test_name, String lab_name, Integer specialized_doctor, Integer fees){
 		return null;
 	}
 	
-	public Boolean updateTest(Integer test_id, String test_name, String lab_name, Integer specialized_doctor, String fees){
+	public static Boolean updateTest(Integer test_id, String test_name, String lab_name, Integer specialized_doctor, Integer fees){
 		return null;
 	}
 	
-	public Boolean deleteTest(Integer test_id){
+	public static Boolean deleteTest(Integer test_id){
 		return null;
 	}
 }

@@ -20,14 +20,14 @@ public class Operations {
 	//Assuming the bed availability has been checked
 	//Add the patient info in ward_patient checkin table
 	//Update the availability of the Bed
-	public Boolean checkInPatient(Integer patientId, Integer ward_id,Integer bed_id){
+	public static Boolean checkInPatient(Integer patientId, Integer ward_id,Integer bed_id){
 		String end_time = null;
 		Ward_PatientCRUD.insertWardPatient(patientId, ward_id, bed_id, end_time);
 		WardCRUD.occupyBed(ward_id, bed_id);
 		return null;
 	}
 	
-	public Boolean checkoutPatient(Integer checkinId){
+	public static Boolean checkoutPatient(Integer checkinId){
 		//Get the checkInRecord
 		Ward_Patient w = Ward_PatientCRUD.viewWardPatients(checkinId);
 		//Update the checkoutTime in the record
@@ -45,7 +45,7 @@ public class Operations {
 		return null;
 	}
 	
-	public Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, String responsible_doctor, Double reg_fee, Double medical_fee){
+	public static Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, String responsible_doctor, Double reg_fee, Double medical_fee){
 		String endDate = null;
 		String payment_status = "N";
 		Double accom_fee = null;
@@ -54,21 +54,21 @@ public class Operations {
 		return null;
 	}
 	
-	public Boolean addTestToTreatment(Integer recordId, Integer testId, String test_date, String result){
+	public static Boolean addTestToTreatment(Integer recordId, Integer testId, String test_date, String result){
 		Test_MedicalRecordsCRUD.insertTest_MedicalRecords(recordId, testId, test_date, result);
 		Test t = TestCRUD.viewTest(testId);
 		BillingAccountCRUD.updateMedicalFee(recordId, t.fees);
 		return null;
 	}
 	
-	public Boolean endTreatment(Integer recordId, Double treatmentFee){
+	public static Boolean endTreatment(Integer recordId, Double treatmentFee){
 		//Add the treatment fee to the existing medical fee
 		BillingAccountCRUD.updateMedicalFee(recordId, treatmentFee);
 		MedicalRecordCRUD.updateMedicalRecordEndTime(recordId);
 		return null;
 	}
 	
-	public Boolean payCash(Integer billId, String payer_ssn, String bill_address, Double amountPaid){
+	public static Boolean payCash(Integer billId, String payer_ssn, String bill_address, Double amountPaid){
 		
 		BillingAccount bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
 		PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,null, amountPaid);
@@ -90,7 +90,7 @@ public class Operations {
 		return null;
 	}
 	
-	public Boolean payInsurance(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String policy_no){
+	public static Boolean payInsurance(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String policy_no){
 		BillingAccount bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
 		PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, policy_no,null, amountPaid);
 		
@@ -111,7 +111,7 @@ public class Operations {
 		return null;
 	}
 	
-	public Boolean payCard(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String card_no){
+	public static Boolean payCard(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String card_no){
 		BillingAccount bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
 		PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,card_no, amountPaid);
 		

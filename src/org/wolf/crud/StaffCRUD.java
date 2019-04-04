@@ -1,8 +1,28 @@
 package org.wolf.crud;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.wolf.baseclasses.Staff;
+
+class StaffMapper implements RowMapper {
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Staff s = new Staff();
+		s.setAddress(rs.getString("address"));
+		s.setDept(rs.getString("dept"));
+		s.setDob(rs.getString("date_of_birth"));
+		s.setGender(rs.getString("gender"));
+		s.setId(rs.getInt("staff_id"));
+		s.setName(rs.getString("name"));
+		s.setPno(rs.getString("phone_no"));
+		s.setProfTitle(rs.getString("prof_title"));
+		s.setSal(rs.getDouble("salary"));
+		s.setJobTitle(rs.getString("job_title"));
+		return s;
+	}
+}
 
 public class StaffCRUD {
 	

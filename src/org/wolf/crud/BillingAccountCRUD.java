@@ -1,9 +1,25 @@
 package org.wolf.crud;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.wolf.baseclasses.BillingAccount;
 
+class BillingAccountMapper implements RowMapper {
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		BillingAccount bill = new BillingAccount();
+		bill.setBill_id(rs.getInt("bill_id"));
+		bill.setMedical_fee(rs.getDouble("medical_fee"));
+		bill.setPatient_id(rs.getInt("patient_id"));
+		bill.setPayment_status(rs.getString("payment_status"));
+		bill.setRecord_id(rs.getInt("record_id"));
+		bill.setAccom_fee(rs.getDouble("accom_fee"));
+		bill.setReg_fee(rs.getDouble("reg_fee"));
+		return bill;
+	}
+}
 
 public final class BillingAccountCRUD {
 	

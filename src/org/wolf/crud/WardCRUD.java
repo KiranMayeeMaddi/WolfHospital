@@ -1,9 +1,22 @@
 package org.wolf.crud;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.wolf.baseclasses.Bed;
 import org.wolf.baseclasses.Ward;
+
+class WardMapper implements RowMapper {
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Ward w = new Ward();
+		w.setCapacity(rs.getInt("capacity"));
+		w.setChargesPerDay(rs.getDouble("charges_per_day"));
+		w.setId(rs.getInt("ward_id"));
+		return w;
+	}
+}
 
 public final class WardCRUD {
 	

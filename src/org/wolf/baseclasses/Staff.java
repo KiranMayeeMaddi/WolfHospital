@@ -3,7 +3,8 @@ package org.wolf.baseclasses;
 public class Staff {
 	
 	public Integer id;
-	public String name; 
+	public String name;
+	public String jobTitle;
 	public String profTitle;
 	public String dob;
 	public String gender;
@@ -23,6 +24,12 @@ public class Staff {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getJobTitle() {
+		return jobTitle;
+	}
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 	public String getProfTitle() {
 		return profTitle;

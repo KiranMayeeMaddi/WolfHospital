@@ -1,8 +1,25 @@
 package org.wolf.crud;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.wolf.baseclasses.Patient;
+
+class PatientMapper implements RowMapper {
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Patient p = new Patient();
+		p.setAddress(rs.getString("address"));
+		p.setDob(rs.getString("date_of_birth"));
+		p.setGender(rs.getString("gender"));
+		p.setId(rs.getInt("patient_id"));
+		p.setName(rs.getString("name"));
+		p.setPno(rs.getString("phone_no"));
+		p.setSsn(rs.getString("ssn"));
+		return p;
+	}
+}
 
 public class PatientCRUD {
 

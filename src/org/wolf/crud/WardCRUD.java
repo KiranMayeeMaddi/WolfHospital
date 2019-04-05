@@ -21,7 +21,7 @@ class WardMapper implements RowMapper {
 public final class WardCRUD {
 	
 	//Get wardInfo by Id
-	public static Ward viewWard(String ward_id){
+	public static Ward viewWard(Integer ward_id){
 		return null;
 	} 
 	
@@ -36,7 +36,7 @@ public final class WardCRUD {
 	}
 	
 	//Get bed info by Id
-	public static Bed viewBedById(String ward_id, String bed_id){
+	public static Bed viewBedById(Integer ward_id, Integer bed_id){
 		return null;
 	}
 	
@@ -52,14 +52,14 @@ public final class WardCRUD {
 		
 	//Inserts new Ward
 	//Returns the new WardId
-	public static Boolean insertWard(Integer id,Integer capacity,Double chargesPerDay){
+	public static Integer insertWard(Integer capacity,Double chargesPerDay){
 		return null;
 	}
 	
 	//Inserts a Bed in the given ward
 	//Check for the capacity of the ward before inserting
 	//Return BedId of the newly inserted Bed
-	public static Boolean insertBedInWard(Integer ward_id){
+	public static Integer insertBedInWard(Integer ward_id){
 		return null;
 	}
 	
@@ -72,7 +72,7 @@ public final class WardCRUD {
 	
 	//Remove bed from the given ward
 	//Return true if successful else false
-	public static Boolean removeBed(Integer bed_id,Integer ward_id){
+	public static Boolean removeBed(Integer ward_id,Integer bed_id){
 		return null;
 	}
 	

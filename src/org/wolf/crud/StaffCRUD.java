@@ -14,7 +14,7 @@ public class StaffCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
 
-		    ResultSet rs = st.executeQuery("SELECT * FROM staff WHERE staff_id =" + id);
+		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE staff_id =" + id);
 		    Staff s = new Staff();
 		    while(rs.next()) {
 		    	s.setAddress(rs.getString("address"));
@@ -72,7 +72,7 @@ public class StaffCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
 
-		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE name =" + name);
+		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE  LIKE '%" + name + "%'");
 		    
 		    ArrayList <Staff> staffList = new ArrayList <> ();
 		    while(rs.next()) {
@@ -102,8 +102,7 @@ public class StaffCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
-
-		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE prof_title =" + profTitle);
+		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE prof_title =" + profTitle );
 		    
 		    ArrayList <Staff> staffList = new ArrayList <> ();
 		    while(rs.next()) {
@@ -169,7 +168,7 @@ public class StaffCRUD {
 		    st.executeUpdate("INSERT INTO Staff(name, job_title, prof_title, date_of_birth, gender, phone_no, address, dept, salary) " +
 		                       "VALUES ('"+ name +"', '"+ jobTitle +"', '"+ profTitle +"', '"+ dob +"', '"+ gender +"', '"+ pno +"', '"+ address +"', '"+ dept +"', '"+ sal +"')");
 		    
-		    ResultSet rs = st.executeQuery("SELECT staff_id FROM staff ORDER BY staff_id DESC LIMIT  1");
+		    ResultSet rs = st.executeQuery("SELECT staff_id FROM Staff ORDER BY staff_id DESC LIMIT  1");
 		    int staff_id = 0;
 		    while(rs.next()) {
 		    	staff_id = rs.getInt("staff_id");
@@ -207,7 +206,7 @@ public class StaffCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
-		    st.executeUpdate("DELETE FROM Staff WHERE staff_id = " + id );
+		    st.executeUpdate("DELETE FROM Staff WHERE staff_id = " + id);
 		    return true;
 	    }
 	    catch (SQLException ex) {

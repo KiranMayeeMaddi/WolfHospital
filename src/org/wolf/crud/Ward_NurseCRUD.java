@@ -21,23 +21,23 @@ class WardNurseMapper implements RowMapper {
 
 public class Ward_NurseCRUD {
 
-	public ArrayList<Ward_Nurse> viewShifts(){
+	public static ArrayList<Ward_Nurse> viewShifts(){
 		return null;
 	}
 	
-	public Ward_Nurse viewShift(Integer shiftId){
+	public static Ward_Nurse viewShift(Integer shiftId){
 		return null;
 	}
 	
-	public Boolean insertWardNurse(Integer wardId, Integer staffId, String start_time, String end_time){
+	public static Integer insertWardNurse(Integer wardId, Integer staffId, String start_time, String end_time){
 		return null;
 	}
 	
-	public Boolean updateWardNurse(Integer shiftId, Integer wardId, Integer staffId, String start_time, String end_time){
+	public static Boolean updateWardNurse(Integer shiftId, Integer wardId, Integer staffId, String start_time, String end_time){
 		return null;
 	}
 	
-	public Boolean deleteWardNurse(Integer shiftId){
+	public static Boolean deleteWardNurse(Integer shiftId){
 		return null;
 	}
 }

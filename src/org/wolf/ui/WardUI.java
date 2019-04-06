@@ -40,7 +40,7 @@ public class WardUI {
 		Integer capacity;
 		Double chargesPerDay;
 		Integer patientId;
-		String endTimes;
+		String endTime;
 		String[] args;
 		
 		switch(input){
@@ -144,7 +144,7 @@ public class WardUI {
 			patientId = Integer.parseInt(args[0]);
 			ward_id = Integer.parseInt(args[1]);
 			bed_id = Integer.parseInt(args[2]);
-			endTimes = args[3];
+			endTime = args[3];
 			if(WardCRUD.reserveBed(patientId, ward_id, bed_id, endTime)){
 				System.out.println("Operation Successful");
 			} else{
@@ -154,11 +154,8 @@ public class WardUI {
 		case "15":
 			System.out.println("Enter your checkinId");
 			int checkInId =  Integer.parseInt(reader.readLine());
-			if(WardCRUD.reserveBed(patientId, ward_id, bed_id, endTime)){
-				System.out.println("Operation Successful");
-			} else{
-				System.out.println("Operation Failed");
-			}
+			System.out.println(WardCRUD.calculateAccomCharges(checkInId));
+			
 			break;
 		case "16":
 			break;

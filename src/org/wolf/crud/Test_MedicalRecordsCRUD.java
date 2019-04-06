@@ -44,7 +44,7 @@ public final class Test_MedicalRecordsCRUD {
 		return null;
 	}
 	
-	public static Boolean deleteTest_MedicalRecords(Integer record_id, Integer test_id, String test_date, String result){
+	public static Boolean deleteTest_MedicalRecords(Integer record_id, Integer test_id){
 		return null;
 	}
 }

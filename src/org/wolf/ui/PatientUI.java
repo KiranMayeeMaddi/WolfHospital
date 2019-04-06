@@ -29,7 +29,7 @@ public class PatientUI {
 		
 		switch(input){
 		case "1": 
-			System.out.println(PatientCRUD.viewPatient());
+			System.out.println(PatientCRUD.viewPatients());
 			break;
 		case "2": 
 			System.out.println("Enter patientId");

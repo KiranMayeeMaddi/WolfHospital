@@ -24,12 +24,20 @@ class PaymentMapper implements RowMapper {
 
 public final class PaymentsCRUD {
 
+	public static ArrayList<Payments> getAllPayments(){
+		return null;
+	}
+	
 	public static ArrayList<Payments> getPaymentsForBill(Integer billId){
 		return null;
 	}
 	
 	public static Integer insertPayment(Integer bill_id, String payer_ssn, String bill_address, String policy_no, String card_no, Double amountPaid){
 		//Put endDate as current  time stamp
+		return null;
+	}
+	
+	public static Boolean deletePayment(Integer payment_id){
 		return null;
 	}
 }

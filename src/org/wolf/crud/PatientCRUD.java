@@ -15,15 +15,10 @@ public class PatientCRUD {
 		    Statement st = conn.createStatement();
 
 		    ResultSet rs = st.executeQuery("SELECT * FROM Patient WHERE patient_id =" + id);
-		    Patient p = new Patient();
+		    Patient p = null;
 		    while(rs.next()) {
-		    	p.setAddress(rs.getString("address"));
-				p.setDob(rs.getString("date_of_birth"));
-				p.setGender(rs.getString("gender"));
-				p.setId(rs.getInt("patient_id"));
-				p.setName(rs.getString("name"));
-				p.setPno(rs.getString("phone_no"));
-				p.setSsn(rs.getString("ssn"));
+			    p = new Patient(rs.getInt("patient_id"), rs.getString("name"), rs.getString("ssn"), rs.getString("date_of_birth"), 
+			    		rs.getString("gender"), rs.getString("phone_no"), rs.getString("address"));
 		    }
 		    return p;
 	    }
@@ -42,21 +37,15 @@ public class PatientCRUD {
 		    ResultSet rs = st.executeQuery("SELECT * FROM Patient");
 		    
 		    ArrayList <Patient> patientList = new ArrayList <> ();
+		    Patient p = null;
 		    while(rs.next()) {
-			    Patient p = new Patient();
-		    	p.setAddress(rs.getString("address"));
-				p.setDob(rs.getString("date_of_birth"));
-				p.setGender(rs.getString("gender"));
-				p.setId(rs.getInt("patient_id"));
-				p.setName(rs.getString("name"));
-				p.setPno(rs.getString("phone_no"));
-				p.setSsn(rs.getString("ssn"));
+		    	p = new Patient(rs.getInt("patient_id"), rs.getString("name"), rs.getString("ssn"), rs.getString("date_of_birth"), 
+			    		rs.getString("gender"), rs.getString("phone_no"), rs.getString("address"));
 				
 				patientList.add(p);
 		    }
 		    return patientList;
-	    }
-	    catch (SQLException ex) {
+	    } catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
 	    	return null;
 	    }
@@ -72,15 +61,10 @@ public class PatientCRUD {
 		    ResultSet rs = st.executeQuery("SELECT * FROM Patient WHERE name LIKE '%" + name + "%'");
 		    
 		    ArrayList <Patient> patientList = new ArrayList <> ();
+		    Patient p = null;
 		    while(rs.next()) {
-			    Patient p = new Patient();
-		    	p.setAddress(rs.getString("address"));
-				p.setDob(rs.getString("date_of_birth"));
-				p.setGender(rs.getString("gender"));
-				p.setId(rs.getInt("patient_id"));
-				p.setName(rs.getString("name"));
-				p.setPno(rs.getString("phone_no"));
-				p.setSsn(rs.getString("ssn"));
+		    	p = new Patient(rs.getInt("patient_id"), rs.getString("name"), rs.getString("ssn"), rs.getString("date_of_birth"), 
+			    		rs.getString("gender"), rs.getString("phone_no"), rs.getString("address"));
 				
 				patientList.add(p);
 		    }
@@ -99,15 +83,10 @@ public class PatientCRUD {
 		    Statement st = conn.createStatement();
 
 		    ResultSet rs = st.executeQuery("SELECT * FROM Patient WHERE ssn ='" + ssn + "'");
-		    Patient p = new Patient();
+		    Patient p = null;
 		    while(rs.next()) {
-		    	p.setAddress(rs.getString("address"));
-				p.setDob(rs.getString("date_of_birth"));
-				p.setGender(rs.getString("gender"));
-				p.setId(rs.getInt("patient_id"));
-				p.setName(rs.getString("name"));
-				p.setPno(rs.getString("phone_no"));
-				p.setSsn(rs.getString("ssn"));
+		    	p = new Patient(rs.getInt("patient_id"), rs.getString("name"), rs.getString("ssn"), rs.getString("date_of_birth"), 
+			    		rs.getString("gender"), rs.getString("phone_no"), rs.getString("address"));
 		    }
 		    return p;
 	    }
@@ -168,8 +147,7 @@ public class PatientCRUD {
 		    st.executeUpdate("DELETE FROM Patient WHERE patient_id = " + id );
 		    
 		    return true;
-	    }
-	    catch (SQLException ex) {
+	    } catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
 	    	return false;
 	    }

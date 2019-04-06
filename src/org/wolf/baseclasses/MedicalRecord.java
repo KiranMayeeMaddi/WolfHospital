@@ -9,6 +9,19 @@ public class MedicalRecord {
 	public String diagnosis;
 	public String prescription;
 	public Integer responsible_doctor_id;
+	
+	public MedicalRecord(Integer record_id, Integer patient_id, String start_date, String end_date, String diagnosis,
+			String prescription, Integer responsible_doctor_id) {
+		super();
+		this.record_id = record_id;
+		this.patient_id = patient_id;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.diagnosis = diagnosis;
+		this.prescription = prescription;
+		this.responsible_doctor_id = responsible_doctor_id;
+	}
+	
 	public Integer getRecord_id() {
 		return record_id;
 	}

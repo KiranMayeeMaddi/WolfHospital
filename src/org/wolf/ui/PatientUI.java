@@ -29,7 +29,7 @@ public class PatientUI {
 		
 		switch(input){
 		case "1": 
-			System.out.println(PatientCRUD.viewPatients());
+			PatientCRUD.viewPatients().forEach(System.out::println);
 			break;
 		case "2": 
 			System.out.println("Enter patientId");
@@ -39,7 +39,7 @@ public class PatientUI {
 		case "3": 
 			System.out.println("Enter patient name");
 			name = reader.readLine();
-			System.out.println(PatientCRUD.getPatientIdByName(name));
+			PatientCRUD.getPatientIdByName(name).forEach(System.out::println);
 			break;
 		case "4":
 			System.out.println("Enter SSN");

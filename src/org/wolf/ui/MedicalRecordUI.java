@@ -31,7 +31,7 @@ public class MedicalRecordUI {
 		switch(input){
 		
 		case "1":
-			System.out.println(MedicalRecordCRUD.viewMedicalRecords());
+			MedicalRecordCRUD.viewMedicalRecords().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter med. recordId");
@@ -41,12 +41,12 @@ public class MedicalRecordUI {
 		case "3":
 			System.out.println("Enter patientId");
 			patient_id = Integer.parseInt(reader.readLine());
-			System.out.println(MedicalRecordCRUD.getMedicalRecordsForPatient(patient_id));
+			MedicalRecordCRUD.getMedicalRecordsForPatient(patient_id).forEach(System.out::println);
 			break;
 		case "4":
 			System.out.println("Enter doctorId");
 			responsible_doctor = Integer.parseInt(reader.readLine());
-			System.out.println(MedicalRecordCRUD.getMedicalRecordsForDoctor(responsible_doctor));
+			MedicalRecordCRUD.getMedicalRecordsForDoctor(responsible_doctor).forEach(System.out::println);
 			break;
 		case "5":
 			System.out.println("Enter space separated Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor");

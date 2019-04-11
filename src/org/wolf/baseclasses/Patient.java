@@ -1,5 +1,12 @@
 package org.wolf.baseclasses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.time.Period;
+
 public class Patient {
 
 	public Integer id;
@@ -76,9 +83,15 @@ public class Patient {
 		this.address = address;
 	}
 
+	public Integer getAge(String dob) {
+		LocalDate dobDate = LocalDate.parse(dob);
+		LocalDate curDate = LocalDate.now();
+		return Period.between(dobDate, curDate).getYears();
+	}
+	
 	@Override
 	public String toString() {
-		return "Patient [id=" + id + ", name=" + name + ", ssn=" + ssn + ", dob=" + dob + ", gender=" + gender
+		return "Patient [id=" + id + ", name=" + name + ", ssn=" + ssn + ", dob=" + dob + ", age="+getAge(dob)+", gender=" + gender
 				+ ", pno=" + pno + ", address=" + address + "]";
 	}
 }

@@ -37,14 +37,16 @@ public class StaffCRUD {
 	}
 	
 	//Returns information of all staff members
-	public static Staff viewStaff(){
+	public static ArrayList<Staff> viewStaff(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
 
 		    ResultSet rs = st.executeQuery("SELECT * FROM staff");
-		    Staff s = new Staff();
+		    ArrayList<Staff> sList = new ArrayList<Staff>();
+		    
 		    while(rs.next()) {
+		    	Staff s = new Staff();
 		    	s.setAddress(rs.getString("address"));
 		    	s.setDept(rs.getString("dept"));
 				s.setDob(rs.getString("date_of_birth"));
@@ -55,8 +57,9 @@ public class StaffCRUD {
 				s.setProfTitle(rs.getString("prof_title"));
 				s.setSal(rs.getDouble("salary"));
 				s.setJobTitle(rs.getString("job_title"));
+				sList.add(s);
 		    }
-		    return s;
+		    return sList;
 	    }
 	    catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());

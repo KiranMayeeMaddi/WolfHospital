@@ -26,17 +26,17 @@ public class TestMedicalRecordUI {
 		String input = reader.readLine();
 		switch(input){
 		case "1":
-			System.out.println(Test_MedicalRecordsCRUD.viewTestMedicalRecords());
+			Test_MedicalRecordsCRUD.viewTestMedicalRecords().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter rercordId");
 			record_id = Integer.parseInt(reader.readLine());
-			System.out.println(Test_MedicalRecordsCRUD.viewTestMedicalRecordsByRecordId(record_id));
+			Test_MedicalRecordsCRUD.viewTestMedicalRecordsByRecordId(record_id).forEach(System.out::println);
 			break;
 		case "3":
 			System.out.println("Enter testId");
 			test_id = Integer.parseInt(reader.readLine());
-			System.out.println(Test_MedicalRecordsCRUD.viewTestMedicalRecordsByTestId(test_id));
+			Test_MedicalRecordsCRUD.viewTestMedicalRecordsByTestId(test_id).forEach(System.out::println);
 			break;
 		case "4":
 			System.out.println("Enter space separated record_id, test_id");

@@ -21,6 +21,7 @@ public class StaffUI {
 		
 		Integer id;
 		String name;
+		String job_title;
 		String profTitle;
 		String dob;
 		String gender;
@@ -33,7 +34,7 @@ public class StaffUI {
 		String input = reader.readLine();
 		switch(input){
 		case "1":
-			System.out.println(StaffCRUD.viewStaff());
+			StaffCRUD.viewStaff().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter staffId");
@@ -43,37 +44,23 @@ public class StaffUI {
 		case "3":
 			System.out.println("Enter name");
 			name = reader.readLine();
-			System.out.println(StaffCRUD.getStaffByName(name));
+			StaffCRUD.getStaffByName(name).forEach(System.out::println);
 			break;
 		case "4":
 			System.out.println("Enter profTitle");
 			profTitle = reader.readLine();
-			System.out.println(StaffCRUD.getStaffIdprofTitle(profTitle));
+			StaffCRUD.getStaffIdprofTitle(profTitle).forEach(System.out::println);
 			break;
 		case "5":
 			System.out.println("Enter dept");
 			dept = reader.readLine();
-			System.out.println(StaffCRUD.getStaffIddept(dept));
+			StaffCRUD.getStaffIddept(dept).forEach(System.out::println);
 			break;
 		case "6":
-			System.out.println("Enter space separated String name, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
+			System.out.println("Enter space separated String name, String jobTitle, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
 			args = reader.readLine().split(" ");
 			name = args[0];
-			profTitle = args[1]; 
-			dob = args[2];
-			gender =  args[3];
-			pno = args[4];
-			address = args[5];
-			dept = args[6];
-			sal = Double.parseDouble(args[7]);
-			System.out.println("New staffId is");
-			System.out.println(StaffCRUD.insertStaff(name, profTitle, dob, gender, pno, address, dept, sal));
-			break;
-		case "7":
-			System.out.println("Enter space separated Integer id, String name, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
-			args = reader.readLine().split(" ");
-			id = Integer.parseInt(args[0]);
-			name = args[1];
+			job_title = args[1];
 			profTitle = args[2]; 
 			dob = args[3];
 			gender =  args[4];
@@ -81,7 +68,23 @@ public class StaffUI {
 			address = args[6];
 			dept = args[7];
 			sal = Double.parseDouble(args[8]);
-			if(StaffCRUD.updateStaff(id, name, profTitle, dob, gender, pno, address, dept, sal)){
+			System.out.println("New staffId is");
+			System.out.println(StaffCRUD.insertStaff(name, job_title, profTitle, dob, gender, pno, address, dept, sal));
+			break;
+		case "7":
+			System.out.println("Enter space separated Integer id, String name, String jobTitle, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
+			args = reader.readLine().split(" ");
+			id = Integer.parseInt(args[0]);
+			name = args[1];
+			job_title = args[2];
+			profTitle = args[3]; 
+			dob = args[4];
+			gender =  args[5];
+			pno = args[6];
+			address = args[7];
+			dept = args[8];
+			sal = Double.parseDouble(args[9]);
+			if(StaffCRUD.updateStaff(id, name,job_title, profTitle, dob, gender, pno, address, dept, sal)){
 				System.out.println("Operation Successful");
 			} else{
 				System.out.println("Operation Failed");	

@@ -45,11 +45,11 @@ public class Operations {
 		return null;
 	}
 	
-	public static Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, String responsible_doctor, Double reg_fee, Double medical_fee){
+	public static Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, Integer responsible_doctor, String process_treatment_plan, Double reg_fee, Double medical_fee){
 		String endDate = null;
 		String payment_status = "N";
 		Double accom_fee = null;
-		Integer record_id = MedicalRecordCRUD.insertMedicalRecord(patient_id, start_date, endDate, diagnosis, prescription, responsible_doctor);
+		Integer record_id = MedicalRecordCRUD.insertMedicalRecord(patient_id, start_date, endDate, diagnosis, prescription, responsible_doctor,process_treatment_plan);
 		BillingAccountCRUD.insertBillingAccount(patient_id, record_id, payment_status, reg_fee, accom_fee, medical_fee);
 		return null;
 	}

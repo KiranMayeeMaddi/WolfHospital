@@ -4,7 +4,14 @@ public class Bed {
 	
 	public Integer ward_id;
 	public Integer bed_id;
-	public Integer is_available;
+	public String is_available;
+	
+	public Bed(Integer ward_id, Integer bed_id, String is_available) {
+		super();
+		this.ward_id = ward_id;
+		this.bed_id = bed_id;
+		this.is_available = is_available;
+	}
 	
 	public Integer getWard_id() {
 		return ward_id;
@@ -18,10 +25,10 @@ public class Bed {
 	public void setBed_id(Integer bed_id) {
 		this.bed_id = bed_id;
 	}
-	public Integer getIs_available() {
+	public String getIs_available() {
 		return is_available;
 	}
-	public void setIs_available(Integer is_available) {
+	public void setIs_available(String is_available) {
 		this.is_available = is_available;
 	}
 	@Override

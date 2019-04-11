@@ -9,9 +9,10 @@ public class MedicalRecord {
 	public String diagnosis;
 	public String prescription;
 	public Integer responsible_doctor_id;
-	
+	public String process_treatment_plan;
+
 	public MedicalRecord(Integer record_id, Integer patient_id, String start_date, String end_date, String diagnosis,
-			String prescription, Integer responsible_doctor_id) {
+			String prescription, Integer responsible_doctor_id, String process_treatment_plan) {
 		super();
 		this.record_id = record_id;
 		this.patient_id = patient_id;
@@ -20,6 +21,7 @@ public class MedicalRecord {
 		this.diagnosis = diagnosis;
 		this.prescription = prescription;
 		this.responsible_doctor_id = responsible_doctor_id;
+		this.process_treatment_plan = process_treatment_plan;
 	}
 	
 	public Integer getRecord_id() {
@@ -63,6 +65,13 @@ public class MedicalRecord {
 	}
 	public void setResponsible_doctor_id(Integer responsible_doctor_id) {
 		this.responsible_doctor_id = responsible_doctor_id;
+	}
+	public String getProcess_treatment_plan() {
+		return process_treatment_plan;
+	}
+
+	public void setProcess_treatment_plan(String process_treatment_plan) {
+		this.process_treatment_plan = process_treatment_plan;
 	}
 	@Override
 	public String toString() {

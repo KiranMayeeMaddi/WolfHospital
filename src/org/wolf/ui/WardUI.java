@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import org.wolf.crud.WardCRUD;
 
-import jdk.internal.org.objectweb.asm.util.CheckAnnotationAdapter;
-
 public class WardUI {
 
 	public static void wardUI(BufferedReader reader) throws IOException  {
@@ -45,7 +43,7 @@ public class WardUI {
 		
 		switch(input){
 		case "1":
-			System.out.println(WardCRUD.viewWard());
+			WardCRUD.viewWard().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter ward_id");
@@ -53,7 +51,7 @@ public class WardUI {
 			System.out.println(WardCRUD.viewWard(ward_id));
 			break;
 		case "3":
-			System.out.println(WardCRUD.viewBeds());
+			WardCRUD.viewBeds().forEach(System.out::println);
 			break;
 		case "4":
 			System.out.println("Enter ward_id and bed_id space separated");
@@ -63,12 +61,12 @@ public class WardUI {
 			System.out.println(WardCRUD.viewBedById(ward_id, bed_id));
 			break;
 		case "5":
-			System.out.println(WardCRUD.checkAvailableBeds());
+			WardCRUD.checkAvailableBeds().forEach(System.out::println);
 			break;
 		case "6":
 			System.out.println("Enter prefered ward size");
 			int ward_size = Integer.parseInt(reader.readLine());
-			System.out.println(WardCRUD.checkAvailableBeds(ward_size));
+			WardCRUD.checkAvailableBeds(ward_size).forEach(System.out::println);
 			break;
 		case "7":
 			System.out.println("Enter capacity and charges per day space separated");

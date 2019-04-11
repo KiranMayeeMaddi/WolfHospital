@@ -27,7 +27,7 @@ public class WardPatientUI {
 		
 		switch(input){
 		case "1":
-			System.out.println(Ward_PatientCRUD.viewWardPatients());
+			Ward_PatientCRUD.viewWardPatients().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter checkinId");

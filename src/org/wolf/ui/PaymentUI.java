@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import org.wolf.crud.PaymentsCRUD;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
 public class PaymentUI {
 
 	public static void paymentUI(BufferedReader reader) throws IOException {
@@ -26,7 +24,7 @@ public class PaymentUI {
 		String input = reader.readLine();
 		switch(input){
 		case "1":
-			System.out.println(PaymentsCRUD.getAllPayments());
+			PaymentsCRUD.getAllPayments().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter billId");

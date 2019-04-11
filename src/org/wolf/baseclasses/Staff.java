@@ -1,5 +1,8 @@
 package org.wolf.baseclasses;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public class Staff {
 	
 	public Integer id;
@@ -74,9 +77,18 @@ public class Staff {
 		this.sal = sal;
 	}
 	
+	public Integer getAge(String dob) {
+		LocalDate dobDate = LocalDate.parse(dob);
+		LocalDate curDate = LocalDate.now();
+		return Period.between(dobDate, curDate).getYears();
+	}
+	
+	
+	
 	@Override
 	public String toString() {
-		return "Staff [id=" + id + ", name=" + name + ", profTitle=" + profTitle + ", dob=" + dob + ", gender=" + gender
-				+ ", pno=" + pno + ", address=" + address + ", dept=" + dept + ", sal=" + sal + "]";
+		return "Staff [id=" + id + ", name=" + name + ", jobTitle=" + jobTitle + ", profTitle=" + profTitle + ", age="
+				+ getAge(dob) + ", gender=" + gender + ", pno=" + pno + ", address=" + address + ", dept=" + dept + ", sal="
+				+ sal + "]";
 	}
 }

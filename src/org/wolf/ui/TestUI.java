@@ -26,7 +26,7 @@ public class TestUI {
 		
 		switch(input){
 		case "1":
-			System.out.println(TestCRUD.viewTest());
+			TestCRUD.viewTest().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter testId");

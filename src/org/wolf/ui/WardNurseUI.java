@@ -25,7 +25,7 @@ public class WardNurseUI {
 		String input = reader.readLine();
 		switch(input){
 		case "1":
-			System.out.println(Ward_NurseCRUD.viewShifts());
+			Ward_NurseCRUD.viewShifts().forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter shiftId");

@@ -33,7 +33,7 @@ public class BillingAccountUI {
 		
 		switch(input){
 		case "1": 
-			System.out.println(BillingAccountCRUD.viewBillingAccounts());
+			BillingAccountCRUD.viewBillingAccounts().forEach(System.out::println);
 			break;
 		case "2": 
 			System.out.println("Enter billId");
@@ -48,12 +48,12 @@ public class BillingAccountUI {
 		case "4":
 			System.out.println("Enter patientId");
 			patient_id = Integer.parseInt(reader.readLine());
-			System.out.println(BillingAccountCRUD.getBillingAccountsForPatient(patient_id));
+			BillingAccountCRUD.getBillingAccountsForPatient(patient_id).forEach(System.out::println);
 			break;
 		case "5":
 			System.out.println("Enter patientId");
 			patient_id = Integer.parseInt(reader.readLine());
-			System.out.println(BillingAccountCRUD.getUnpaidBillingAccountsForPatient(patient_id));
+			BillingAccountCRUD.getUnpaidBillingAccountsForPatient(patient_id).forEach(System.out::println);
 			break;
 		case "6":
 			System.out.println("Enter patientId");

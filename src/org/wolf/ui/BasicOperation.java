@@ -3,6 +3,8 @@ package org.wolf.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import org.wolf.crud.TreatmentPlanCRUD;
+
 public class BasicOperation {
 
 	public static void basicOperations(BufferedReader reader) throws IOException {
@@ -17,7 +19,8 @@ public class BasicOperation {
 		System.out.println("8.Ward_Nurse");
 		System.out.println("9.Ward_patient");
 		System.out.println("10.Ward");
-		System.out.println("11.Exit");
+		System.out.println("11.TreatmentPlans");
+		System.out.println("12.Exit");
 		String input = reader.readLine();
 		switch(input){
 		case "1": BillingAccountUI.billingAccountUI(reader);
@@ -40,7 +43,9 @@ public class BasicOperation {
 		break;
 		case "10": WardUI.wardUI(reader);
 		break;
-		case "11": return;
+		case "11": TreatmentPlanUI.treatmentPlanUI(reader);
+		break;
+		case "12": return;
 		default: System.out.println("Please enter valid input");
 		}
 	}

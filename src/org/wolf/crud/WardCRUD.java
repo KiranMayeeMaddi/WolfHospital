@@ -345,7 +345,7 @@ public final class WardCRUD {
 			
 		    Statement st = conn.createStatement();
 		    
-		    st.executeUpdate("UPDATE Bed SET is_available = 'N', start_time = NOW() WHERE ward_id = " + ward_id + " AND bed_id =" + bed_id);
+		    st.executeUpdate("UPDATE Bed SET is_available = 'N', start_time = NOW(), end_time = '"+ endTime +"' WHERE ward_id = " + ward_id + " AND bed_id =" + bed_id );
 		    
 		    return true;
 		    

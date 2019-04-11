@@ -29,7 +29,7 @@ public class PatientInfo {
 	@Override
 	public String toString() {
 		return "PatientInfo [id=" + id + ", name=" + name + ", ssn=" + ssn + ", dob=" + dob + ", gender=" + gender
-				+ ", pno=" + pno + ", address=" + address + ", process_treatment_paln=" + process_treatment_paln
+				+ ", pno=" + pno + ", address=" + address + ", process_treatment_paln=" + process_treatment_plan
 				+ ", in_ward=" + in_ward + ", completing_treatment=" + completing_treatment + "]";
 	}
 }

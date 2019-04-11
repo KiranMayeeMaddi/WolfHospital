@@ -6,6 +6,13 @@ public class Ward {
 	public Integer capacity;
 	public Double chargesPerDay;
 	
+	public Ward(Integer id, Integer capacity, Double chargesPerDay) {
+		super();
+		this.id = id;
+		this.capacity = capacity;
+		this.chargesPerDay = chargesPerDay;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

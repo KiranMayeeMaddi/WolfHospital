@@ -48,17 +48,18 @@ public class Menu_Layer1 {
 	}
 
 	public static void createTreatment(BufferedReader reader) throws IOException{
-		System.out.println("Enter space separated patient_id, start_date, diagnosis, prescription, responsible_doctor, reg_fee, medical_fee");
+		System.out.println("Enter space separated patient_id, start_date, diagnosis, prescription, responsible_doctor, treatment_plan, reg_fee, medical_fee");
 		String input = reader.readLine();
 		String[] args = input.split(" ");
 		Integer patient_id = Integer.parseInt(args[0]);
 		String start_date = args[1];
 		String diagnosis = args[2]; 
 		String prescription = args[3]; 
-		String responsible_doctor = args[4]; 
-		Double reg_fee = Double.parseDouble(args[5]); 
-		Double medical_fee = Double.parseDouble(args[6]);
-		if(Operations.createTreatment(patient_id, start_date, diagnosis, prescription, responsible_doctor, reg_fee, medical_fee)){
+		Integer responsible_doctor = Integer.parseInt(args[4]);
+		String process_treatment_plan = args[5];
+		Double reg_fee = Double.parseDouble(args[6]); 
+		Double medical_fee = Double.parseDouble(args[7]);
+		if(Operations.createTreatment(patient_id, start_date, diagnosis, prescription, responsible_doctor,process_treatment_plan, reg_fee, medical_fee)){
 			System.out.println("Operation Successful");
 		} else{
 			System.out.println("Operation Failed");

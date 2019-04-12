@@ -2,12 +2,13 @@ package org.wolf.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.wolf.crud.BillingAccountCRUD;
 
 public class BillingAccountUI {
 
-	public static void billingAccountUI(BufferedReader reader) throws IOException {
+	public static void billingAccountUI(BufferedReader reader) throws IOException, SQLException {
 		System.out.println("1.ViewAll");
 		System.out.println("2.ViewByBillId");
 		System.out.println("3.ViewByRecordId");

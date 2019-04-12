@@ -56,29 +56,27 @@ public final class Ward_PatientCRUD {
 	//Returns check-in ID
 	public static Integer insertWardPatient(Integer patient_id, Integer ward_id, Integer bed_id, String end_time) throws SQLException {
 		//Put the start time as the current  timestamp
-		try {
-			Connection conn = DatabaseConnection.getConnection();
+		Connection conn = DatabaseConnection.getConnection();
 			
 			//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			//LocalDateTime localDate = LocalDateTime.now();
 			//String start_time = dtf.format(localDate);
 			
-			String query = "insert into Ward_Patient_checks_In (patient_id, ward_id, bed_id, start_time, end_time)"
-					+ " values (?,?,?,NOW(),?)";
-			PreparedStatement st = conn.prepareStatement(query);
-			st.setInt(1, patient_id);
-			st.setInt(2, ward_id);
-			st.setInt(3, bed_id);
-			//st.setString(4, start_time);
-			st.setString(4, end_time);
-			st.executeUpdate();
+		String query = "insert into Ward_Patient_checks_In (patient_id, ward_id, bed_id, start_time, end_time)"
+				+ " values (?,?,?,NOW(),?)";
+		PreparedStatement st = conn.prepareStatement(query);
+		st.setInt(1, patient_id);
+		st.setInt(2, ward_id);
+		st.setInt(3, bed_id);
+		//st.setString(4, start_time);
+		st.setString(4, end_time);
+		st.executeUpdate();
 			
-			ResultSet rs = st.executeQuery("select checkin_id from Ward_Patient_checks_In order by checkin_id desc limit 1");
-		    int shift_id = 0;
-		    while (rs.next())
-		    	shift_id = rs.getInt("checkin_id");
-		    return shift_id;
-	    }
+		ResultSet rs = st.executeQuery("select checkin_id from Ward_Patient_checks_In order by checkin_id desc limit 1");
+		int shift_id = 0;
+	    while (rs.next())
+	    	shift_id = rs.getInt("checkin_id");
+	    return shift_id;
 	}
 	
 	public static Boolean updateWardPatient(Integer checkin_id, Integer patient_id, Integer ward_id, Integer bed_id, String start_time, String end_time){

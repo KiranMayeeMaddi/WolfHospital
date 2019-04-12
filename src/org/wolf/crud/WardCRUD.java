@@ -279,8 +279,7 @@ public final class WardCRUD {
 	}
 	
 	//Set the availability of the bed to Y
-	public static Boolean releaseBed(Integer ward_id, Integer bed_id){
-		try {
+	public static Boolean releaseBed(Integer ward_id, Integer bed_id) throws SQLException{
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
@@ -288,53 +287,36 @@ public final class WardCRUD {
 		    st.executeUpdate("UPDATE Bed SET is_available = 'Y' WHERE ward_id = " + ward_id + " AND bed_id =" + bed_id);
 		    
 		    return true;
-		    
-	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
-	    	return false;
-	    }
 	}
 	
 	//Set the availability of the bed to N
-	public static Boolean occupyBed(Integer ward_id, Integer bed_id){
-		try {
-			Connection conn = DatabaseConnection.getConnection();
-			
-		    Statement st = conn.createStatement();
-		    st.executeUpdate("UPDATE Bed SET is_available = 'N' WHERE ward_id = " + ward_id + " AND bed_id =" + bed_id);
-		    
-		    return true;
-		    
-	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
-	    	return false;
-	    }
+	public static Boolean occupyBed(Integer ward_id, Integer bed_id) throws SQLException {
+		Connection conn = DatabaseConnection.getConnection();
+		
+	    Statement st = conn.createStatement();
+	    st.executeUpdate("UPDATE Bed SET is_available = 'N' WHERE ward_id = " + ward_id + " AND bed_id =" + bed_id);
+	    
+	    return true;
 	}
 	
-	public static Double calculateAccomCharges(Integer checkinId){
+	public static Double calculateAccomCharges(Integer checkinId) throws SQLException {
 		//Based on the rate sheet in the Wards table and the days(end time - start time)
 		//Calculate the amount and return it
 		
-		try {
-			Connection conn = DatabaseConnection.getConnection();
-			
-		    Statement st = conn.createStatement();
-		    int stay_days = 0;
-		    int charges_per_day = 0;
-		    ResultSet rs = st.executeQuery("SELECT DATEDIFF(end_time, start_time) + 1 AS stay_days, charges_per_day FROM Ward_Patient_Checks_In INNER JOIN Ward ON "
-		    		+ "Ward_Patient_Checks_In.ward_id = Ward.ward_id "
-		    		+ "WHERE checkin_id = " + checkinId);
-		    while(rs.next()) {
-		    	stay_days = rs.getInt("stay_days");
-		    	charges_per_day = rs.getInt("ward_id");
-		    }
-		    
-		    return (double)(charges_per_day * stay_days);
-		    
-	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
-	    	return null;
+		Connection conn = DatabaseConnection.getConnection();
+		
+	    Statement st = conn.createStatement();
+	    int stay_days = 0;
+	    int charges_per_day = 0;
+	    ResultSet rs = st.executeQuery("SELECT DATEDIFF(end_time, start_time) + 1 AS stay_days, charges_per_day FROM Ward_Patient_Checks_In INNER JOIN Ward ON "
+	    		+ "Ward_Patient_Checks_In.ward_id = Ward.ward_id "
+	    		+ "WHERE checkin_id = " + checkinId);
+	    while(rs.next()) {
+	    	stay_days = rs.getInt("stay_days");
+	    	charges_per_day = rs.getInt("ward_id");
 	    }
+	    
+	    return (double)(charges_per_day * stay_days);
 	} 
 	
 	//Return true if successful else false

@@ -7,9 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.wolf.baseclasses.Bed;
-import org.wolf.baseclasses.MedicalRecord;
 import org.wolf.baseclasses.Ward;
-import org.wolf.baseclasses.Ward_Patient;
 import org.wolf.config.DatabaseConnection;
 
 

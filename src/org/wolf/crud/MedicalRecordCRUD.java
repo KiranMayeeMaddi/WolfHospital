@@ -1,6 +1,7 @@
 package org.wolf.crud;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -120,22 +121,25 @@ public final class MedicalRecordCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-		    Statement st = conn.createStatement();
+			String query = "insert into MedicalRecords (patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor, process_treatment_plan)"
+					+ " values (?,NOW(),?,?,?,?,?)";
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setInt(1, patient_id);
+			if (end_date.isEmpty())
+				st.setNull(2, java.sql.Types.VARCHAR);
+			else
+				st.setString(2, end_date);
+			st.setString(3, diagnosis);
+			st.setString(4, prescription);
+			st.setInt(5, responsible_doctor);
+			st.setInt(6, process_treatment_plan);
+			
+		    st.executeUpdate();
 		    
-//		    System.out.println("INSERT INTO MedicalRecords(patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor) " +
-//                    "VALUES ("+ patient_id +", '"+ start_date+"', '"+end_date+"', '"+diagnosis+"', '"+prescription+"', "+responsible_doctor+")");
-		   
-//		    start_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		    
-		    st.executeUpdate("INSERT INTO MedicalRecords(patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor, process_treatment_plan) " +
-		                       "VALUES ("+ patient_id +", '"+ start_date+"', '"+end_date+"', '"+diagnosis+"', '"+prescription+"', "+responsible_doctor+", " + process_treatment_plan + ")");
-		    ResultSet rs = st.executeQuery("SELECT record_id FROM MedicalRecords ORDER BY record_id DESC LIMIT  1");
-		    int record_id = 0;
-		    
-		    while(rs.next()) {
+		    ResultSet rs = st.executeQuery("select record_id from MedicalRecords order by record_id desc limit 1");
+			int record_id = 0;
+		    while (rs.next())
 		    	record_id = rs.getInt("record_id");
-		    }
-		    
 		    return record_id;
 	    }
 	    catch (SQLException ex) {
@@ -150,10 +154,21 @@ public final class MedicalRecordCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-		    Statement st = conn.createStatement();
-		    
-		    st.executeUpdate("UPDATE MedicalRecords SET patient_id = "+ patient_id +", start_date = '"+ start_date +"', end_date = '"+ end_date +"', diagnosis = '"+ diagnosis 
-		    					+"', prescription = '"+ prescription +"', responsible_doctor = "+ responsible_doctor +", process_treatment_plan = "+process_treatment_plan+" WHERE record_id = " + recordId );
+			String query = "update into MedicalRecords (patient_id=?, start_date=?, end_date=?, diagnosis=?, prescription=?, responsible_doctor=?, process_treatment_plan=? where record_id=?";
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setInt(1, patient_id);
+			st.setString(2, start_date);
+			if (end_date.isEmpty())
+				st.setNull(3, java.sql.Types.VARCHAR);
+			else
+				st.setString(3, end_date);
+			st.setString(4, diagnosis);
+			st.setString(5, prescription);
+			st.setInt(6, responsible_doctor);
+			st.setInt(7, process_treatment_plan);
+			st.setInt(8, recordId);
+			
+		    st.executeUpdate();
 		    
 		    return true;
 	    } catch (SQLException ex) {

@@ -100,17 +100,28 @@ public class PatientCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-		    Statement st = conn.createStatement();
-		    st.executeUpdate("INSERT INTO Patient(name, address, phone_no, gender, ssn, date_of_birth) " +
-		                       "VALUES ('"+ name +"', '"+ address+"', '"+pno+"', '"+gender+"', '"+ssn+"', '"+dob+"')");
-		    ResultSet rs = st.executeQuery("SELECT patient_id FROM Patient ORDER BY patient_id DESC LIMIT  1");
-		    int patient_id = 0;
-		    while(rs.next()) {
-		    	patient_id = rs.getInt("patient_id");
-		    }
+			String query = "insert into Patient (name, address, phone_no, gender, ssn, date_of_birth)"
+					+ " values (?,?,?,?,?,?)";
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setString(1, name);
+			st.setString(2, address);
+			st.setString(3, pno);
+			st.setString(4, gender);
+			if (ssn.isEmpty())
+				st.setNull(5, java.sql.Types.VARCHAR);
+			else
+				st.setString(5, ssn);
+			st.setString(6, dob);
+			
+		    st.executeUpdate();
 		    
+		    ResultSet rs = st.executeQuery("select patient_id from Patient order by patient_id desc limit 1");
+			int patient_id = 0;
+		    while (rs.next())
+		    	patient_id = rs.getInt("patient_id");
 		    return patient_id;
-	    } catch (SQLException ex) {
+	    }
+	    catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
 	    	return null;
 	    }
@@ -122,15 +133,27 @@ public class PatientCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-		    Statement st = conn.createStatement();
-		    st.executeUpdate("UPDATE Patient SET name = '"+ name +"', address = '"+ address +"', phone_no = '"+ pno +"', gender = '"+ gender 
-		    					+"', ssn = '"+ ssn +"', date_of_birth = '"+ dob +"' WHERE patient_id = " + id );
-		    
-		    return true;
-	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
-	    	return false;
-	    }
+			String query = "Update Patient set name=?, address=?, phone_no=?, gender=?, ssn=?, date_of_birth=? where patient_id=?";
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setString(1, name);
+			st.setString(2, address);
+			st.setString(3, pno);
+			st.setString(4, gender);
+			if (ssn.isEmpty())
+				st.setNull(5, java.sql.Types.VARCHAR);
+			else
+				st.setString(5, ssn);
+			st.setString(6, dob);
+			st.setInt(7, id);
+			
+			st.executeUpdate();
+			
+			return true;
+		}
+		catch(SQLException e) {
+			System.err.println(e.getMessage());
+			return false;
+		}
 	}
 	
 	// Deletes the patient information  using the patient Id

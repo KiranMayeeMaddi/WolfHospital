@@ -69,7 +69,10 @@ public final class Ward_PatientCRUD {
 		st.setInt(2, ward_id);
 		st.setInt(3, bed_id);
 		//st.setString(4, start_time);
-		st.setString(4, end_time);
+		if(end_time.isEmpty())
+			st.setNull(5, java.sql.Types.VARCHAR);
+		else 
+			st.setString(4, end_time);
 		st.executeUpdate();
 			
 		ResultSet rs = st.executeQuery("select checkin_id from Ward_Patient_checks_In order by checkin_id desc limit 1");
@@ -88,7 +91,10 @@ public final class Ward_PatientCRUD {
 		    st.setInt(2, ward_id);
 		    st.setInt(3, bed_id);
 		    st.setString(4, start_time);
-		    st.setString(5, end_time);
+		    if(end_time.isEmpty())
+				st.setNull(5, java.sql.Types.VARCHAR);
+			else 
+				st.setString(4, end_time);
 		    st.setInt(6, checkin_id);
 		    st.executeUpdate();
 		    

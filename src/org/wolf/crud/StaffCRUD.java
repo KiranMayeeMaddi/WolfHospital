@@ -197,30 +197,32 @@ public class StaffCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-		    Statement st = conn.createStatement();
-		    st.executeUpdate("INSERT INTO Staff(name, job_title, prof_title, date_of_birth, gender, phone_no, address, dept, salary) " +
-		                       "VALUES ('"+ name +"', '"+ jobTitle +"', '"+ profTitle +"', '"+ dob +"', '"+ gender +"', '"+ pno +"', '"+ address +"', '"+ dept +"', '"+ sal +"')");
+			String query = "insert into Staff (name, job_title, prof_title, date_of_birth, gender, phone_no, address, dept, salary)"
+					+ " values (?,?,?,?,?,?,?,?,?)";
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setString(1, name);
+			st.setString(2, jobTitle);
+			if (profTitle.isEmpty())
+				st.setNull(3, java.sql.Types.VARCHAR);
+			else
+				st.setString(3, profTitle);
+			st.setString(4, dob);
+			st.setString(5, gender);
+			st.setString(6, pno);
+			st.setString(7, address);
+			st.setString(8, dept);
+			st.setDouble(9, sal);
+			
+		    st.executeUpdate();
 		    
-		    ResultSet rs = st.executeQuery("SELECT staff_id FROM Staff ORDER BY staff_id DESC LIMIT  1");
-		    int staff_id = 0;
-		    while(rs.next()) {
+		    ResultSet rs = st.executeQuery("select staff_id from Staff order by staff_id desc limit 1");
+			int staff_id = 0;
+		    while (rs.next())
 		    	staff_id = rs.getInt("staff_id");
-		    }
-		    System.out.println(jobTitle.toLowerCase());
-		    // inserting in nurse, doctor, or receptionist table based on prof_title
-		    if (jobTitle.toLowerCase().equals("doctor"))
-		    	st.executeUpdate("insert into Doctor (staff_id) values ("+staff_id+")");
-		    
-		    else if (jobTitle.toLowerCase().equals("nurse"))
-		    	st.executeUpdate("insert into Nurse (staff_id) values ("+staff_id+")");
-		    
-		    else
-		    	st.executeUpdate("insert into Receptionist (staff_id) values ("+staff_id+")");
-		    
 		    return staff_id;
 	    }
 	    catch (SQLException ex) {
-	    	ex.printStackTrace();
+	    	System.err.println(ex.getMessage());
 	    	return null;
 	    }
 	}
@@ -231,9 +233,24 @@ public class StaffCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-		    Statement st = conn.createStatement();
-		    st.executeUpdate("UPDATE Staff SET name = '"+ name +"', job_title = '"+ jobTitle +"', prof_title = '"+ profTitle +"', date_of_birth = '"+ dob 
-		    					+"', gender = '"+ gender +"', phone_no = '"+ pno +"', address = '"+ address +"', dept = '"+ dept +"', salary = '"+ sal +"' WHERE staff_id = " + id);
+			String query = "update Staff set name=?, job_title=?, prof_title=?, date_of_birth=?, gender=?, phone_no=?, address=?, dept=?, salary=?"
+					+ " where staff_id=?";
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setString(1, name);
+			st.setString(2, jobTitle);
+			if (profTitle.isEmpty())
+				st.setNull(3, java.sql.Types.VARCHAR);
+			else
+				st.setString(3, profTitle);
+			st.setString(4, dob);
+			st.setString(5, gender);
+			st.setString(6, pno);
+			st.setString(7, address);
+			st.setString(8, dept);
+			st.setDouble(9, sal);
+			st.setInt(10, id);
+			
+		    st.executeUpdate();
 		    
 		    return true;
 	    }

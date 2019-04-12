@@ -77,7 +77,10 @@ public class BillingAccountUI {
 			record_id = Integer.parseInt(args[1]);
 			payment_status = args[2];
 			reg_fee = Double.parseDouble(args[3]);
-			accom_fee = Double.parseDouble(args[4]);
+			if (args[4].isEmpty())
+				accom_fee = 0.0;
+			else
+				accom_fee = Double.parseDouble(args[4]);
 			medical_fee = Double.parseDouble(args[5]);
 			if(BillingAccountCRUD.insertBillingAccount(patient_id, record_id, payment_status, reg_fee, accom_fee, medical_fee)){
 				System.out.println("Operation Successful");
@@ -93,7 +96,10 @@ public class BillingAccountUI {
 			record_id = Integer.parseInt(args[2]);
 			payment_status = args[3];
 			reg_fee = Double.parseDouble(args[4]);
-			accom_fee = Double.parseDouble(args[5]);
+			if (args[4].isEmpty())
+				accom_fee = 0.0;
+			else
+				accom_fee = Double.parseDouble(args[4]);
 			medical_fee = Double.parseDouble(args[6]);
 			if(BillingAccountCRUD.updateBillingAccount(billId, patient_id, record_id, payment_status, reg_fee, accom_fee, medical_fee)){
 				System.out.println("Operation Successful");

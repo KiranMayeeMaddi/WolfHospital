@@ -14,20 +14,29 @@ import org.wolf.config.DatabaseConnection;
 public final class WardCRUD {
 	
 	//Get wardInfo by Id
-	public static Ward viewWard(Integer ward_id){
+	public static String viewWard(Integer ward_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
+		    
+		    String out = null;
+		    String patients = null;
 
 		    ResultSet rs = st.executeQuery("SELECT * FROM Ward WHERE ward_id =" + ward_id);
-		    
-		    Ward w = null;
 		    while(rs.next()) {
+		    	out += "ward_id = " + rs.getInt("ward_id");
+		    	out += "capacity = " + rs.getInt("capacity");
+		    	out += "charges_per_day = " + rs.getDouble("charges_per_day");
+		    	ResultSet rs1 = st.executeQuery("SELECT * FROM Ward_Patient_Checks_In WHERE ward_id =" + ward_id);
+		    	patients = null;
+		    	while(rs1.next()) { 
+		    		patients += rs.getInt("patient_id") + ",";
+		    	}
 		    	
-		    	w = new Ward(rs.getInt("ward_id"), rs.getInt("capacity"), rs.getDouble("charges_per_day"));
+		    	out += "Patient_id" + patients;
 		    }
-		    return w;
+		    return out;
 		    
 	    } catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
@@ -36,7 +45,7 @@ public final class WardCRUD {
 	} 
 	
 	//Get all wardInfo
-	public static ArrayList<Ward> viewWard(){
+	public static ArrayList<String> viewWard(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
@@ -44,13 +53,24 @@ public final class WardCRUD {
 
 		    ResultSet rs = st.executeQuery("SELECT * FROM Ward");
 		    
-		    ArrayList <Ward> wardList = new ArrayList <> ();
-		    Ward w = null;
+		    ArrayList <String> wardList = new ArrayList <> ();
+		    String out = null;
+		    String patients = null;
+		    
 		    while(rs.next()) {
+		    	out = null;
+		    	out += "ward_id = " + rs.getInt("ward_id");
+		    	out += "capacity = " + rs.getInt("capacity");
+		    	out += "charges_per_day = " + rs.getDouble("charges_per_day");
+		    	ResultSet rs1 = st.executeQuery("SELECT * FROM Ward_Patient_Checks_In WHERE ward_id =" + rs.getInt("ward_id"));
+		    	patients = null;
+		    	while(rs1.next()) { 
+		    		patients += rs.getInt("patient_id") + ",";
+		    	}
 		    	
-		    	w = new Ward(rs.getInt("ward_id"), rs.getInt("capacity"), rs.getDouble("charges_per_day"));
-				
-		    	wardList.add(w);
+		    	out += "Patient_id" + patients;
+		    	
+		    	wardList.add(out);
 		    }
 		    return wardList;
 		    

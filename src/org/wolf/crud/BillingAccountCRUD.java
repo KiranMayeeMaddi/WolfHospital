@@ -147,29 +147,24 @@ public final class BillingAccountCRUD {
 	}
 	
 	//Get the latest unpaid bill for the given patient_id
-	public static BillingAccount getLatestUnpaidBill(Integer patientId){
-		try {
-			Connection conn = DatabaseConnection.getConnection();
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId
-					+ " and payment_status='N' order by bill_id desc limit 1");
-			BillingAccount b = new BillingAccount();
-			
-			while (rs.next()) {
-				b.setAccom_fee(rs.getDouble("accom_fee"));
-				b.setBill_id(rs.getInt("bill_id"));
-				b.setMedical_fee(rs.getDouble("medical_fee"));
-				b.setPatient_id(rs.getInt("patient_id"));
-				b.setPayment_status(rs.getString("payment_status"));
-				b.setRecord_id(rs.getInt("record_id"));
-				b.setReg_fee(rs.getDouble("reg_fee"));
-			}
-			return b;
+	public static BillingAccount getLatestUnpaidBill(Integer patientId) throws SQLException {
+		  
+		Connection conn = DatabaseConnection.getConnection();
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId
+				+ " and payment_status='N' order by bill_id desc limit 1");
+		BillingAccount b = new BillingAccount();
+		
+		while (rs.next()) {
+			b.setAccom_fee(rs.getDouble("accom_fee"));
+			b.setBill_id(rs.getInt("bill_id"));
+			b.setMedical_fee(rs.getDouble("medical_fee"));
+			b.setPatient_id(rs.getInt("patient_id"));
+			b.setPayment_status(rs.getString("payment_status"));
+			b.setRecord_id(rs.getInt("record_id"));
+			b.setReg_fee(rs.getDouble("reg_fee"));
 		}
-		catch (SQLException e) {
-			System.err.println(e.getMessage());
-			return null;
-		}
+		return b;
 	}
 	
 	//Add fee to the current medical fee in BillingAccount table
@@ -218,27 +213,22 @@ public final class BillingAccountCRUD {
 	
 	//Updates a medical bill with the given data
 	//Return true if successful else false
-	public static Boolean updateBillingAccount(Integer billId, Integer patient_id, Integer record_id,String payment_status, Double reg_fee, Double accom_fee, Double medical_fee){
-		try {
-			Connection conn = DatabaseConnection.getConnection();
-			String query = "UPDATE BillingAccounts SET patient_id=?, record_id=?, payment_status=?,"
-					+ "reg_fee=?, accom_fee=?, medical_fee=? WHERE bill_id=?";
-		    PreparedStatement st = conn.prepareStatement(query);
-		    st.setInt(1, patient_id);
-		    st.setInt(2, record_id);
-		    st.setString(3, payment_status);
-		    st.setDouble(4, reg_fee);
-		    st.setDouble(5, accom_fee);
-		    st.setDouble(6, medical_fee);
-		    st.setInt(7, billId);
-		    st.executeUpdate();
-		    
-		    return true;
-	    }
-	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
-	    	return false;
-	    }
+	public static Boolean updateBillingAccount(Integer billId, Integer patient_id, Integer record_id,String payment_status, Double reg_fee, Double accom_fee, Double medical_fee) throws SQLException {
+		
+		Connection conn = DatabaseConnection.getConnection();
+		String query = "UPDATE BillingAccounts SET patient_id=?, record_id=?, payment_status=?,"
+				+ "reg_fee=?, accom_fee=?, medical_fee=? WHERE bill_id=?";
+	    PreparedStatement st = conn.prepareStatement(query);
+	    st.setInt(1, patient_id);
+	    st.setInt(2, record_id);
+	    st.setString(3, payment_status);
+	    st.setDouble(4, reg_fee);
+	    st.setDouble(5, accom_fee);
+	    st.setDouble(6, medical_fee);
+	    st.setInt(7, billId);
+	    st.executeUpdate();
+	    
+	    return true;
 	}
 	
 	//Deletes a medical bill with the given billId

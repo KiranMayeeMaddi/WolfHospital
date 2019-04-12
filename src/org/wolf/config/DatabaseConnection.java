@@ -12,12 +12,11 @@ public class DatabaseConnection  {
      * @return a Connection object
      * @throws SQLException
      */
+	static Connection conn = null;
 	
-    public static Connection getConnection() throws SQLException {
-        Connection conn = null;
-        
-        Variables var = new Variables();
- 
+	private DatabaseConnection() {
+		Variables var = new Variables();
+		 
         // assign db parameters
         String url = var.getUrl();
         String user = var.getUser();
@@ -32,7 +31,13 @@ public class DatabaseConnection  {
         } catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-        
+	}
+	
+    public static Connection getConnection() throws SQLException {
+    	if(conn==null) {
+    		new DatabaseConnection();
+    	}
+    	
         return conn;
     }
 }

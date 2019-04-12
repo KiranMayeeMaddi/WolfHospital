@@ -1,31 +1,50 @@
 package org.wolf.crud;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.wolf.baseclasses.BillingAccount;
+import org.wolf.baseclasses.BillingAccountView;
 import org.wolf.config.DatabaseConnection;
+
 
 public final class BillingAccountCRUD {
 	
 	//Return All the bills
-	public static ArrayList<BillingAccount> viewBillingAccounts(){
+	public static ArrayList<BillingAccountView> viewBillingAccounts(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from BillingAccounts");
-			ArrayList<BillingAccount> bills = new ArrayList<BillingAccount>();
+			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					"FROM medicalrecords" + 
+					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
+					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
+					"INNER JOIN payments on T.payment_id = payments.payment_id");
 			
+			ArrayList<BillingAccountView> bills = new ArrayList<BillingAccountView>();
+			String payment_method = null;
+			String prescribed_meds = "No";
 			while (rs.next()) {
-				BillingAccount b = new BillingAccount();
 				
-				b.setAccom_fee(rs.getDouble("accom_fee"));
-				b.setBill_id(rs.getInt("bill_id"));
-				b.setMedical_fee(rs.getDouble("medical_fee"));
-				b.setPatient_id(rs.getInt("patient_id"));
-				b.setPayment_status(rs.getString("payment_status"));
-				b.setRecord_id(rs.getInt("record_id"));
-				b.setReg_fee(rs.getDouble("reg_fee"));
+				if(rs.getString("card_no") != null) {
+					payment_method = "Credit Card";
+					
+				} else if(rs.getString("policy_no") != null) {
+					payment_method = "Insurance";
+				} else {
+					payment_method = "Check";
+				}
+				
+				if(rs.getString("prescription") != null) {
+					prescribed_meds = "Yes";
+				}
+				BillingAccountView b = new BillingAccountView(rs.getInt("bill_id"), rs.getInt("patient_id"), rs.getInt("record_id"), rs.getString("payer_ssn"), rs.getString("billing_address"),
+						payment_method, rs.getString("card_no"), rs.getString("policy_no"), rs.getDouble("reg_fee"), rs.getDouble("accom_fee"),
+						rs.getDouble("medical_fee"), rs.getString("start_date"), prescribed_meds);
 				
 				bills.add(b);
 			}
@@ -38,21 +57,37 @@ public final class BillingAccountCRUD {
 	}
 	
 	//Return bill for a  given  billId
-	public static BillingAccount viewBillingAccountsByBill(Integer billId){
+	public static BillingAccountView viewBillingAccountsByBill(Integer billId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from BillingAccounts where bill_id="+billId);
-			BillingAccount b = new BillingAccount();
+			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					"FROM medicalrecords" + 
+					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
+					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
+					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
+					"WHERE billingaccounts.bill_id = " + billId);
 			
+			String payment_method = null;
+			String prescribed_meds = "No";
+			BillingAccountView b = null;
 			while (rs.next()) {
-				b.setAccom_fee(rs.getDouble("accom_fee"));
-				b.setBill_id(rs.getInt("bill_id"));
-				b.setMedical_fee(rs.getDouble("medical_fee"));
-				b.setPatient_id(rs.getInt("patient_id"));
-				b.setPayment_status(rs.getString("payment_status"));
-				b.setRecord_id(rs.getInt("record_id"));
-				b.setReg_fee(rs.getDouble("reg_fee"));
+				
+				if(rs.getString("card_no") != null) {
+					payment_method = "Credit Card";
+					
+				} else if(rs.getString("policy_no") != null) {
+					payment_method = "Insurance";
+				} else {
+					payment_method = "Check";
+				}
+				
+				if(rs.getString("prescription") != null) {
+					prescribed_meds = "Yes";
+				}
+				b = new BillingAccountView(rs.getInt("bill_id"), rs.getInt("patient_id"), rs.getInt("record_id"), rs.getString("payer_ssn"), rs.getString("billing_address"),
+						payment_method, rs.getString("card_no"), rs.getString("policy_no"), rs.getDouble("reg_fee"), rs.getDouble("accom_fee"),
+						rs.getDouble("medical_fee"), rs.getString("start_date"), prescribed_meds);
 			}
 			return b;
 		}
@@ -63,21 +98,37 @@ public final class BillingAccountCRUD {
 	}
 	
 	//Return bill for a given recordId
-	public static BillingAccount viewBillingAccountsByRecord(Integer recordId){
+	public static BillingAccountView viewBillingAccountsByRecord(Integer recordId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from BillingAccounts where record_id="+recordId);
-			BillingAccount b = new BillingAccount();
+			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					"FROM medicalrecords" + 
+					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
+					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
+					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
+					"WHERE medicalrecords.record_id = "+ recordId);
 			
+			String payment_method = null;
+			String prescribed_meds = "No";
+			BillingAccountView b = null;
 			while (rs.next()) {
-				b.setAccom_fee(rs.getDouble("accom_fee"));
-				b.setBill_id(rs.getInt("bill_id"));
-				b.setMedical_fee(rs.getDouble("medical_fee"));
-				b.setPatient_id(rs.getInt("patient_id"));
-				b.setPayment_status(rs.getString("payment_status"));
-				b.setRecord_id(rs.getInt("record_id"));
-				b.setReg_fee(rs.getDouble("reg_fee"));
+				
+				if(rs.getString("card_no") != null) {
+					payment_method = "Credit Card";
+					
+				} else if(rs.getString("policy_no") != null) {
+					payment_method = "Insurance";
+				} else {
+					payment_method = "Check";
+				}
+				
+				if(rs.getString("prescription") != null) {
+					prescribed_meds = "Yes";
+				}
+				b = new BillingAccountView(rs.getInt("bill_id"), rs.getInt("patient_id"), rs.getInt("record_id"), rs.getString("payer_ssn"), rs.getString("billing_address"),
+						payment_method, rs.getString("card_no"), rs.getString("policy_no"), rs.getDouble("reg_fee"), rs.getDouble("accom_fee"),
+						rs.getDouble("medical_fee"), rs.getString("start_date"), prescribed_meds);
 			}
 			return b;
 		}
@@ -88,23 +139,37 @@ public final class BillingAccountCRUD {
 	}
 	
 	//Returns all the bills for a given PatientId
-	public static ArrayList<BillingAccount> getBillingAccountsForPatient(Integer patientId){
+	public static ArrayList<BillingAccountView> getBillingAccountsForPatient(Integer patientId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId);
-			ArrayList<BillingAccount> bills = new ArrayList<BillingAccount>();
+			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					"FROM medicalrecords" + 
+					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
+					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
+					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
+					"WHERE medicalrecords.patient_id = " + patientId);
 			
+			ArrayList<BillingAccountView> bills = new ArrayList<BillingAccountView>();
+			String payment_method = null;
+			String prescribed_meds = "No";
 			while (rs.next()) {
-				BillingAccount b = new BillingAccount();
 				
-				b.setAccom_fee(rs.getDouble("accom_fee"));
-				b.setBill_id(rs.getInt("bill_id"));
-				b.setMedical_fee(rs.getDouble("medical_fee"));
-				b.setPatient_id(rs.getInt("patient_id"));
-				b.setPayment_status(rs.getString("payment_status"));
-				b.setRecord_id(rs.getInt("record_id"));
-				b.setReg_fee(rs.getDouble("reg_fee"));
+				if(rs.getString("card_no") != null) {
+					payment_method = "Credit Card";
+					
+				} else if(rs.getString("policy_no") != null) {
+					payment_method = "Insurance";
+				} else {
+					payment_method = "Check";
+				}
+				
+				if(rs.getString("prescription") != null) {
+					prescribed_meds = "Yes";
+				}
+				BillingAccountView b = new BillingAccountView(rs.getInt("bill_id"), rs.getInt("patient_id"), rs.getInt("record_id"), rs.getString("payer_ssn"), rs.getString("billing_address"),
+						payment_method, rs.getString("card_no"), rs.getString("policy_no"), rs.getDouble("reg_fee"), rs.getDouble("accom_fee"),
+						rs.getDouble("medical_fee"), rs.getString("start_date"), prescribed_meds);
 				
 				bills.add(b);
 			}
@@ -117,24 +182,37 @@ public final class BillingAccountCRUD {
 	}
 	
 	//Returns all the bills for a given PatientId which are unpaid
-	public static ArrayList<BillingAccount> getUnpaidBillingAccountsForPatient(Integer patientId){
+	public static ArrayList<BillingAccountView> getUnpaidBillingAccountsForPatient(Integer patientId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId
-					+" and payment_status='N'");
-			ArrayList<BillingAccount> bills = new ArrayList<BillingAccount>();
+			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					"FROM medicalrecords" + 
+					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
+					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
+					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
+					"WHERE medicalrecords.patient_id = "+patientId+" AND billingaccounts.payment_status = 'N'");
 			
+			ArrayList<BillingAccountView> bills = new ArrayList<BillingAccountView>();
+			String payment_method = null;
+			String prescribed_meds = "No";
 			while (rs.next()) {
-				BillingAccount b = new BillingAccount();
 				
-				b.setAccom_fee(rs.getDouble("accom_fee"));
-				b.setBill_id(rs.getInt("bill_id"));
-				b.setMedical_fee(rs.getDouble("medical_fee"));
-				b.setPatient_id(rs.getInt("patient_id"));
-				b.setPayment_status(rs.getString("payment_status"));
-				b.setRecord_id(rs.getInt("record_id"));
-				b.setReg_fee(rs.getDouble("reg_fee"));
+				if(rs.getString("card_no") != null) {
+					payment_method = "Credit Card";
+					
+				} else if(rs.getString("policy_no") != null) {
+					payment_method = "Insurance";
+				} else {
+					payment_method = "Check";
+				}
+				
+				if(rs.getString("prescription") != null) {
+					prescribed_meds = "Yes";
+				}
+				BillingAccountView b = new BillingAccountView(rs.getInt("bill_id"), rs.getInt("patient_id"), rs.getInt("record_id"), rs.getString("payer_ssn"), rs.getString("billing_address"),
+						payment_method, rs.getString("card_no"), rs.getString("policy_no"), rs.getDouble("reg_fee"), rs.getDouble("accom_fee"),
+						rs.getDouble("medical_fee"), rs.getString("start_date"), prescribed_meds);
 				
 				bills.add(b);
 			}
@@ -147,22 +225,37 @@ public final class BillingAccountCRUD {
 	}
 	
 	//Get the latest unpaid bill for the given patient_id
-	public static BillingAccount getLatestUnpaidBill(Integer patientId) throws SQLException {
+	public static BillingAccountView getLatestUnpaidBill(Integer patientId) throws SQLException {
 		  
 		Connection conn = DatabaseConnection.getConnection();
 		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId
-				+ " and payment_status='N' order by bill_id desc limit 1");
-		BillingAccount b = new BillingAccount();
+		ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+				"FROM medicalrecords" + 
+				"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
+				"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
+				"INNER JOIN payments on T.payment_id = payments.payment_id" + 
+				"WHERE medicalrecords.patient_id = "+patientId+" AND billingaccounts.payment_status = 'N' ORDER BY billingaccounts.bill_id DESC LIMIT 1");
 		
+		String payment_method = null;
+		String prescribed_meds = "No";
+		BillingAccountView b = null;
 		while (rs.next()) {
-			b.setAccom_fee(rs.getDouble("accom_fee"));
-			b.setBill_id(rs.getInt("bill_id"));
-			b.setMedical_fee(rs.getDouble("medical_fee"));
-			b.setPatient_id(rs.getInt("patient_id"));
-			b.setPayment_status(rs.getString("payment_status"));
-			b.setRecord_id(rs.getInt("record_id"));
-			b.setReg_fee(rs.getDouble("reg_fee"));
+			
+			if(rs.getString("card_no") != null) {
+				payment_method = "Credit Card";
+				
+			} else if(rs.getString("policy_no") != null) {
+				payment_method = "Insurance";
+			} else {
+				payment_method = "Check";
+			}
+			
+			if(rs.getString("prescription") != null) {
+				prescribed_meds = "Yes";
+			}
+			b = new BillingAccountView(rs.getInt("bill_id"), rs.getInt("patient_id"), rs.getInt("record_id"), rs.getString("payer_ssn"), rs.getString("billing_address"),
+					payment_method, rs.getString("card_no"), rs.getString("policy_no"), rs.getDouble("reg_fee"), rs.getDouble("accom_fee"),
+					rs.getDouble("medical_fee"), rs.getString("start_date"), prescribed_meds);
 		}
 		return b;
 	}

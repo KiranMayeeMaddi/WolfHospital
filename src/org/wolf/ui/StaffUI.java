@@ -2,6 +2,7 @@ package org.wolf.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.wolf.crud.StaffCRUD;
 
@@ -13,11 +14,12 @@ public class StaffUI {
 		System.out.println("2.viewStaffById");
 		System.out.println("3.getStaffByName");
 		System.out.println("4.getStaffIdByprofTitle");
-		System.out.println("5.getStaffIdBydept");
-		System.out.println("6.insertStaff");
-		System.out.println("7.updateStaff");
-		System.out.println("8.deleteStaff");
-		System.out.println("9.exit");
+		System.out.println("5.getStaffIdByjobTitle");
+		System.out.println("6.getStaffIdBydept");
+		System.out.println("7.insertStaff");
+		System.out.println("8.updateStaff");
+		System.out.println("9.deleteStaff");
+		System.out.println("10.exit");
 		
 		Integer id;
 		String name;
@@ -52,13 +54,19 @@ public class StaffUI {
 			StaffCRUD.getStaffIdprofTitle(profTitle).forEach(System.out::println);
 			break;
 		case "5":
+			System.out.println("Enter jobTitle");
+			job_title = reader.readLine();
+			StaffCRUD.getStaffIdjobTitle(job_title).forEach(System.out::println);
+			break;
+		case "6":
 			System.out.println("Enter dept");
 			dept = reader.readLine();
 			StaffCRUD.getStaffIddept(dept).forEach(System.out::println);
 			break;
-		case "6":
-			System.out.println("Enter space separated String name, String jobTitle, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
-			args = reader.readLine().split(" ");
+		case "7":
+			System.out.println("Enter | separated String name, String jobTitle, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
+			args = reader.readLine().split("[|]");
+			System.out.println(Arrays.toString(args));
 			name = args[0];
 			job_title = args[1];
 			profTitle = args[2]; 
@@ -71,9 +79,9 @@ public class StaffUI {
 			System.out.println("New staffId is");
 			System.out.println(StaffCRUD.insertStaff(name, job_title, profTitle, dob, gender, pno, address, dept, sal));
 			break;
-		case "7":
-			System.out.println("Enter space separated Integer id, String name, String jobTitle, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
-			args = reader.readLine().split(" ");
+		case "8":
+			System.out.println("Enter | separated Integer id, String name, String jobTitle, String profTitle, String dob, String gender, String pno, String address, String dept, Double sal");
+			args = reader.readLine().split("[|]");
 			id = Integer.parseInt(args[0]);
 			name = args[1];
 			job_title = args[2];
@@ -90,7 +98,7 @@ public class StaffUI {
 				System.out.println("Operation Failed");	
 			}
 			break;
-		case "8":
+		case "9":
 			System.out.println("Enter staffId");
 			id = Integer.parseInt(reader.readLine());
 			if(StaffCRUD.deleteStaff(id)){
@@ -99,7 +107,7 @@ public class StaffUI {
 				System.out.println("Operation Failed");
 			}
 			break;
-		case "9":
+		case "10":
 			return;
 		default:
 			System.out.println("Enter a valid choice");

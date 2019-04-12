@@ -54,8 +54,8 @@ public class WardUI {
 			WardCRUD.viewBeds().forEach(System.out::println);
 			break;
 		case "4":
-			System.out.println("Enter ward_id and bed_id space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter ward_id and bed_id separated by |");
+			args = reader.readLine().split("[|]");
 			ward_id = Integer.parseInt(args[0]);
 			bed_id = Integer.parseInt(args[1]);
 			System.out.println(WardCRUD.viewBedById(ward_id, bed_id));
@@ -69,8 +69,8 @@ public class WardUI {
 			WardCRUD.checkAvailableBeds(ward_size).forEach(System.out::println);
 			break;
 		case "7":
-			System.out.println("Enter capacity and charges per day space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter capacity and charges per day separated by |");
+			args = reader.readLine().split("[|]");
 			capacity = Integer.parseInt(args[0]);
 			chargesPerDay = Double.parseDouble(args[1]);
 			System.out.println("Newly generate ward_id = ");
@@ -83,8 +83,8 @@ public class WardUI {
 			System.out.println(WardCRUD.insertBedInWard(ward_id));
 			break;
 		case "9":
-			System.out.println("Enter ward_id, capacity, charges per day spac separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter ward_id, capacity, charges per day separated by |");
+			args = reader.readLine().split("[|]");
 			ward_id  = Integer.parseInt(args[0]);
 			capacity = Integer.parseInt(args[1]);
 			chargesPerDay = Double.parseDouble(args[2]);
@@ -104,8 +104,8 @@ public class WardUI {
 			}
 			break;
 		case "11":
-			System.out.println("Enter ward_id and bed_id space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter ward_id and bed_id separated by |");
+			args = reader.readLine().split("[|]");
 			ward_id = Integer.parseInt(args[0]);
 			bed_id = Integer.parseInt(args[1]);
 			if(WardCRUD.removeBed(ward_id, bed_id)){
@@ -115,8 +115,8 @@ public class WardUI {
 			}
 			break;
 		case "12":
-			System.out.println("Enter ward_id and bed_id space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter ward_id and bed_id separated by |");
+			args = reader.readLine().split("[|]");
 			ward_id = Integer.parseInt(args[0]);
 			bed_id = Integer.parseInt(args[1]);
 			if(WardCRUD.releaseBed(ward_id, bed_id)){
@@ -126,8 +126,8 @@ public class WardUI {
 			}
 			break;
 		case "13":
-			System.out.println("Enter ward_id and bed_id space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter ward_id and bed_id separated by |");
+			args = reader.readLine().split("[|]");
 			ward_id = Integer.parseInt(args[0]);
 			bed_id = Integer.parseInt(args[1]);
 			if(WardCRUD.occupyBed(ward_id, bed_id)){
@@ -137,8 +137,8 @@ public class WardUI {
 			}
 			break;
 		case "14":
-			System.out.println("Enter patientId, wardId, bedId, endTime space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter patientId, wardId, bedId, endTime separated by |");
+			args = reader.readLine().split("[|]");
 			patientId = Integer.parseInt(args[0]);
 			ward_id = Integer.parseInt(args[1]);
 			bed_id = Integer.parseInt(args[2]);

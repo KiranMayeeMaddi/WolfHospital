@@ -35,8 +35,8 @@ public class WardPatientUI {
 			System.out.println(Ward_PatientCRUD.viewWardPatients(checkin_id));
 			break;
 		case "3":
-			System.out.println("Enter patient_id, ward_id, bed_id, end_time space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter patient_id, ward_id, bed_id, end_time separated by |");
+			args = reader.readLine().split("[|]");
 			patient_id = Integer.parseInt(args[0]);
 			ward_id = Integer.parseInt(args[1]);
 			bed_id = Integer.parseInt(args[2]);
@@ -45,8 +45,8 @@ public class WardPatientUI {
 			System.out.println(Ward_PatientCRUD.insertWardPatient(patient_id, ward_id, bed_id, end_time));
 			break;
 		case "4":
-			System.out.println("Enter checkinId, patient_id, ward_id, bed_id, start_time, end_time space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter checkinId, patient_id, ward_id, bed_id, start_time, end_time separated by |");
+			args = reader.readLine().split("[|]");
 			checkin_id = Integer.parseInt(args[0]);
 			patient_id = Integer.parseInt(args[1]);
 			ward_id = Integer.parseInt(args[2]);

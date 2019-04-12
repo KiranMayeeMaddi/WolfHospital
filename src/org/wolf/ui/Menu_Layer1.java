@@ -8,9 +8,9 @@ import org.wolf.operations.Operations;
 public class Menu_Layer1 {
 
 	public static void checkInPatient(BufferedReader reader) throws IOException {
-		System.out.println("Please enter space separated patient_id, ward_id, bed_id");
+		System.out.println("Please enter | separated patient_id, ward_id, bed_id");
 		String input = reader.readLine();
-		String[] args = input.split(" ");
+		String[] args = input.split("[|]");
 		Integer patientId = Integer.parseInt(args[0]);
 		Integer ward_id = Integer.parseInt(args[1]);
 		Integer bed_id = Integer.parseInt(args[2]);
@@ -33,9 +33,9 @@ public class Menu_Layer1 {
 	}
 
 	public static void undergoTests(BufferedReader reader) throws IOException {
-		System.out.println("Please enter space separated recordId, testId, test_date and result");
+		System.out.println("Please | space separated recordId, testId, test_date and result");
 		String input = reader.readLine();
-		String[] args = input.split(" ");
+		String[] args = input.split("[|]");
 		Integer recordId = Integer.parseInt(args[0]);
 		Integer testId = Integer.parseInt(args[1]);
 		String test_date = args[2];
@@ -48,9 +48,9 @@ public class Menu_Layer1 {
 	}
 
 	public static void createTreatment(BufferedReader reader) throws IOException{
-		System.out.println("Enter space separated patient_id, start_date, diagnosis, prescription, responsible_doctor, treatment_plan, reg_fee, medical_fee");
+		System.out.println("Enter | separated patient_id, start_date, diagnosis, prescription, responsible_doctor, treatment_plan, reg_fee, medical_fee");
 		String input = reader.readLine();
-		String[] args = input.split(" ");
+		String[] args = input.split("[|]");
 		Integer patient_id = Integer.parseInt(args[0]);
 		String start_date = args[1];
 		String diagnosis = args[2]; 
@@ -68,9 +68,9 @@ public class Menu_Layer1 {
 	}
 
 	public static void pay(BufferedReader reader) throws IOException {
-		System.out.println("Enter space separated billId, payer_ssn, bill_address, amountPaying");
+		System.out.println("Enter | separated billId, payer_ssn, bill_address, amountPaying");
 		String input = reader.readLine();
-		String[] args = input.split(" ");
+		String[] args = input.split("[|]");
 		Integer billId = Integer.parseInt(args[0]); 
 		String payer_ssn = args[1]; 
 		String bill_address = args[2];

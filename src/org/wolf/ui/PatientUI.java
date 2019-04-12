@@ -47,8 +47,8 @@ public class PatientUI {
 			System.out.println(PatientCRUD.getPatientIdBySSN(ssn));
 			break;
 		case "5":
-			System.out.println("Enter name, ssn, dob, gender,pno, address space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter name, ssn, dob, gender,pno, address separated by |");
+			args = reader.readLine().split("[|]");
 			name = args[0];
 			ssn = args[1];
 			dob = args[2];
@@ -59,8 +59,8 @@ public class PatientUI {
 			System.out.println(PatientCRUD.insertPatient(name, ssn, dob, gender, pno, address));
 			break;
 		case "6":
-			System.out.println("Enter id, name, ssn, dob, gender,pno, address space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter id, name, ssn, dob, gender,pno, address separated by |");
+			args = reader.readLine().split("[|]");
 			id = Integer.parseInt(args[0]);
 			name = args[1];
 			ssn = args[2];

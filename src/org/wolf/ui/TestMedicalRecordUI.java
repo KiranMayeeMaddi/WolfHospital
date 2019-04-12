@@ -39,8 +39,8 @@ public class TestMedicalRecordUI {
 			Test_MedicalRecordsCRUD.viewTestMedicalRecordsByTestId(test_id).forEach(System.out::println);
 			break;
 		case "4":
-			System.out.println("Enter space separated record_id, test_id");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated record_id, test_id");
+			args = reader.readLine().split("[|]");
 			record_id = Integer.parseInt(args[0]);
 			test_id = Integer.parseInt(args[1]);
 			
@@ -48,8 +48,8 @@ public class TestMedicalRecordUI {
 			break;
 			
 		case "5":
-			System.out.println("Enter space separated Integer record_id, Integer test_id, String test_date, String result");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated Integer record_id, Integer test_id, String test_date, String result");
+			args = reader.readLine().split("[|]");
 			record_id = Integer.parseInt(args[0]);
 			test_id = Integer.parseInt(args[1]);
 			test_date = args[2];
@@ -61,8 +61,8 @@ public class TestMedicalRecordUI {
 			}
 			break;
 		case "6":
-			System.out.println("Enter space separated Integer record_id, Integer test_id, String test_date, String result");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated Integer record_id, Integer test_id, String test_date, String result");
+			args = reader.readLine().split("[|]");
 			record_id = Integer.parseInt(args[0]);
 			test_id = Integer.parseInt(args[1]);
 			test_date = args[2];
@@ -74,8 +74,8 @@ public class TestMedicalRecordUI {
 			}
 			break;
 		case "7":
-			System.out.println("Enter space separated record_id, test_id");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated record_id, test_id");
+			args = reader.readLine().split("[|]");
 			record_id = Integer.parseInt(args[0]);
 			test_id = Integer.parseInt(args[1]);
 			if(Test_MedicalRecordsCRUD.deleteTest_MedicalRecords(record_id, test_id)){

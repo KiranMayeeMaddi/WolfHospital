@@ -61,8 +61,8 @@ public class BillingAccountUI {
 			System.out.println(BillingAccountCRUD.getLatestUnpaidBill(patient_id));
 			break;
 		case "7":
-			System.out.println("Enter recordID, fee space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter recordID, fee | separated");
+			args = reader.readLine().split("[|]");
 			if(BillingAccountCRUD.updateMedicalFee(Integer.parseInt(args[0]), Double.parseDouble(args[1]))){
 				System.out.println("Operation Successful");
 			} else{
@@ -70,8 +70,8 @@ public class BillingAccountUI {
 			}
 			break;
 		case "8":
-			System.out.println("patient_id,record_id,payment_status,reg_fee,accom_fee,medical_fee space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("patient_id,record_id,payment_status,reg_fee,accom_fee,medical_fee separated by |");
+			args = reader.readLine().split("[|]");
 			patient_id = Integer.parseInt(args[0]);
 			record_id = Integer.parseInt(args[1]);
 			payment_status = args[2];
@@ -85,8 +85,8 @@ public class BillingAccountUI {
 			}
 			break;
 		case "9":
-			System.out.println("bill_id,patient_id,record_id,payment_status,reg_fee,accom_fee,medical_fee space separated");
-			args = reader.readLine().split(" ");
+			System.out.println("bill_id,patient_id,record_id,payment_status,reg_fee,accom_fee,medical_fee separated by |");
+			args = reader.readLine().split("[|]");
 			billId = Integer.parseInt(args[0]);
 			patient_id = Integer.parseInt(args[1]);
 			record_id = Integer.parseInt(args[2]);

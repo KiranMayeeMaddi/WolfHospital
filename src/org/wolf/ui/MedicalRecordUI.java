@@ -25,7 +25,7 @@ public class MedicalRecordUI {
 		String diagnosis;
 		String prescription; 
 		Integer responsible_doctor;
-		String treatmentPlan;
+		Integer treatmentPlan;
 		String[] args;
 		
 		String input = reader.readLine();
@@ -50,21 +50,21 @@ public class MedicalRecordUI {
 			MedicalRecordCRUD.getMedicalRecordsForDoctor(responsible_doctor).forEach(System.out::println);
 			break;
 		case "5":
-			System.out.println("Enter space separated Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, String treatmentPlan");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer treatmentPlan");
+			args = reader.readLine().split("[|]");
 			patient_id = Integer.parseInt(args[0]);
 			start_date = args[1];
 			end_date = args[2];
 			diagnosis = args[3];
 			prescription = args[4];
 			responsible_doctor = Integer.parseInt(args[5]);
-			treatmentPlan = args[6];
+			treatmentPlan = Integer.parseInt(args[6]);
 			System.out.println("New med record Id is");	
 			System.out.println(MedicalRecordCRUD.insertMedicalRecord(patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor,treatmentPlan));
 			break;
 		case "6":
-			System.out.println("Enter space separated Integer recordId, Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, String treatmentPlan");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated Integer recordId, Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer treatmentPlan");
+			args = reader.readLine().split("[|]");
 			recordId = Integer.parseInt(args[0]);
 			patient_id = Integer.parseInt(args[1]);
 			start_date = args[2];
@@ -72,7 +72,7 @@ public class MedicalRecordUI {
 			diagnosis = args[4];
 			prescription = args[5];
 			responsible_doctor = Integer.parseInt(args[6]);
-			treatmentPlan = args[7];
+			treatmentPlan = Integer.parseInt(args[7]);
 			if(MedicalRecordCRUD.updateMedicalRecord(recordId, patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor,treatmentPlan)){
 				System.out.println("Operation Successful");
 			} else{

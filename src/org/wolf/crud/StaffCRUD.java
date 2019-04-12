@@ -75,7 +75,7 @@ public class StaffCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
 
-		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE  LIKE '%" + name + "%'");
+		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE LOWER(name) LIKE '%" + name.toLowerCase() + "%'");
 		    
 		    ArrayList <Staff> staffList = new ArrayList <> ();
 		    while(rs.next()) {
@@ -105,7 +105,7 @@ public class StaffCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
-		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE prof_title =" + profTitle );
+		    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE prof_title ='" + profTitle+"'");
 		    
 		    ArrayList <Staff> staffList = new ArrayList <> ();
 		    while(rs.next()) {
@@ -129,6 +129,36 @@ public class StaffCRUD {
 	    	return null;
 	    }	
 	}
+	
+	//Returns list of staff info with given job title
+		public static ArrayList<Staff> getStaffIdjobTitle(String jobTitle){
+			try {
+				Connection conn = DatabaseConnection.getConnection();
+			    Statement st = conn.createStatement();
+			    ResultSet rs = st.executeQuery("SELECT * FROM Staff WHERE job_title ='"+jobTitle+"'" );
+			    
+			    ArrayList <Staff> staffList = new ArrayList <> ();
+			    while(rs.next()) {
+				    Staff s = new Staff();
+				    s.setAddress(rs.getString("address"));
+			    	s.setDept(rs.getString("dept"));
+					s.setDob(rs.getString("date_of_birth"));
+					s.setGender(rs.getString("gender"));
+					s.setId(rs.getInt("staff_id"));
+					s.setName(rs.getString("name"));
+					s.setPno(rs.getString("phone_no"));
+					s.setProfTitle(rs.getString("prof_title"));
+					s.setSal(rs.getDouble("salary"));
+					s.setJobTitle(rs.getString("job_title"));
+					staffList.add(s);
+			    }
+			    return staffList;
+		    }
+		    catch (SQLException ex) {
+		    	System.err.println(ex.getMessage());
+		    	return null;
+		    }	
+		}
 	
 	//Returns list of staff info in given dept
 	public static ArrayList<Staff> getStaffIddept(String dept){
@@ -176,10 +206,21 @@ public class StaffCRUD {
 		    while(rs.next()) {
 		    	staff_id = rs.getInt("staff_id");
 		    }
+		    System.out.println(jobTitle.toLowerCase());
+		    // inserting in nurse, doctor, or receptionist table based on prof_title
+		    if (jobTitle.toLowerCase().equals("doctor"))
+		    	st.executeUpdate("insert into Doctor (staff_id) values ("+staff_id+")");
+		    
+		    else if (jobTitle.toLowerCase().equals("nurse"))
+		    	st.executeUpdate("insert into Nurse (staff_id) values ("+staff_id+")");
+		    
+		    else
+		    	st.executeUpdate("insert into Receptionist (staff_id) values ("+staff_id+")");
+		    
 		    return staff_id;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 	}

@@ -65,18 +65,18 @@ public final class Ward_PatientCRUD {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime localDate = LocalDateTime.now();
-			String start_time = dtf.format(localDate);
+			//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			//LocalDateTime localDate = LocalDateTime.now();
+			//String start_time = dtf.format(localDate);
 			
 			String query = "insert into Ward_Patient_checks_In (patient_id, ward_id, bed_id, start_time, end_time)"
-					+ " values (?,?,?,?,?)";
+					+ " values (?,?,?,NOW(),?)";
 			PreparedStatement st = conn.prepareStatement(query);
 			st.setInt(1, patient_id);
 			st.setInt(2, ward_id);
 			st.setInt(3, bed_id);
-			st.setString(4, start_time);
-			st.setString(5, end_time);
+			//st.setString(4, start_time);
+			st.setString(4, end_time);
 			st.executeUpdate();
 			
 			ResultSet rs = st.executeQuery("select checkin_id from Ward_Patient_checks_In order by checkin_id desc limit 1");

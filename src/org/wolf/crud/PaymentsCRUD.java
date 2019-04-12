@@ -76,10 +76,10 @@ public final class PaymentsCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
-		    LocalDateTime paymentDate = java.time.LocalDateTime.now();
+		    //LocalDateTime paymentDate = java.time.LocalDateTime.now();
 		    
 		    st.executeUpdate("INSERT INTO Patient(bill_id, payer_ssn, billing_address, policy_no, card_no, amount_paid, payment_date) " +
-		                       "VALUES ('"+ bill_id +"', '"+ payer_ssn+"', '"+ bill_address +"', '"+ policy_no +"', '"+ card_no +"', '"+amountPaid+"', '"+ paymentDate +"')");
+		                       "VALUES ('"+ bill_id +"', '"+ payer_ssn+"', '"+ bill_address +"', '"+ policy_no +"', '"+ card_no +"', '"+amountPaid+"',  NOW())");
 		    ResultSet rs = st.executeQuery("SELECT payment_id FROM Payments ORDER BY payment_id DESC LIMIT  1");
 		    int payment_id = 0;
 		    while(rs.next()) {

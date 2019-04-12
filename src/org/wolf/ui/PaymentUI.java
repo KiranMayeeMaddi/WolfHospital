@@ -32,8 +32,8 @@ public class PaymentUI {
 			System.out.println(PaymentsCRUD.getPaymentsForBill(bill_id));
 			break;
 		case "3":
-			System.out.println("Enter space separated Integer bill_id, String payer_ssn, String bill_address, String policy_no, String card_no, Double amountPaid");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated Integer bill_id, String payer_ssn, String bill_address, String policy_no, String card_no, Double amountPaid");
+			args = reader.readLine().split("[|]");
 			bill_id = Integer.parseInt(args[0]);
 			payer_ssn = args[1];
 			bill_address = args[2]; 

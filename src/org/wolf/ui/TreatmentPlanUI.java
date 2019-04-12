@@ -36,8 +36,8 @@ public class TreatmentPlanUI {
 			System.out.println(TreatmentPlanCRUD.insertTreatmentPlan(plan));
 			break;
 		case "4":
-			System.out.println("Enter space separated id, plan");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated id, plan");
+			args = reader.readLine().split("[|]");
 			id = Integer.parseInt(args[0]);
 			plan = args[1];
 			if(TreatmentPlanCRUD.updateTreatmentPlan(id, plan)){

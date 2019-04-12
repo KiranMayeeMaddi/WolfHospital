@@ -181,14 +181,14 @@ public final class MedicalRecordCRUD {
 	public static Boolean updateMedicalRecordEndTime(Integer recordId) {
 		// Update the end time to the current time stamp through SQL
 		
-		String end_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		//String end_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
 		    
-		    st.executeUpdate("UPDATE MedicalRecords SET end_date = '"+ end_date +"' WHERE record_id = " + recordId );
+		    st.executeUpdate("UPDATE MedicalRecords SET end_date = NOW() WHERE record_id = " + recordId );
 		    
 		    return true;
 	    }

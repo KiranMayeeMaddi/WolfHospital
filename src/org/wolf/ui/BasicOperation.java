@@ -3,8 +3,6 @@ package org.wolf.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import org.wolf.crud.TreatmentPlanCRUD;
-
 public class BasicOperation {
 
 	public static void basicOperations(BufferedReader reader) throws IOException {

@@ -34,8 +34,8 @@ public class TestUI {
 			System.out.println(TestCRUD.viewTest(test_id));
 			break;
 		case "3":
-			System.out.println("Enter space separated String test_name, String lab_name, Integer specialized_doctor, Integer fees");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated String test_name, String lab_name, Integer specialized_doctor, Integer fees");
+			args = reader.readLine().split("[|]");
 			test_name = args[0];
 			lab_name = args[1];
 			specialized_doctor = Integer.parseInt(args[2]);
@@ -44,8 +44,8 @@ public class TestUI {
 			System.out.println(TestCRUD.insertTest(test_name, lab_name, specialized_doctor, fees));
 			break;
 		case "4":
-			System.out.println("Enter space separated Integer test_id, String test_name, String lab_name, Integer specialized_doctor, Integer fees");
-			args = reader.readLine().split(" ");
+			System.out.println("Enter | separated Integer test_id, String test_name, String lab_name, Integer specialized_doctor, Integer fees");
+			args = reader.readLine().split("[|]");
 			test_id = Integer.parseInt(args[0]);
 			test_name = args[1];
 			lab_name = args[2];

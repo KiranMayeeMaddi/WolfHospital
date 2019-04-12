@@ -36,31 +36,25 @@ public final class Ward_PatientCRUD {
 		}
 	} 
 	
-	public static Ward_Patient viewWardPatients(Integer checkinId){
-		try {
-			Connection conn = DatabaseConnection.getConnection();
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from Ward_Patient_checks_In where checkin_id="+checkinId);
-			Ward_Patient p = new Ward_Patient();
-			
-			while (rs.next()) {
-				p.setBed_id(rs.getInt("bed_id"));
-				p.setCheckin_id(rs.getInt("checkin_id"));
-				p.setEnd_time(rs.getString("end_time"));
-				p.setPatient_id(rs.getInt("patient_id"));
-				p.setStart_time(rs.getString("start_time"));
-				p.setWard_id(rs.getInt("ward_id"));
-			}
-			return p;
+	public static Ward_Patient viewWardPatients(Integer checkinId) throws SQLException{
+		Connection conn = DatabaseConnection.getConnection();
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery("select * from Ward_Patient_checks_In where checkin_id="+checkinId);
+		Ward_Patient p = new Ward_Patient();
+		
+		while (rs.next()) {
+			p.setBed_id(rs.getInt("bed_id"));
+			p.setCheckin_id(rs.getInt("checkin_id"));
+			p.setEnd_time(rs.getString("end_time"));
+			p.setPatient_id(rs.getInt("patient_id"));
+			p.setStart_time(rs.getString("start_time"));
+			p.setWard_id(rs.getInt("ward_id"));
 		}
-		catch (SQLException e) {
-			System.err.println(e.getMessage());
-			return null;
-		}
+		return p;
 	} 
 	
 	//Returns check-in ID
-	public static Integer insertWardPatient(Integer patient_id, Integer ward_id, Integer bed_id, String end_time){
+	public static Integer insertWardPatient(Integer patient_id, Integer ward_id, Integer bed_id, String end_time) throws SQLException {
 		//Put the start time as the current  timestamp
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -85,10 +79,6 @@ public final class Ward_PatientCRUD {
 		    	shift_id = rs.getInt("checkin_id");
 		    return shift_id;
 	    }
-	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
-	    	return null;
-	    }
 	}
 	
 	public static Boolean updateWardPatient(Integer checkin_id, Integer patient_id, Integer ward_id, Integer bed_id, String start_time, String end_time){
@@ -112,28 +102,23 @@ public final class Ward_PatientCRUD {
 	    }
 	}
 	
-	public static Boolean updateWardEndtime(Integer checkin_id){
+	public static Boolean updateWardEndtime(Integer checkin_id) throws SQLException {
 		//Put the current time stamp as end_time
-		try {
-			Connection conn = DatabaseConnection.getConnection();
-			
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime localDate = LocalDateTime.now();
-			String end_time = dtf.format(localDate);
-			
-			String query = "Update Ward_Patient_checks_In set end_time=? where checkin_id=?";
-			PreparedStatement st = conn.prepareStatement(query);
-			st.setString(1, end_time);
-			st.setInt(2, checkin_id);
-			
-			st.executeUpdate();
-			
-			return true;
-		}
-		catch (SQLException e) {
-			System.err.println(e.getMessage());
-			return false;
-		}
+		
+		Connection conn = DatabaseConnection.getConnection();
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime localDate = LocalDateTime.now();
+		String end_time = dtf.format(localDate);
+		
+		String query = "Update Ward_Patient_checks_In set end_time=? where checkin_id=?";
+		PreparedStatement st = conn.prepareStatement(query);
+		st.setString(1, end_time);
+		st.setInt(2, checkin_id);
+		
+		st.executeUpdate();
+		
+		return true;
 	}
 	
 	public static Boolean deleteWardPatient(Integer checkinId){

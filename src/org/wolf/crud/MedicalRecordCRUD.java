@@ -28,7 +28,7 @@ public final class MedicalRecordCRUD {
 		    while(rs.next()) {
 		    	
 		    	mr = new MedicalRecord(rs.getInt("record_id"), rs.getInt("patient_id"), rs.getString("start_date"), rs.getString("end_date"), 
-		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getString("process_treatment_plan"));
+		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getInt("process_treatment_plan"));
 				
 		    	recordList.add(mr);
 		    }
@@ -52,7 +52,7 @@ public final class MedicalRecordCRUD {
 		    while(rs.next()) {
 		    	
 		    	mr = new MedicalRecord(rs.getInt("record_id"), rs.getInt("patient_id"), rs.getString("start_date"), rs.getString("end_date"), 
-		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getString("process_treatment_plan"));
+		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getInt("process_treatment_plan"));
 				
 		    }
 		    return mr;
@@ -76,7 +76,7 @@ public final class MedicalRecordCRUD {
 		    while(rs.next()) {
 		    	
 		    	mr = new MedicalRecord(rs.getInt("record_id"), rs.getInt("patient_id"), rs.getString("start_date"), rs.getString("end_date"), 
-		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getString("process_treatment_plan"));
+		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getInt("process_treatment_plan"));
 				
 		    	recordList.add(mr);
 		    }
@@ -101,7 +101,7 @@ public final class MedicalRecordCRUD {
 		    while(rs.next()) {
 		    	
 		    	mr = new MedicalRecord(rs.getInt("record_id"), rs.getInt("patient_id"), rs.getString("start_date"), rs.getString("end_date"), 
-		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getString("process_treatment_plan"));
+		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getInt("process_treatment_plan"));
 				
 		    	recordList.add(mr);
 		    }
@@ -116,7 +116,7 @@ public final class MedicalRecordCRUD {
 	
 	//Insert a medical record for the given data
 	//Return latest auto generated id
-	public static Integer insertMedicalRecord(Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, String process_treatment_plan){
+	public static Integer insertMedicalRecord(Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
@@ -128,7 +128,7 @@ public final class MedicalRecordCRUD {
 //		    start_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		    
 		    st.executeUpdate("INSERT INTO MedicalRecords(patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor, process_treatment_plan) " +
-		                       "VALUES ("+ patient_id +", '"+ start_date+"', '"+end_date+"', '"+diagnosis+"', '"+prescription+"', "+responsible_doctor+", '" + process_treatment_plan + "')");
+		                       "VALUES ("+ patient_id +", '"+ start_date+"', '"+end_date+"', '"+diagnosis+"', '"+prescription+"', "+responsible_doctor+", " + process_treatment_plan + ")");
 		    ResultSet rs = st.executeQuery("SELECT record_id FROM MedicalRecords ORDER BY record_id DESC LIMIT  1");
 		    int record_id = 0;
 		    
@@ -146,14 +146,14 @@ public final class MedicalRecordCRUD {
 	
 	//Updates a medical record with the given data
 	//Return true if successful else false
-	public static Boolean updateMedicalRecord(Integer recordId, Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, String process_treatment_plan){
+	public static Boolean updateMedicalRecord(Integer recordId, Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
 		    
 		    st.executeUpdate("UPDATE MedicalRecords SET patient_id = "+ patient_id +", start_date = '"+ start_date +"', end_date = '"+ end_date +"', diagnosis = '"+ diagnosis 
-		    					+"', prescription = '"+ prescription +"', responsible_doctor = "+ responsible_doctor +", process_treatment_plan = '"+process_treatment_plan+"' WHERE record_id = " + recordId );
+		    					+"', prescription = '"+ prescription +"', responsible_doctor = "+ responsible_doctor +", process_treatment_plan = "+process_treatment_plan+" WHERE record_id = " + recordId );
 		    
 		    return true;
 	    } catch (SQLException ex) {

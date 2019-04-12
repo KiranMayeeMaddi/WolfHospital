@@ -2,12 +2,13 @@ package org.wolf.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.wolf.operations.Operations;
 
 public class Menu_Layer1 {
 
-	public static void checkInPatient(BufferedReader reader) throws IOException {
+	public static void checkInPatient(BufferedReader reader) throws IOException, SQLException, Exception {
 		System.out.println("Please enter | separated patient_id, ward_id, bed_id");
 		String input = reader.readLine();
 		String[] args = input.split("[|]");
@@ -21,7 +22,7 @@ public class Menu_Layer1 {
 		}
 	}
 
-	public static void checkOutPatient(BufferedReader reader) throws IOException {
+	public static void checkOutPatient(BufferedReader reader) throws IOException, SQLException, Exception {
 		System.out.println("Please enter checkIn-Id");
 		String input = reader.readLine();
 		Integer checkInId = Integer.parseInt(input);

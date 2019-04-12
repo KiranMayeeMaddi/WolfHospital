@@ -2,10 +2,11 @@ package org.wolf.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class BasicOperation {
 
-	public static void basicOperations(BufferedReader reader) throws IOException {
+	public static void basicOperations(BufferedReader reader) throws IOException, SQLException {
 		System.out.println("Chose your field of operations");
 		System.out.println("1.Billing Account");
 		System.out.println("2.Medical Record");

@@ -57,7 +57,7 @@ public class Menu_Layer1 {
 		String diagnosis = args[2]; 
 		String prescription = args[3]; 
 		Integer responsible_doctor = Integer.parseInt(args[4]);
-		String process_treatment_plan = args[5];
+		Integer process_treatment_plan = Integer.parseInt(args[5]);
 		Double reg_fee = Double.parseDouble(args[6]); 
 		Double medical_fee = Double.parseDouble(args[7]);
 		if(Operations.createTreatment(patient_id, start_date, diagnosis, prescription, responsible_doctor,process_treatment_plan, reg_fee, medical_fee)){

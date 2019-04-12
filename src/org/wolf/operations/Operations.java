@@ -108,7 +108,7 @@ public class Operations {
 		}
 	}
 	
-	public static Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, Integer responsible_doctor, String process_treatment_plan, Double reg_fee, Double medical_fee){
+	public static Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan, Double reg_fee, Double medical_fee){
 		String endDate = null;
 		String payment_status = "N";
 		Double accom_fee = null;

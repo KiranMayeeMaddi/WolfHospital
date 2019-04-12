@@ -1,12 +1,15 @@
 package org.wolf.operations;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.wolf.baseclasses.BillingAccount;
+import org.wolf.baseclasses.BillingAccountView;
 import org.wolf.baseclasses.Payments;
 import org.wolf.baseclasses.Test;
 import org.wolf.baseclasses.Ward_Patient;
+import org.wolf.config.DatabaseConnection;
 import org.wolf.crud.BillingAccountCRUD;
 import org.wolf.crud.MedicalRecordCRUD;
 import org.wolf.crud.PaymentsCRUD;
@@ -14,7 +17,6 @@ import org.wolf.crud.TestCRUD;
 import org.wolf.crud.Test_MedicalRecordsCRUD;
 import org.wolf.crud.WardCRUD;
 import org.wolf.crud.Ward_PatientCRUD;
-import org.wolf.config.DatabaseConnection;
 
 public class Operations {
 
@@ -76,7 +78,7 @@ public class Operations {
 			//Release the occupied Bed
 			WardCRUD.releaseBed(w.ward_id, w.bed_id);
 			//Get the latest unpaid bill for the patientId.
-			BillingAccount bill = BillingAccountCRUD.getLatestUnpaidBill(w.patient_id);
+			BillingAccount bill = BillingAccountCRUD.internalGetLatestUnpaidBill(w.patient_id);
 			//Calculate the accommodation Fee for the time stayed
 			Double accomFee = WardCRUD.calculateAccomCharges(checkinId);
 			//Add it the calculated fee to the original
@@ -134,7 +136,7 @@ public class Operations {
 	public static Boolean payCash(Integer billId, String payer_ssn, String bill_address, Double amountPaid) {
 		try {
 		
-			BillingAccount bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
+			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
 			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,null, amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
@@ -161,7 +163,7 @@ public class Operations {
 	
 	public static Boolean payInsurance(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String policy_no) {
 		try {
-			BillingAccount bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
+			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
 			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, policy_no,null, amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
@@ -188,7 +190,7 @@ public class Operations {
 	
 	public static Boolean payCard(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String card_no) {
 		try {
-			BillingAccount bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
+			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
 			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,card_no, amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);

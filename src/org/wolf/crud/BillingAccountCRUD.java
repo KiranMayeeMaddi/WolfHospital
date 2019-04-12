@@ -260,6 +260,28 @@ public final class BillingAccountCRUD {
 		return b;
 	}
 	
+	
+	//Get the latest unpaid bill for the given patient_id
+		public static BillingAccount internalGetLatestUnpaidBill(Integer patientId) throws SQLException {
+			  
+			Connection conn = DatabaseConnection.getConnection();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId
+					+ " and payment_status='N' order by bill_id desc limit 1");
+			BillingAccount b = new BillingAccount();
+			
+			while (rs.next()) {
+				b.setAccom_fee(rs.getDouble("accom_fee"));
+				b.setBill_id(rs.getInt("bill_id"));
+				b.setMedical_fee(rs.getDouble("medical_fee"));
+				b.setPatient_id(rs.getInt("patient_id"));
+				b.setPayment_status(rs.getString("payment_status"));
+				b.setRecord_id(rs.getInt("record_id"));
+				b.setReg_fee(rs.getDouble("reg_fee"));
+			}
+			return b;
+		}
+	
 	//Add fee to the current medical fee in BillingAccount table
 	public static Boolean updateMedicalFee(Integer recordID, Double fee){
 		try {

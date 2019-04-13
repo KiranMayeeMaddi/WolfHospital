@@ -80,8 +80,11 @@ public class WardUI {
 		case "8":
 			System.out.println("Enter wardId");
 			ward_id = Integer.parseInt(reader.readLine());
-			System.out.println("Newly generate bed_id = ");
-			System.out.println(WardCRUD.insertBedInWard(ward_id));
+			Integer bedId = WardCRUD.insertBedInWard(ward_id);
+			if(bedId != null) {
+				System.out.println("Newly generate bed_id = ");
+				System.out.println(bedId);	
+			}
 			break;
 		case "9":
 			System.out.println("Enter ward_id, capacity, charges per day separated by |");

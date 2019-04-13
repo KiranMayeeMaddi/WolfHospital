@@ -6,8 +6,19 @@ import java.util.ArrayList;
 import org.wolf.baseclasses.Test_MedicalRecords;
 import org.wolf.config.DatabaseConnection;
 
+/**
+ * This class is for handling CRUD operations for Test_MedicalRecords table.
+ *
+ */
 public final class Test_MedicalRecordsCRUD {
 	
+	/**
+	 * This function is for obtaining the test results for a given record_id and test_id
+	 * 
+	 * @param record_id
+	 * @param test_id
+	 * @return - Test_MedicalRecords object
+	 */
 	public static Test_MedicalRecords viewTestMedicalRecords(Integer record_id, Integer test_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -29,6 +40,12 @@ public final class Test_MedicalRecordsCRUD {
 		}
 	}
 	
+	/**
+	 * This function is for obtaining all the records of test performed for a given record_id
+	 * 
+	 * @param record_id
+	 * @return - ArrayList of Test_MedicalRecords objects
+	 */
 	public static ArrayList<Test_MedicalRecords> viewTestMedicalRecordsByRecordId(Integer record_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -54,6 +71,12 @@ public final class Test_MedicalRecordsCRUD {
 		}
 	}
 	
+	/**
+	 * This function is for getting the results of all the medical records for which a particular test was performed
+	 * 
+	 * @param test_id
+	 * @return - ArrayList of Test_MedicalRecords objects
+	 */
 	public static ArrayList<Test_MedicalRecords> viewTestMedicalRecordsByTestId(Integer test_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -79,6 +102,11 @@ public final class Test_MedicalRecordsCRUD {
 		}
 	}
 	
+	/**
+	 * This function is for getting all the records of all the tests performed for all patients
+	 * 
+	 * @return - ArrayList of Test_MedicalRecords objects
+	 */
 	public static ArrayList<Test_MedicalRecords> viewTestMedicalRecords(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -104,6 +132,15 @@ public final class Test_MedicalRecordsCRUD {
 		}
 	}
 	
+	/**
+	 * This function inserts a new record for a test performed, in the Test_MedicalRecords table
+	 * 
+	 * @param record_id
+	 * @param test_id
+	 * @param test_date
+	 * @param result
+	 * @return - true if insert successful, else false 
+	 */
 	public static Boolean insertTest_MedicalRecords(Integer record_id, Integer test_id, String test_date, String result){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -126,6 +163,15 @@ public final class Test_MedicalRecordsCRUD {
 	    }
 	}
 	
+	/**
+	 * This function is for updating any field in the Test_MedicalRecords table for a given record_id, test_id pair 
+	 * 
+	 * @param record_id
+	 * @param test_id
+	 * @param test_date
+	 * @param result
+	 * @return - true if update successful, else false
+	 */
 	public static Boolean updateTest_MedicalRecords(Integer record_id, Integer test_id, String test_date, String result){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -145,6 +191,13 @@ public final class Test_MedicalRecordsCRUD {
 	    }
 	}
 	
+	/**
+	 * This function deletes a record from the Test_MedicalRecords table for a given reocrd_id, test_id pair
+	 * 
+	 * @param record_id
+	 * @param test_id
+	 * @return - true if delete successful, else false
+	 */
 	public static Boolean deleteTest_MedicalRecords(Integer record_id, Integer test_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();

@@ -10,10 +10,11 @@ public class PaymentUI {
 	public static void paymentUI(BufferedReader reader) throws IOException {
 		System.out.println("1.getAllPayments");
 		System.out.println("2.getPaymentsForBill");
-		System.out.println("3.insertPayment");
-		System.out.println("4.updatePayment");
-		System.out.println("5.deletePayment");
-		System.out.println("6.exit");
+		System.out.println("3.getPaymentsforPayment");
+		System.out.println("4.insertPayment");
+		System.out.println("5.updatePayment");
+		System.out.println("6.deletePayment");
+		System.out.println("7.exit");
 		Integer payment_id;
 		Integer bill_id;
 		String payer_ssn;
@@ -33,6 +34,11 @@ public class PaymentUI {
 			System.out.println(PaymentsCRUD.getPaymentsForBill(bill_id));
 			break;
 		case "3":
+			System.out.println("Enter paymentId");
+			payment_id = Integer.parseInt(reader.readLine());
+			System.out.println(PaymentsCRUD.getPaymentsForPayment(payment_id));
+			break;
+		case "4":
 			System.out.println("Enter | separated Integer bill_id, String payer_ssn, String bill_address, String policy_no, String card_no, Double amountPaid");
 			args = reader.readLine().split("[|]");
 			bill_id = Integer.parseInt(args[0]);
@@ -44,7 +50,7 @@ public class PaymentUI {
 			System.out.println("PaymentId is");
 			System.out.println(PaymentsCRUD.insertPayment(bill_id, payer_ssn, bill_address, policy_no, card_no, amountPaid));
 			break;
-		case "4":
+		case "5":
 			System.out.println("Enter | separated Integer payment_id, Integer bill_id, String payer_ssn, String billing_address, String policy_no, String card_no, String amount_paid, String payment_date");
 			args = reader.readLine().split("[|]");
 			payment_id = Integer.parseInt(args[0]);
@@ -59,7 +65,8 @@ public class PaymentUI {
 				System.out.println("Operation Successful");
 			else
 				System.out.println("Operation Failed");
-		case "5":
+			break;
+		case "6":
 			System.out.println("Enter paymentId");
 			payment_id = Integer.parseInt(reader.readLine());
 			if(PaymentsCRUD.deletePayment(payment_id)){
@@ -68,7 +75,7 @@ public class PaymentUI {
 				System.out.println("Operation Failed");
 			}
 			break;
-		case "6":
+		case "7":
 			return;
 		default:
 			System.out.println("Enter a valid choice");

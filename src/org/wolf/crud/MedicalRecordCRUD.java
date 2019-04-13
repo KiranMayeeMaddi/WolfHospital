@@ -5,18 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.wolf.baseclasses.MedicalRecord;
-import org.wolf.baseclasses.Patient;
 import org.wolf.config.DatabaseConnection;
 
 
+/**
+ * Basic Operations for the MedicalRecords table such as viewing, inserting, updating and deleting.
+ */
 public final class MedicalRecordCRUD {
-
-	//Return All the medical records
+	
+	/**
+	 * @return All the medical records information
+	 */
 	public static ArrayList<MedicalRecord> viewMedicalRecords(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -41,7 +43,10 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 	
-	//Return medical Record for a  given  recordId
+	/**
+	 * @param recordId
+	 * @return All the medical records information for the given recordId
+	 */
 	public static MedicalRecord viewMedicalRecords(Integer recordId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -56,6 +61,9 @@ public final class MedicalRecordCRUD {
 		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getInt("process_treatment_plan"));
 				
 		    }
+		    if(mr == null){
+		    	System.out.println("No such Medical Record");
+		    }
 		    return mr;
 		    
 	    } catch (SQLException ex) {
@@ -64,7 +72,10 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 	
-	//Returns all the medical Records for a given PatientId
+	/**
+	 * @param patientId
+	 * @return All the medical records information for a given patient
+	 */
 	public static ArrayList<MedicalRecord> getMedicalRecordsForPatient(Integer patientId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -81,6 +92,9 @@ public final class MedicalRecordCRUD {
 				
 		    	recordList.add(mr);
 		    }
+		    if(recordList.size()==0){
+		    	System.out.println("No such medical records");
+		    }
 		    return recordList;
 		    
 	    } catch (SQLException ex) {
@@ -89,7 +103,10 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 	
-	//Returns all the medical Records for a given responsible doctor Id
+	/**
+	 * @param doctor_id
+	 * @return All the medical records information for a given responsible doctor Id
+	 */
 	public static ArrayList<MedicalRecord> getMedicalRecordsForDoctor(Integer doctor_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -106,6 +123,9 @@ public final class MedicalRecordCRUD {
 				
 		    	recordList.add(mr);
 		    }
+		    if(recordList.size()==0){
+		    	System.out.println("No such medical records");
+		    }
 		    return recordList;
 		    
 	    } catch (SQLException ex) {
@@ -115,8 +135,17 @@ public final class MedicalRecordCRUD {
 		
 	}
 	
-	//Insert a medical record for the given data
-	//Return latest auto generated id
+	/**
+	 * Inserts a medical record for the given parameters in the MedicalRecords table
+	 * @param patient_id
+	 * @param start_date
+	 * @param end_date
+	 * @param diagnosis
+	 * @param prescription
+	 * @param responsible_doctor
+	 * @param process_treatment_plan
+	 * @return latest auto generated id for medical record
+	 */
 	public static Integer insertMedicalRecord(Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -148,13 +177,22 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 	
-	//Updates a medical record with the given data
-	//Return true if successful else false
+	/**Updates a medical record with the given data
+	 * @param recordId
+	 * @param patient_id
+	 * @param start_date
+	 * @param end_date
+	 * @param diagnosis
+	 * @param prescription
+	 * @param responsible_doctor
+	 * @param process_treatment_plan
+	 * @return true if successful else false
+	 */
 	public static Boolean updateMedicalRecord(Integer recordId, Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
-			String query = "update into MedicalRecords (patient_id=?, start_date=?, end_date=?, diagnosis=?, prescription=?, responsible_doctor=?, process_treatment_plan=? where record_id=?";
+			String query = "update MedicalRecords set patient_id=?, start_date=?, end_date=?, diagnosis=?, prescription=?, responsible_doctor=?, process_treatment_plan=? where record_id=?";
 			PreparedStatement st = conn.prepareStatement(query);
 			st.setInt(1, patient_id);
 			st.setString(2, start_date);
@@ -177,8 +215,11 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 	
-	//Deletes a medical record with the given recordId
-	//Return true if successful else false
+	/**
+	 * Deletes a medical record with the given recordId
+	 * @param record_id
+	 * @return true if successful else false
+	 */
 	public static Boolean deleteMedicalRecord(Integer record_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -193,10 +234,14 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 
+	/**
+	 * Updates the end time of a medical record and sets it to the current time
+	 * This functionality is used to end a treatment
+	 * @param recordId
+	 * @return true if successful else false
+	 */
 	public static Boolean updateMedicalRecordEndTime(Integer recordId) {
 		// Update the end time to the current time stamp through SQL
-		
-		//String end_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		
 		try {
 			Connection conn = DatabaseConnection.getConnection();

@@ -34,17 +34,17 @@ public class PatientUI {
 		case "2": 
 			System.out.println("Enter patientId");
 			id = Integer.parseInt(reader.readLine());
-			System.out.println(PatientCRUD.viewPatient(id));
+			System.out.println(PatientCRUD.viewPatients(id));
 			break;
 		case "3": 
 			System.out.println("Enter patient name");
 			name = reader.readLine();
-			PatientCRUD.getPatientIdByName(name).forEach(System.out::println);
+			PatientCRUD.viewPatientsByName(name).forEach(System.out::println);
 			break;
 		case "4":
 			System.out.println("Enter SSN");
 			ssn = reader.readLine();
-			System.out.println(PatientCRUD.getPatientIdBySSN(ssn));
+			System.out.println(PatientCRUD.viewPatientsBySSN(ssn));
 			break;
 		case "5":
 			System.out.println("Enter name, ssn, dob, gender,pno, address separated by |");

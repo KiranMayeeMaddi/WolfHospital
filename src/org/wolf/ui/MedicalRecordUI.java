@@ -15,7 +15,8 @@ public class MedicalRecordUI {
 		System.out.println("5.insertMedicalRecord");
 		System.out.println("6.updateMedicalRecord");
 		System.out.println("7.deleteMedicalRecord");
-		System.out.println("8.exit");
+		System.out.println("8.updateMedicalRecordEndTime");
+		System.out.println("9.exit");
 		
 		
 		Integer recordId;
@@ -89,6 +90,15 @@ public class MedicalRecordUI {
 			}
 			break;
 		case "8":
+			System.out.println("Enter med record Id");
+			recordId = Integer.parseInt(reader.readLine());
+			if(MedicalRecordCRUD.updateMedicalRecordEndTime(recordId)){
+				System.out.println("Operation Successful");
+			} else{
+				System.out.println("Operation Failed");
+			}
+			break;
+		case "9":
 			return;
 		default:
 			System.out.println("Enter a valid choice");		

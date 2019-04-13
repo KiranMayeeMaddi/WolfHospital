@@ -75,8 +75,8 @@ public class MedicalRecord {
 	}
 	@Override
 	public String toString() {
-		return "MedicalRecord [record_id=" + record_id + ", patient_id=" + patient_id + ", start_date=" + start_date
-				+ ", end_date=" + end_date + ", diagnosis=" + diagnosis + ", prescription=" + prescription
-				+ ", responsible_doctor_id=" + responsible_doctor_id + "]";
+		return "[record_id=" + record_id + ",patient_id=" + patient_id + ",start_date=" + start_date
+				+ ",end_date=" + end_date + ",diagnosis=" + diagnosis + ",prescription=" + prescription
+				+ ",responsible_doctor_id=" + responsible_doctor_id + "]";
 	}
 }

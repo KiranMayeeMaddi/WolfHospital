@@ -12,18 +12,24 @@ import org.wolf.baseclasses.BillingAccountView;
 import org.wolf.config.DatabaseConnection;
 
 
+/**
+ * Basic Operations for the BillingAccount table such as viewing, inserting, updating and deleting.
+ */
 public final class BillingAccountCRUD {
 	
 	//Return All the bills
+	/**
+	 * @return information for all the billing accounts
+	 */
 	public static ArrayList<BillingAccountView> viewBillingAccounts(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
-					"FROM medicalrecords" + 
-					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
-					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
-					"INNER JOIN payments on T.payment_id = payments.payment_id");
+			ResultSet rs = st.executeQuery("SELECT BillingAccounts.record_id, Payments.payment_id,BillingAccounts.bill_id, MedicalRecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					" FROM MedicalRecords" + 
+					" INNER JOIN BillingAccounts ON BillingAccounts.record_id = MedicalRecords.record_id" + 
+					" LEFT OUTER JOIN (select p.bill_id,max(p.payment_id) as payment_id from Payments as p group by p.bill_id) as T ON T.bill_id = BillingAccounts.bill_id" + 
+					" LEFT OUTER JOIN Payments on T.payment_id = Payments.payment_id");
 			
 			ArrayList<BillingAccountView> bills = new ArrayList<BillingAccountView>();
 			String payment_method = null;
@@ -56,17 +62,20 @@ public final class BillingAccountCRUD {
 		}
 	}
 	
-	//Return bill for a  given  billId
+	/**
+	 * @param billId
+	 * @return Return bill for a  given  billId
+	 */
 	public static BillingAccountView viewBillingAccountsByBill(Integer billId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
-					"FROM medicalrecords" + 
-					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
-					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
-					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
-					"WHERE billingaccounts.bill_id = " + billId);
+			ResultSet rs = st.executeQuery("SELECT BillingAccounts.record_id, Payments.payment_id,BillingAccounts.bill_id, MedicalRecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					" FROM MedicalRecords" + 
+					" INNER JOIN BillingAccounts ON BillingAccounts.record_id = MedicalRecords.record_id" + 
+					" LEFT OUTER JOIN (select p.bill_id,max(p.payment_id) as payment_id from Payments as p group by p.bill_id) as T ON T.bill_id = BillingAccounts.bill_id" + 
+					" LEFT OUTER JOIN Payments on T.payment_id = Payments.payment_id" + 
+					" WHERE BillingAccounts.bill_id = " + billId);
 			
 			String payment_method = null;
 			String prescribed_meds = "No";
@@ -97,17 +106,20 @@ public final class BillingAccountCRUD {
 		}
 	}
 	
-	//Return bill for a given recordId
+	/**
+	 * @param recordId
+	 * @return Return bill for a  given  recordId
+	 */
 	public static BillingAccountView viewBillingAccountsByRecord(Integer recordId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
-					"FROM medicalrecords" + 
-					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
-					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
-					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
-					"WHERE medicalrecords.record_id = "+ recordId);
+			ResultSet rs = st.executeQuery("SELECT BillingAccounts.record_id, Payments.payment_id,BillingAccounts.bill_id, MedicalRecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					" FROM MedicalRecords" + 
+					" INNER JOIN BillingAccounts ON BillingAccounts.record_id = MedicalRecords.record_id" + 
+					" LEFT OUTER JOIN (select p.bill_id,max(p.payment_id) as payment_id from Payments as p group by p.bill_id) as T ON T.bill_id = BillingAccounts.bill_id" + 
+					" LEFT OUTER JOIN Payments on T.payment_id = Payments.payment_id" +
+					" WHERE MedicalRecords.record_id = "+ recordId);
 			
 			String payment_method = null;
 			String prescribed_meds = "No";
@@ -138,17 +150,20 @@ public final class BillingAccountCRUD {
 		}	
 	}
 	
-	//Returns all the bills for a given PatientId
+	/**
+	 * @param patientId
+	 * @return Returns all the bills for a given PatientId
+	 */
 	public static ArrayList<BillingAccountView> getBillingAccountsForPatient(Integer patientId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
-					"FROM medicalrecords" + 
-					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
-					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
-					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
-					"WHERE medicalrecords.patient_id = " + patientId);
+			ResultSet rs = st.executeQuery("SELECT BillingAccounts.record_id, Payments.payment_id,BillingAccounts.bill_id, MedicalRecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					" FROM MedicalRecords" + 
+					" INNER JOIN BillingAccounts ON BillingAccounts.record_id = MedicalRecords.record_id" + 
+					" LEFT OUTER JOIN (select p.bill_id,max(p.payment_id) as payment_id from Payments as p group by p.bill_id) as T ON T.bill_id = BillingAccounts.bill_id" + 
+					" LEFT OUTER JOIN Payments on T.payment_id = Payments.payment_id" +
+					" WHERE MedicalRecords.patient_id = " + patientId);
 			
 			ArrayList<BillingAccountView> bills = new ArrayList<BillingAccountView>();
 			String payment_method = null;
@@ -181,17 +196,20 @@ public final class BillingAccountCRUD {
 		}
 	}
 	
-	//Returns all the bills for a given PatientId which are unpaid
+	/**
+	 * @param patientId
+	 * @return Returns all the bills for a given PatientId which are unpaid
+	 */
 	public static ArrayList<BillingAccountView> getUnpaidBillingAccountsForPatient(Integer patientId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
-					"FROM medicalrecords" + 
-					"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
-					"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
-					"INNER JOIN payments on T.payment_id = payments.payment_id" + 
-					"WHERE medicalrecords.patient_id = "+patientId+" AND billingaccounts.payment_status = 'N'");
+			ResultSet rs = st.executeQuery("SELECT BillingAccounts.record_id, Payments.payment_id,BillingAccounts.bill_id, MedicalRecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+					" FROM MedicalRecords" + 
+					" INNER JOIN BillingAccounts ON BillingAccounts.record_id = MedicalRecords.record_id" + 
+					" LEFT OUTER JOIN (select p.bill_id,max(p.payment_id) as payment_id from Payments as p group by p.bill_id) as T ON T.bill_id = BillingAccounts.bill_id" + 
+					" LEFT OUTER JOIN Payments on T.payment_id = Payments.payment_id" +
+					" WHERE MedicalRecords.patient_id = "+patientId+" AND BillingAccounts.payment_status = 'N'");
 			
 			ArrayList<BillingAccountView> bills = new ArrayList<BillingAccountView>();
 			String payment_method = null;
@@ -224,17 +242,21 @@ public final class BillingAccountCRUD {
 		}
 	}
 	
-	//Get the latest unpaid bill for the given patient_id
+	/**
+	 * @param patientId
+	 * @return Get the latest unpaid bill for the given patient_id
+	 * @throws SQLException
+	 */
 	public static BillingAccountView getLatestUnpaidBill(Integer patientId) throws SQLException {
 		  
 		Connection conn = DatabaseConnection.getConnection();
 		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery("SELECT billingaccounts.record_id, payments.payment_id,billingaccounts.bill_id, medicalrecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
-				"FROM medicalrecords" + 
-				"INNER JOIN billingaccounts ON billingaccounts.record_id = medicalrecords.record_id" + 
-				"INNER JOIN (select p.bill_id,max(p.payment_id) as payment_id from payments as p group by p.bill_id) as T ON T.bill_id = billingaccounts.bill_id" + 
-				"INNER JOIN payments on T.payment_id = payments.payment_id" + 
-				"WHERE medicalrecords.patient_id = "+patientId+" AND billingaccounts.payment_status = 'N' ORDER BY billingaccounts.bill_id DESC LIMIT 1");
+		ResultSet rs = st.executeQuery("SELECT BillingAccounts.record_id, Payments.payment_id,BillingAccounts.bill_id, MedicalRecords.patient_id, payer_ssn, billing_address, card_no, policy_no, reg_fee, accom_fee, medical_fee, start_date, prescription" + 
+				" FROM MedicalRecords" + 
+				" INNER JOIN BillingAccounts ON BillingAccounts.record_id = MedicalRecords.record_id" + 
+				" LEFT OUTER JOIN (select p.bill_id,max(p.payment_id) as payment_id from Payments as p group by p.bill_id) as T ON T.bill_id = BillingAccounts.bill_id" + 
+				" LEFT OUTER JOIN Payments on T.payment_id = Payments.payment_id" +
+				" WHERE MedicalRecords.patient_id = "+patientId+" AND BillingAccounts.payment_status = 'N' ORDER BY BillingAccounts.bill_id DESC LIMIT 1");
 		
 		String payment_method = null;
 		String prescribed_meds = "No";
@@ -261,7 +283,7 @@ public final class BillingAccountCRUD {
 	}
 	
 	
-	//Get the latest unpaid bill for the given patient_id
+		//Get the latest unpaid bill for the given patient_id
 		public static BillingAccount internalGetLatestUnpaidBill(Integer patientId) throws SQLException {
 			  
 			Connection conn = DatabaseConnection.getConnection();
@@ -282,14 +304,26 @@ public final class BillingAccountCRUD {
 			return b;
 		}
 	
-	//Add fee to the current medical fee in BillingAccount table
+	/**
+	 * @param recordID
+	 * @param fee
+	 * @return Add fee to the current medical fee in BillingAccount table
+	 */
 	public static Boolean updateMedicalFee(Integer recordID, Double fee){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
+			Statement ms = conn.createStatement();
+			ResultSet rs = ms.executeQuery("Select medical_fee from BillingAccounts where record_id="+recordID);
+			
+			Double medical_fee = 0.0;
+			while (rs.next())
+				medical_fee = rs.getDouble("medical_fee");
+			
+			medical_fee += fee;
 			
 			String query = "update BillingAccounts set medical_fee=? where record_id=?"; 
 		    PreparedStatement st = conn.prepareStatement(query);
-		    st.setDouble(1, fee);
+		    st.setDouble(1, medical_fee);
 		    st.setInt(2, recordID);
 		    st.executeUpdate();
 		    
@@ -301,8 +335,16 @@ public final class BillingAccountCRUD {
 	    }
 	}
 	
-	//Insert a bill
-	//Return true if successful else false
+	/**
+	 * Insert a bill based on the given data
+	 * @param patient_id
+	 * @param record_id
+	 * @param payment_status
+	 * @param reg_fee
+	 * @param accom_fee
+	 * @param medical_fee
+	 * @return true if successful else false
+	 */
 	public static Boolean insertBillingAccount(Integer patient_id, Integer record_id,String payment_status, Double reg_fee, Double accom_fee, Double medical_fee){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -326,8 +368,18 @@ public final class BillingAccountCRUD {
 	    }
 	}
 	
-	//Updates a medical bill with the given data
-	//Return true if successful else false
+	/**
+	 * Updates a medical bill with the given data
+	 * @param billId
+	 * @param patient_id
+	 * @param record_id
+	 * @param payment_status
+	 * @param reg_fee
+	 * @param accom_fee
+	 * @param medical_fee
+	 * @return true if successful else false
+	 * @throws SQLException
+	 */
 	public static Boolean updateBillingAccount(Integer billId, Integer patient_id, Integer record_id,String payment_status, Double reg_fee, Double accom_fee, Double medical_fee) throws SQLException {
 		
 		Connection conn = DatabaseConnection.getConnection();
@@ -346,8 +398,11 @@ public final class BillingAccountCRUD {
 	    return true;
 	}
 	
-	//Deletes a medical bill with the given billId
-	//Return true if successful else false
+	/**
+	 * Deletes a medical bill with the given billId
+	 * @param bill_id
+	 * @return true if successful else false
+	 */
 	public static Boolean deleteBillingAccount(Integer bill_id){
 		try {
 			Connection conn = DatabaseConnection.getConnection();

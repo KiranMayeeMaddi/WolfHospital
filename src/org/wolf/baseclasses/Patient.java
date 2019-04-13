@@ -1,10 +1,6 @@
 package org.wolf.baseclasses;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.time.Period;
 
 public class Patient {

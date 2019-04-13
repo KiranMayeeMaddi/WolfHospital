@@ -18,7 +18,7 @@ import org.wolf.baseclasses.PatientMedicalHistory;
 public class Reports {
 	
 	//Returns the medical history of a particular patient
-	public ArrayList<PatientMedicalHistory> patientMedicalHistory(Integer patientId){
+	public static ArrayList<PatientMedicalHistory> patientMedicalHistory(Integer patientId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -54,7 +54,7 @@ public class Reports {
 	}
 
 	// Returns medical history of a patient within a time period
-	public ArrayList<PatientMedicalHistory> patientMedicalHistoryTimePeriod(Integer patientId,String startTime, String endTime){
+	public static ArrayList<PatientMedicalHistory> patientMedicalHistoryTimePeriod(Integer patientId,String startTime, String endTime){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -92,7 +92,7 @@ public class Reports {
 	}
 
 	// Returns of the percentage usage of a particular bed with in certain time  
-	public Double bedUsageTimePeriod(String startDate, String endDate, Integer bedId) {
+	public static Double bedUsageTimePeriod(String startDate, String endDate, Integer bedId) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -110,7 +110,7 @@ public class Reports {
 	
 	
 	// Returns the percentage usage of a particular bed for the present day
-	public Double currentBedUsage(Integer bedId) {
+	public static Double currentBedUsage(Integer bedId) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -128,7 +128,7 @@ public class Reports {
 	}
 	
 	// Returns the percentage usage of particular ward for the given time period
-	public Double wardUsageTimePeriod(String startDate, String endDate, Integer wardId) {
+	public static Double wardUsageTimePeriod(String startDate, String endDate, Integer wardId) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -146,7 +146,7 @@ public class Reports {
 	
 	
 	// Returns the percentage usage of a particular ward for the present day
-	public Double currentWardUsage(Integer wardId) {
+	public static Double currentWardUsage(Integer wardId) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -164,7 +164,7 @@ public class Reports {
 	}
 	
 	//Returns the number of Patients for a given time period
-	public Integer noOfPatientsTimePeriod(String startDate, String endDate) {
+	public static Integer noOfPatientsTimePeriod(String startDate, String endDate) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -178,7 +178,7 @@ public class Reports {
 	}
 	
 	//Returns the patient information for which a doctor is responsible
-	public ArrayList<Patient> getPatientsForResponsibleDoc(Integer responsibleDoc) {
+	public static ArrayList<Patient> getPatientsForResponsibleDoc(Integer responsibleDoc) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
@@ -201,7 +201,7 @@ public class Reports {
 	}
 	
 	//Returns the information of the staff with respect to a job title 
-	public ArrayList<Staff> getStaffByJobtitle(String jobTitle) {
+	public static ArrayList<Staff> getStaffByJobtitle(String jobTitle) {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();

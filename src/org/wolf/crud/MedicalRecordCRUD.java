@@ -38,7 +38,7 @@ public final class MedicalRecordCRUD {
 		    return recordList;
 		    
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 	}
@@ -67,7 +67,7 @@ public final class MedicalRecordCRUD {
 		    return mr;
 		    
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 	}
@@ -98,7 +98,7 @@ public final class MedicalRecordCRUD {
 		    return recordList;
 		    
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 	}
@@ -129,7 +129,7 @@ public final class MedicalRecordCRUD {
 		    return recordList;
 		    
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 		
@@ -172,7 +172,7 @@ public final class MedicalRecordCRUD {
 		    return record_id;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 	}
@@ -210,7 +210,7 @@ public final class MedicalRecordCRUD {
 		    
 		    return true;
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}
@@ -229,7 +229,7 @@ public final class MedicalRecordCRUD {
 		    
 		    return true;
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}
@@ -253,7 +253,7 @@ public final class MedicalRecordCRUD {
 		    return true;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 		

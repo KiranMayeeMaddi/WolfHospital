@@ -205,7 +205,7 @@ public class PatientCRUD {
 		    return patient_id;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return null;
 	    }
 	}
@@ -243,7 +243,7 @@ public class PatientCRUD {
 			return true;
 		}
 		catch(SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -262,7 +262,7 @@ public class PatientCRUD {
 		    
 		    return true;
 	    } catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}

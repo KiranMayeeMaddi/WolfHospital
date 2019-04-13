@@ -17,7 +17,8 @@ public class Main {
 			System.out.println("5.End Medical Record");
 			System.out.println("6.Pay");
 			System.out.println("7.Basic Operations");
-			System.out.println("8.Exit");
+			System.out.println("8.Reports");
+			System.out.println("9.Exit");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				String choice = reader.readLine();
@@ -36,7 +37,9 @@ public class Main {
 				break;
 				case "7": BasicOperation.basicOperations(reader);
 				break;
-				case "8": System.out.println("Bye");
+				case "8": ReportsUI.operations(reader);
+				break;
+				case "9": System.out.println("Bye");
 				return;
 				default: System.out.println("Please enter a valid choice");
 				}

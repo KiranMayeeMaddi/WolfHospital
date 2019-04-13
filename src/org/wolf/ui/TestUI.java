@@ -52,16 +52,16 @@ public class TestUI {
 			specialized_doctor = Integer.parseInt(args[3]);
 			fees = Double.parseDouble(args[4]);
 			if(TestCRUD.updateTest(test_id, test_name, lab_name, specialized_doctor, fees)){
-				
+				System.out.println("Test Record Updated Successfully");
 			} else{
-				
+				System.out.println("Operation Failed");
 			}
 			break;
 		case "5":
 			System.out.println("Enter test_id");
 			test_id = Integer.parseInt(reader.readLine());
 			if(TestCRUD.deleteTest(test_id)){
-				System.out.println("Operation Successful");
+				System.out.println("Test Record Deleted Successfully");
 			} else{
 				System.out.println("Operation Failed");
 			}

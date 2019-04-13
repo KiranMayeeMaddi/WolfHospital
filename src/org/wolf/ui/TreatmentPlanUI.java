@@ -41,7 +41,7 @@ public class TreatmentPlanUI {
 			id = Integer.parseInt(args[0]);
 			plan = args[1];
 			if(TreatmentPlanCRUD.updateTreatmentPlan(id, plan)){
-				System.out.println("Operation Successful");
+				System.out.println("Record updated Successfully");
 			} else{
 				System.out.println("Operation Failed");
 			}
@@ -50,7 +50,7 @@ public class TreatmentPlanUI {
 			System.out.println("Enter treatmentId");
 			id = Integer.parseInt(reader.readLine());
 			if(TreatmentPlanCRUD.deleteTreatmentPlan(id)){
-				System.out.println("Operation Successful");
+				System.out.println("Record deleted Successfully");
 			} else{
 				System.out.println("Operation Failed");
 			}

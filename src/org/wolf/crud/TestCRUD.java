@@ -18,7 +18,7 @@ import org.wolf.config.DatabaseConnection;
  * 1. Viewing the Test table
  * 2. Viewing the Test table with respect to a given Test Id 
  * 3. Inserting values into the table
- * 4. Changing the already existing records
+ * 4. Updating the already existing records
  * 5. Deleting the existing record
  */
 
@@ -125,7 +125,7 @@ public final class TestCRUD {
 	
 	
 	/**
-	 * updateTest function allows to update the any value in the available record
+	 * updateTest function allows to update any value in the available record
 	 * @param test_id
 	 * @param test_name
 	 * @param lab_name

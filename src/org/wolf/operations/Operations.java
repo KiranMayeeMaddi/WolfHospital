@@ -110,6 +110,18 @@ public class Operations {
 		}
 	}
 	
+	/**
+	 * This function creates a medical record and also creates a corresponding bill for it
+	 * @param patient_id - The patient should exist from before
+	 * @param start_date
+	 * @param diagnosis
+	 * @param prescription
+	 * @param responsible_doctor
+	 * @param process_treatment_plan
+	 * @param reg_fee - initial registration fee
+	 * @param medical_fee - initial medical  fee
+	 * @return true when treatment is created successfully else false
+	 */
 	public static Boolean createTreatment(Integer patient_id, String start_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan, Double reg_fee, Double medical_fee){
 		String endDate = null;
 		String payment_status = "N";

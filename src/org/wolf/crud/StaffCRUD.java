@@ -57,7 +57,7 @@ public class StaffCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
 
-		    ResultSet rs = st.executeQuery("SELECT * FROM staff");
+		    ResultSet rs = st.executeQuery("SELECT * FROM Staff");
 		    ArrayList<Staff> sList = new ArrayList<Staff>();
 		    
 		    while(rs.next()) {

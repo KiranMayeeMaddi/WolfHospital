@@ -57,7 +57,7 @@ public final class BillingAccountCRUD {
 			return bills;
 		}
 		catch (SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -101,7 +101,7 @@ public final class BillingAccountCRUD {
 			return b;
 		}
 		catch (SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -145,7 +145,7 @@ public final class BillingAccountCRUD {
 			return b;
 		}
 		catch (SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return null;
 		}	
 	}
@@ -191,7 +191,7 @@ public final class BillingAccountCRUD {
 			return bills;
 		}
 		catch (SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -237,7 +237,7 @@ public final class BillingAccountCRUD {
 			return bills;
 		}
 		catch (SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -330,7 +330,7 @@ public final class BillingAccountCRUD {
 		    return true;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}
@@ -363,7 +363,7 @@ public final class BillingAccountCRUD {
 		    return true;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}
@@ -413,7 +413,7 @@ public final class BillingAccountCRUD {
 		    return true;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}

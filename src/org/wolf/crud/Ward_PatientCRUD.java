@@ -10,6 +10,9 @@ import org.wolf.config.DatabaseConnection;
 
 public final class Ward_PatientCRUD {
 	
+	/**
+	 * @return array list of all records in ward_patient_checks_in table
+	 */
 	public static ArrayList<Ward_Patient> viewWardPatients(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -36,6 +39,11 @@ public final class Ward_PatientCRUD {
 		}
 	} 
 	
+	/**
+	 * @param Integer checkinId
+	 * @return return the record for the associated checkin id
+	 * @throws SQLException
+	 */
 	public static Ward_Patient viewWardPatients(Integer checkinId) throws SQLException{
 		Connection conn = DatabaseConnection.getConnection();
 		Statement st = conn.createStatement();
@@ -54,6 +62,14 @@ public final class Ward_PatientCRUD {
 	} 
 	
 	//Returns check-in ID
+	/**
+	 * @param Integer patient_id
+	 * @param Integer ward_id
+	 * @param Integer bed_id
+	 * @param String end_time
+	 * @return recently inserted check_in id 
+	 * @throws SQLException
+	 */
 	public static Integer insertWardPatient(Integer patient_id, Integer ward_id, Integer bed_id, String end_time) throws SQLException {
 		//Put the start time as the current  timestamp
 		Connection conn = DatabaseConnection.getConnection();
@@ -82,6 +98,15 @@ public final class Ward_PatientCRUD {
 	    return shift_id;
 	}
 	
+	/**
+	 * @param Integer checkin_id
+	 * @param Integer patient_id
+	 * @param Integer ward_id
+	 * @param Integer bed_id
+	 * @param String start_time
+	 * @param String end_time
+	 * @return true if the update was successful else false
+	 */
 	public static Boolean updateWardPatient(Integer checkin_id, Integer patient_id, Integer ward_id, Integer bed_id, String start_time, String end_time){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -94,18 +119,23 @@ public final class Ward_PatientCRUD {
 		    if(end_time.isEmpty())
 				st.setNull(5, java.sql.Types.VARCHAR);
 			else 
-				st.setString(4, end_time);
+				st.setString(5, end_time);
 		    st.setInt(6, checkin_id);
 		    st.executeUpdate();
 		    
 		    return true;
 	    }
 	    catch (SQLException ex) {
-	    	System.err.println(ex.getMessage());
+	    	ex.printStackTrace();
 	    	return false;
 	    }
 	}
 	
+	/**
+	 * @param Integer checkin_id
+	 * @return true if update was successful else false
+	 * @throws SQLException
+	 */
 	public static Boolean updateWardEndtime(Integer checkin_id) throws SQLException {
 		//Put the current time stamp as end_time
 		
@@ -125,6 +155,10 @@ public final class Ward_PatientCRUD {
 		return true;
 	}
 	
+	/**
+	 * @param Integer checkinId
+	 * @return true if deleted successfully else false
+	 */
 	public static Boolean deleteWardPatient(Integer checkinId){
 		try {
 			Connection conn = DatabaseConnection.getConnection();

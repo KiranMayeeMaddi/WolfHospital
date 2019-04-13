@@ -6,8 +6,14 @@ import java.util.ArrayList;
 import org.wolf.baseclasses.Ward_Nurse;
 import org.wolf.config.DatabaseConnection;
 
+
 public class Ward_NurseCRUD {
 
+	/**
+	 * viewShift function displays all the ward ans nurse details
+	 * @return all the shifts
+	 */
+	
 	public static ArrayList<Ward_Nurse> viewShifts(){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
@@ -22,7 +28,6 @@ public class Ward_NurseCRUD {
 				w.setStaffId(rs.getInt("staff_id"));
 				w.setStart_time(rs.getString("start_time"));
 				w.setWardId(rs.getInt("ward_id"));
-
 				shifts.add(w);
 			}
 			return shifts;
@@ -31,7 +36,15 @@ public class Ward_NurseCRUD {
 			System.err.println(e.getMessage());
 			return null;
 		}
-	}
+	}//viewShifts
+	
+	
+	
+	/**
+	 * viewShift function displays all the ward and nurse details for a particular shift id
+	 * @param shiftId
+	 * @return the details of the ward and nurse for a particular shift id
+	 */
 	
 	public static Ward_Nurse viewShift(Integer shiftId){
 		try {
@@ -53,7 +66,18 @@ public class Ward_NurseCRUD {
 			System.err.println(e.getMessage());
 			return null;
 		}
-	}
+	}//viewShift using shift id
+	
+	
+	
+	/**
+	 * insertWardNurse function inserts the details of the nurse for a particular ward
+	 * @param wardId
+	 * @param staffId
+	 * @param start_time
+	 * @param end_time
+	 * @return shift_id
+	 */
 	
 	public static Integer insertWardNurse(Integer wardId, Integer staffId, String start_time, String end_time){
 		try {
@@ -78,7 +102,19 @@ public class Ward_NurseCRUD {
 	    	System.err.println(ex.getMessage());
 	    	return null;
 	    }
-	}
+	}//insertWardInsert
+	
+	
+	
+	/**
+	 * updateWardNurse function can update values of already available record
+	 * @param shiftId
+	 * @param wardId
+	 * @param staffId
+	 * @param start_time
+	 * @param end_time
+	 * @return status of update
+	 */
 	
 	public static Boolean updateWardNurse(Integer shiftId, Integer wardId, Integer staffId, String start_time, String end_time){
 		try {
@@ -98,7 +134,15 @@ public class Ward_NurseCRUD {
 	    	System.err.println(ex.getMessage());
 	    	return false;
 	    }
-	}
+	}//updateWardNurse
+	
+	
+	
+	/**
+	 * deleteWardNurse function deletes the nurse association with a ward
+	 * @param shiftId
+	 * @return status of deletion
+	 */
 	
 	public static Boolean deleteWardNurse(Integer shiftId){
 		try {
@@ -113,5 +157,5 @@ public class Ward_NurseCRUD {
 	    	System.err.println(ex.getMessage());
 	    	return false;
 	    }
-	}
+	}//deleteWardNurse
 }

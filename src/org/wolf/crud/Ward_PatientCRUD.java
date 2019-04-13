@@ -70,7 +70,7 @@ public final class Ward_PatientCRUD {
 	 * @return recently inserted check_in id 
 	 * @throws SQLException
 	 */
-	public static Integer insertWardPatient(Integer patient_id, Integer ward_id, Integer bed_id, String end_time) throws SQLException {
+	public static Integer insertWardPatient(Integer patient_id, String end_time, Integer ward_id, Integer bed_id) throws SQLException {
 		//Put the start time as the current  timestamp
 		Connection conn = DatabaseConnection.getConnection();
 			
@@ -78,17 +78,17 @@ public final class Ward_PatientCRUD {
 			//LocalDateTime localDate = LocalDateTime.now();
 			//String start_time = dtf.format(localDate);
 			
-		String query = "insert into Ward_Patient_checks_In (patient_id, ward_id, bed_id, start_time, end_time)"
-				+ " values (?,?,?,NOW(),?)";
+		String query = "insert into Ward_Patient_checks_In (patient_id, end_time, start_time, ward_id, bed_id)"
+				+ " values (?,?,NOW(),?,?)";
 		PreparedStatement st = conn.prepareStatement(query);
 		st.setInt(1, patient_id);
-		st.setInt(2, ward_id);
-		st.setInt(3, bed_id);
-		//st.setString(4, start_time);
 		if(end_time.isEmpty())
-			st.setNull(5, java.sql.Types.VARCHAR);
+			st.setNull(2, java.sql.Types.VARCHAR);
 		else 
-			st.setString(4, end_time);
+			st.setString(2, end_time);
+		st.setInt(3, ward_id);
+		st.setInt(4, bed_id);
+		//st.setString(4, start_time);
 		st.executeUpdate();
 			
 		ResultSet rs = st.executeQuery("select checkin_id from Ward_Patient_checks_In order by checkin_id desc limit 1");

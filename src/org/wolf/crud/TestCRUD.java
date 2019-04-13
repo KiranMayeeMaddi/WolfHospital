@@ -131,7 +131,7 @@ public final class TestCRUD {
 	 * @param lab_name
 	 * @param specialized_doctor
 	 * @param fees
-	 * @return
+	 * @return status of update
 	 */
 	
 	public static Boolean updateTest(Integer test_id, String test_name, String lab_name, Integer specialized_doctor, Double fees){
@@ -153,7 +153,7 @@ public final class TestCRUD {
 	/**
 	 * deleteTest function allows to delete the record with respect to id
 	 * @param test_id
-	 * @return
+	 * @return status of deletion
 	 */
 	
 	public static Boolean deleteTest(Integer test_id){

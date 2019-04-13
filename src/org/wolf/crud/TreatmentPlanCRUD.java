@@ -23,7 +23,7 @@ public class TreatmentPlanCRUD {
 	/**
 	 * getAllTreatmentPlans function displays all the records of the treatment plans available
 	 * It displays details of id, plan
-	 * @return
+	 * @return all the treatment plans
 	 */
 	
 	public static ArrayList<TreatmentPlan> getAllTreatmentPlans(){
@@ -54,7 +54,7 @@ public class TreatmentPlanCRUD {
 	 * getAllTreatmentPlan(id) function displays all the records of the treatment plans with respect to id
 	 * It displays details of id, plan
 	 * @param id
-	 * @return
+	 * @return treatmentPlan
 	 */
 	
 	public static TreatmentPlan getTreatmentPlan(Integer id){
@@ -81,7 +81,7 @@ public class TreatmentPlanCRUD {
 	/**
 	 * insertTreatmentPlan function allows to insert record to the Treatment table
 	 * @param plan
-	 * @return
+	 * @return id
 	 */
 	
 	public static Integer insertTreatmentPlan(String plan){
@@ -110,7 +110,7 @@ public class TreatmentPlanCRUD {
 	 * updateTreatmentPlan function allows to update any value in the available record
 	 * @param id
 	 * @param plan
-	 * @return
+	 * @return status of update
 	 */
 	
 	public static Boolean updateTreatmentPlan(Integer id, String plan){
@@ -133,7 +133,7 @@ public class TreatmentPlanCRUD {
 	/**
 	 * deleteTreatmentPlan function allows to delete the record with respect to id
 	 * @param id
-	 * @return
+	 * @return status of deletion
 	 */
 	
 	public static Boolean deleteTreatmentPlan(Integer id){

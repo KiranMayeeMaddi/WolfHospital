@@ -33,8 +33,8 @@ public class Operations {
 			// set autoCommit to false to make sure no commit happens in case of SQLException
 			conn.setAutoCommit(false);
 			
-			String end_time = null;
-			Integer checkinId = Ward_PatientCRUD.insertWardPatient(patientId, ward_id, bed_id, end_time);
+			String end_time = "";
+			Integer checkinId = Ward_PatientCRUD.insertWardPatient(patientId, end_time, ward_id, bed_id);
 			WardCRUD.occupyBed(ward_id, bed_id);
 			System.out.println("The new checkin Id is "+ checkinId);
 			

@@ -27,7 +27,7 @@ public final class WardCRUD {
 		    String out = "";
 
 		    ResultSet rs = st.executeQuery("SELECT Ward.ward_id, capacity, charges_per_day, GROUP_CONCAT(patient_id) AS patients FROM Ward "
-		    		+ "LEFT JOIN Ward_Patient_Checks_In ON Ward.ward_id = Ward_Patient_Checks_In.ward_id WHERE Ward.ward_id = "+ward_id+" GROUP BY Ward.ward_id ");
+		    		+ "LEFT JOIN Ward_Patient_checks_In ON Ward.ward_id = Ward_Patient_checks_In.ward_id WHERE Ward.ward_id = "+ward_id+" GROUP BY Ward.ward_id ");
 		    if(rs.isBeforeFirst()) {
 			    while(rs.next()) {
 			    	out += "ward_id = " + rs.getInt("ward_id");
@@ -62,7 +62,7 @@ public final class WardCRUD {
 		    String out = null;
 		    
 		    ResultSet rs = st.executeQuery("SELECT Ward.ward_id, capacity, charges_per_day, GROUP_CONCAT(patient_id) AS patients FROM Ward "
-		    		+ "LEFT JOIN Ward_Patient_Checks_In ON Ward.ward_id = Ward_Patient_Checks_In.ward_id  GROUP BY Ward.ward_id ");
+		    		+ "LEFT JOIN Ward_Patient_checks_In ON Ward.ward_id = Ward_Patient_checks_In.ward_id  GROUP BY Ward.ward_id ");
 		    while(rs.next()) {
 		    	out = "";
 		    	out += "ward_id = " + rs.getInt("ward_id");
@@ -416,8 +416,8 @@ public final class WardCRUD {
 	    Double charges_per_day = 0.0;
 	    ResultSet rs = st.executeQuery("SELECT DATEDIFF(A.et, A.start_time) + 1 as stay_days, A.charges_per_day "
 	    		+ "FROM ( SELECT CASE  WHEN end_time IS NULL THEN NOW() ELSE end_time END as et, end_time, start_time, charges_per_day "
-	    		+ "FROM Ward_Patient_Checks_In "
-	    		+ "INNER JOIN Ward ON Ward_Patient_Checks_In.ward_id = Ward.ward_id "
+	    		+ "FROM Ward_Patient_checks_In "
+	    		+ "INNER JOIN Ward ON Ward_Patient_checks_In.ward_id = Ward.ward_id "
 	    		+ "WHERE checkin_id = " + checkinId + ") A");
 	    while(rs.next()) {
 	    	stay_days = rs.getInt("stay_days");
@@ -440,7 +440,7 @@ public final class WardCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
-		    st.executeUpdate("INSERT INTO Ward_Patient_Checks_In(patient_id, ward_id, bed_id, start_time, end_time) "
+		    st.executeUpdate("INSERT INTO Ward_Patient_checks_In(patient_id, ward_id, bed_id, start_time, end_time) "
 		    		+ "VALUES("+patientId+", "+ward_id+","+bed_id+",NOW(),'"+endTime+"')");
 		    
 		    st.executeUpdate("UPDATE Bed SET is_available = 'N' WHERE ward_id = " + ward_id + " AND bed_id =" + bed_id );

@@ -1,4 +1,4 @@
-	package org.wolf.operations;
+package org.wolf.operations;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,10 +20,21 @@ import org.wolf.crud.Ward_PatientCRUD;
 
 public class Operations {
 
-	//Return true if successful else false
+	//
 	//Assuming the bed availability has been checked
 	//Add the patient info in ward_patient checkin table
 	//Update the availability of the Bed
+	/**
+	 * Assuming the bed availability has been checked
+	 * Adds the patient info in ward_patient checkin table - to signify that the patient has checked in
+	 * Update the availability of the Bed, since he/she have occupied them
+	 * @param patientId
+	 * @param ward_id
+	 * @param bed_id
+	 * @returnReturn true if successful else false
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public static Boolean checkInPatient(Integer patientId, Integer ward_id,Integer bed_id) throws SQLException,Exception{
 		Connection conn = null;
 		try {
@@ -62,6 +73,16 @@ public class Operations {
 		}
 	}
 	
+	/**
+	 * Checks out a patient from a ward by  performing the following
+	 * Update the record in the Ward_patient Checks in table, by setting its end tiem to the current timestamp
+	 * Releases the bed, which was occupied by the patient
+	 * Gets the latest unpaid bill for the patient and adds the accommodation fee to the bill based on the time he was checked in
+	 * @param checkinId
+	 * @return
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public static Boolean checkoutPatient(Integer checkinId) throws SQLException, Exception{
 		Connection conn = null;
 		try {

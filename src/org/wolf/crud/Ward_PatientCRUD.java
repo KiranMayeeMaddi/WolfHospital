@@ -86,7 +86,7 @@ public final class Ward_PatientCRUD {
 		
 		// check whether this patient is already checked in
 		Statement ps = conn.createStatement();
-		ResultSet r = ps.executeQuery("select * from Ward_Patient_checks_in where patient_id="+patient_id+" and (end_time is null or NOW()<end_time)");
+		ResultSet r = ps.executeQuery("select * from Ward_Patient_checks_In where patient_id="+patient_id+" and (end_time is null or NOW()<end_time)");
 		if (r.next()) {
 			System.out.println("Patient is already checked in");
 			return null;

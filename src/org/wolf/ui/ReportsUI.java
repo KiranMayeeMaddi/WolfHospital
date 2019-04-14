@@ -81,18 +81,19 @@ public class ReportsUI {
 			System.out.println(Reports.currentWardUsageById(wardId));
 			break;
 		case "9":
+			System.out.println("Enter | separated startDate, endDate");
 			args = reader.readLine().split("[|]");
 			startDate = args[0];
 			endDate = args[1];
 			System.out.println(Reports.noOfPatientsTimePeriod(startDate, endDate));
 			break;
 		case "10":
+			System.out.println("Enter doctor id");
 			responsibleDoc = Integer.parseInt(reader.readLine());
 			Reports.getPatientsForResponsibleDoc(responsibleDoc).forEach(System.out::println);
 			break;
 		case "11":
-			jobTitle = reader.readLine();
-			Reports.getStaffByJobtitle(jobTitle).forEach(System.out::println);
+			Reports.getStaffByJobtitle().forEach(System.out::println);
 			break;
 		case "12":
 			return;

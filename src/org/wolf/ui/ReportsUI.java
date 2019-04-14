@@ -33,7 +33,7 @@ public class ReportsUI {
 		case "1":
 			System.out.println("Enter patientId");
 			patientId = Integer.parseInt(reader.readLine());
-			Reports.patientMedicalHistory(patientId);
+			Reports.patientMedicalHistory(patientId).forEach(System.out::println);
 			break;
 		case "2":
 			System.out.println("Enter | separated patientId, startTime, endTime");
@@ -41,7 +41,7 @@ public class ReportsUI {
 			patientId = Integer.parseInt(args[0]);
 			startTime = args[1];
 			endTime = args[2];
-			Reports.patientMedicalHistoryTimePeriod(patientId, startTime, endTime);
+			Reports.patientMedicalHistoryTimePeriod(patientId, startTime, endTime).forEach(System.out::println);
 			break;
 		case "3":
 			System.out.println("Enter | separated startDate, endDate, bedId");
@@ -49,12 +49,12 @@ public class ReportsUI {
 			startDate = args[0];
 			endDate = args[1];
 			bedId = Integer.parseInt(args[2]);
-			Reports.bedUsageTimePeriod(startDate, endDate, bedId);
+			System.out.println(Reports.bedUsageTimePeriod(startDate, endDate, bedId));
 			break;
 		case "4":
 			System.out.println("Enter bedId");
 			bedId = Integer.parseInt(reader.readLine());
-			Reports.currentBedUsage(bedId);
+			System.out.println(Reports.currentBedUsage(bedId));
 			break;
 		case "5":
 			System.out.println("Enter | separated startDate, endDate, wardId");
@@ -62,25 +62,25 @@ public class ReportsUI {
 			startDate = args[0];
 			endDate = args[1];
 			wardId = Integer.parseInt(args[2]);
-			Reports.wardUsageTimePeriod(startDate, endDate, wardId);
+			System.out.println(Reports.wardUsageTimePeriod(startDate, endDate, wardId));
 			break;
 		case "6":
 			wardId = Integer.parseInt(reader.readLine());
-			Reports.currentWardUsage(wardId);
+			System.out.println(Reports.currentWardUsage(wardId));
 			break;
 		case "7":
 			args = reader.readLine().split("[|]");
 			startDate = args[0];
 			endDate = args[1];
-			Reports.noOfPatientsTimePeriod(startDate, endDate);
+			System.out.println(Reports.noOfPatientsTimePeriod(startDate, endDate));
 			break;
 		case "8":
 			responsibleDoc = Integer.parseInt(reader.readLine());
-			Reports.getPatientsForResponsibleDoc(responsibleDoc);
+			Reports.getPatientsForResponsibleDoc(responsibleDoc).forEach(System.out::println);
 			break;
 		case "9":
 			jobTitle = reader.readLine();
-			Reports.getStaffByJobtitle(jobTitle);
+			Reports.getStaffByJobtitle(jobTitle).forEach(System.out::println);
 			break;
 		case "10":
 			return;

@@ -29,8 +29,8 @@ public class WardUI {
 		System.out.println("14.reserveBed");
 		
 		System.out.println("15.calculateAccomCharges");
-		
-		System.out.println("16.Exit");
+		System.out.println("16.isBedAvailable");
+		System.out.println("17.Exit");
 		
 		String input = reader.readLine();
 		
@@ -160,6 +160,13 @@ public class WardUI {
 			
 			break;
 		case "16":
+			System.out.println("Enter | separated ward_id and bed_id");
+			args = reader.readLine().split("[|]");
+			ward_id = Integer.parseInt(args[0]);
+			bed_id = Integer.parseInt(args[1]);
+			System.out.println(WardCRUD.isBedAvailable(ward_id, bed_id));
+			break;
+		case "17":
 			break;
 		default: System.out.println("Please enter correct input");
 		}

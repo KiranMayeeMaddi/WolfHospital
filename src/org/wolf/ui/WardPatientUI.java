@@ -39,21 +39,21 @@ public class WardPatientUI {
 			System.out.println("Enter patient_id, end_time, ward_id, bed_id separated by |");
 			args = reader.readLine().split("[|]");
 			patient_id = Integer.parseInt(args[0]);
-			end_time = args[2];
-			ward_id = Integer.parseInt(args[3]);
-			bed_id = Integer.parseInt(args[4]);
+			end_time = args[1];
+			ward_id = Integer.parseInt(args[2]);
+			bed_id = Integer.parseInt(args[3]);
 			System.out.println("New checkinId is");
 			System.out.println(Ward_PatientCRUD.insertWardPatient(patient_id, end_time, ward_id, bed_id));
 			break;
 		case "4":
-			System.out.println("Enter checkinId, patient_id, ward_id, bed_id, start_time, end_time separated by |");
+			System.out.println("Enter checkinId, patient_id, start_time, end_time, ward_id, bed_id separated by |");
 			args = reader.readLine().split("[|]");
 			checkin_id = Integer.parseInt(args[0]);
 			patient_id = Integer.parseInt(args[1]);
-			ward_id = Integer.parseInt(args[2]);
-			bed_id = Integer.parseInt(args[3]);
-			start_time= args[4];
-			end_time = args[5];
+			start_time= args[2];
+			end_time = args[3];
+			ward_id = Integer.parseInt(args[4]);
+			bed_id = Integer.parseInt(args[5]);
 			if(Ward_PatientCRUD.updateWardPatient(checkin_id, patient_id, ward_id, bed_id, start_time, end_time)){
 				System.out.println("Operation Successful");
 			} else{

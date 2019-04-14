@@ -71,6 +71,13 @@ public final class Ward_PatientCRUD {
 	 * @throws SQLException
 	 */
 	public static Integer insertWardPatient(Integer patient_id, String end_time, Integer ward_id, Integer bed_id) throws SQLException {
+		// checks whether the bed is available or not
+		if (!WardCRUD.isBedAvailable(ward_id, bed_id)) {
+			System.out.println("This bed is not available");
+			return null;
+		}
+		WardCRUD.occupyBed(ward_id, bed_id);
+		
 		//Put the start time as the current  timestamp
 		Connection conn = DatabaseConnection.getConnection();
 			
@@ -110,8 +117,25 @@ public final class Ward_PatientCRUD {
 	public static Boolean updateWardPatient(Integer checkin_id, Integer patient_id, Integer ward_id, Integer bed_id, String start_time, String end_time){
 		try {
 			Connection conn = DatabaseConnection.getConnection();
+			
+			// check if the bed_id and ward_id is being updated and if it is, then check whether that bed is occupied or not
+			Statement bs = conn.createStatement();
+			ResultSet rs = bs.executeQuery("Select ward_id, bed_id from Ward_Patient_checks_In where checkin_id="+checkin_id);
+			Integer bed_id_old = -1;
+			Integer ward_id_old = -1;
+			while (rs.next()) {
+				ward_id_old = rs.getInt("ward_id");
+				bed_id_old = rs.getInt("bed_id");
+			}
+			if (ward_id_old!=ward_id || bed_id_old!=bed_id) {
+				if (!WardCRUD.isBedAvailable(ward_id, bed_id)) {
+					System.out.println("This bed is not available");
+					return false;
+				}
+			}
+			
 			String query = "UPDATE Ward_Patient_checks_In SET patient_id=?, ward_id=?, bed_id=?, start_time=?, end_time=? where checkin_id=?";
-		    PreparedStatement st = conn.prepareStatement(query);
+			PreparedStatement st = conn.prepareStatement(query);
 		    st.setInt(1, patient_id);
 		    st.setInt(2, ward_id);
 		    st.setInt(3, bed_id);
@@ -164,7 +188,16 @@ public final class Ward_PatientCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
+		    ResultSet rs = st.executeQuery("select ward_id, bed_id from Ward_Patient_checks_In where checkin_id="+checkinId);
+		    Integer ward_id = -1;
+		    Integer bed_id = -1;
+		    while(rs.next()) {
+		    	ward_id = rs.getInt("ward_id");
+		    	bed_id = rs.getInt("bed_id");
+		    }
+		    
 		    st.executeUpdate("DELETE FROM Ward_Patient_checks_In WHERE checkin_id= " + checkinId);
+		    WardCRUD.releaseBed(ward_id, bed_id);
 		    
 		    return true;
 	    }

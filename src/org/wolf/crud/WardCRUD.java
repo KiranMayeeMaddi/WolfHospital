@@ -137,6 +137,27 @@ public final class WardCRUD {
 	    }
 	}
 	
+	public static Boolean isBedAvailable(Integer ward_id, Integer bed_id) {
+		try {
+			Connection conn = DatabaseConnection.getConnection();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("select is_available from Bed where bed_id="+bed_id+" and ward_id="+ward_id);
+			
+			String available = "";
+			while (rs.next())
+				available = rs.getString("is_available");
+			
+			if (available.equals("Y"))
+				return true;
+			else
+				return false;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	// List of info of all available beds
 	/**
 	 * @return Array list of available Beds from Bed table where is_avaialable is 'Y'

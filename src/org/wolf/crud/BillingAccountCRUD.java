@@ -290,9 +290,10 @@ public final class BillingAccountCRUD {
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery("select * from BillingAccounts where patient_id="+patientId
 					+ " and payment_status='N' order by bill_id desc limit 1");
-			BillingAccount b = new BillingAccount();
+			BillingAccount b = null;
 			
 			while (rs.next()) {
+				b = new BillingAccount();
 				b.setAccom_fee(rs.getDouble("accom_fee"));
 				b.setBill_id(rs.getInt("bill_id"));
 				b.setMedical_fee(rs.getDouble("medical_fee"));
@@ -308,9 +309,9 @@ public final class BillingAccountCRUD {
 	 * @param recordID
 	 * @param fee
 	 * @return Add fee to the current medical fee in BillingAccount table
+	 * @throws SQLException 
 	 */
-	public static Boolean updateMedicalFee(Integer recordID, Double fee){
-		try {
+	public static Boolean updateMedicalFee(Integer recordID, Double fee) throws SQLException{
 			Connection conn = DatabaseConnection.getConnection();
 			Statement ms = conn.createStatement();
 			ResultSet rs = ms.executeQuery("Select medical_fee from BillingAccounts where record_id="+recordID);
@@ -328,11 +329,6 @@ public final class BillingAccountCRUD {
 		    st.executeUpdate();
 		    
 		    return true;
-	    }
-	    catch (SQLException ex) {
-	    	ex.printStackTrace();
-	    	return false;
-	    }
 	}
 	
 	/**
@@ -344,9 +340,9 @@ public final class BillingAccountCRUD {
 	 * @param accom_fee
 	 * @param medical_fee
 	 * @return true if successful else false
+	 * @throws SQLException 
 	 */
-	public static Boolean insertBillingAccount(Integer patient_id, Integer record_id,String payment_status, Double reg_fee, Double accom_fee, Double medical_fee){
-		try {
+	public static Boolean insertBillingAccount(Integer patient_id, Integer record_id,String payment_status, Double reg_fee, Double accom_fee, Double medical_fee) throws SQLException{
 			Connection conn = DatabaseConnection.getConnection();
 			
 			String query = "insert into BillingAccounts (patient_id, record_id, payment_status, reg_fee, accom_fee, medical_fee)"
@@ -361,11 +357,6 @@ public final class BillingAccountCRUD {
 			
 		    st.executeUpdate();
 		    return true;
-	    }
-	    catch (SQLException ex) {
-	    	ex.printStackTrace();
-	    	return false;
-	    }
 	}
 	
 	/**

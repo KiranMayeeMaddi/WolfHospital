@@ -31,7 +31,7 @@ public class Main {
 				break;
 				case "4": Menu_Layer1.createTreatment(reader);
 				break;
-				case "5": Menu_Layer1.createTreatment(reader);
+				case "5": Menu_Layer1.endTreatment(reader);
 				break;
 				case "6": Menu_Layer1.pay(reader);
 				break;

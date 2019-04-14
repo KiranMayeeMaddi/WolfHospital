@@ -103,6 +103,38 @@ public final class MedicalRecordCRUD {
 	    }
 	}
 	
+	
+	/**
+	 * @param patientId
+	 * @return All the medical records information for a given patient where end date is null
+	 */
+	public static ArrayList<MedicalRecord> getMedicalRecordsForPatientEndDateNull(Integer patientId){
+		try {
+			Connection conn = DatabaseConnection.getConnection();
+		    Statement st = conn.createStatement();
+
+		    ResultSet rs = st.executeQuery("SELECT * FROM MedicalRecords WHERE end_date is NULL and patient_id =" + patientId);
+		    
+		    ArrayList <MedicalRecord> recordList = new ArrayList <> ();
+		    MedicalRecord mr = null;
+		    while(rs.next()) {
+		    	
+		    	mr = new MedicalRecord(rs.getInt("record_id"), rs.getInt("patient_id"), rs.getString("start_date"), rs.getString("end_date"), 
+		    			rs.getString("diagnosis"), rs.getString("prescription"), rs.getInt("responsible_doctor"), rs.getInt("process_treatment_plan"));
+				
+		    	recordList.add(mr);
+		    }
+		    if(recordList.size()==0){
+		    	System.out.println("No active medical records");
+		    }
+		    return recordList;
+		    
+	    } catch (SQLException ex) {
+	    	ex.printStackTrace();
+	    	return null;
+	    }
+	}
+	
 	/**
 	 * @param doctor_id
 	 * @return All the medical records information for a given responsible doctor Id
@@ -145,19 +177,21 @@ public final class MedicalRecordCRUD {
 	 * @param responsible_doctor
 	 * @param process_treatment_plan
 	 * @return latest auto generated id for medical record
+	 * @throws SQLException 
 	 */
-	public static Integer insertMedicalRecord(Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan){
-		try {
+	public static Integer insertMedicalRecord(Integer patient_id, String start_date,String end_date, String diagnosis, String prescription, Integer responsible_doctor, Integer process_treatment_plan) throws SQLException{
+		
 			Connection conn = DatabaseConnection.getConnection();
 			
 			String query = "insert into MedicalRecords (patient_id, start_date, end_date, diagnosis, prescription, responsible_doctor, process_treatment_plan)"
 					+ " values (?,NOW(),?,?,?,?,?)";
 			PreparedStatement st = conn.prepareStatement(query);
 			st.setInt(1, patient_id);
-			if (end_date.isEmpty())
+			if (end_date == null || end_date.isEmpty())
 				st.setNull(2, java.sql.Types.VARCHAR);
 			else
 				st.setString(2, end_date);
+			
 			st.setString(3, diagnosis);
 			st.setString(4, prescription);
 			st.setInt(5, responsible_doctor);
@@ -167,14 +201,12 @@ public final class MedicalRecordCRUD {
 		    
 		    ResultSet rs = st.executeQuery("select record_id from MedicalRecords order by record_id desc limit 1");
 			int record_id = 0;
-		    while (rs.next())
+		    while (rs.next()){
 		    	record_id = rs.getInt("record_id");
+		    	System.out.println("The medical Record Id is = "+record_id);
+		    }
+		    	
 		    return record_id;
-	    }
-	    catch (SQLException ex) {
-	    	ex.printStackTrace();
-	    	return null;
-	    }
 	}
 	
 	/**Updates a medical record with the given data
@@ -196,7 +228,7 @@ public final class MedicalRecordCRUD {
 			PreparedStatement st = conn.prepareStatement(query);
 			st.setInt(1, patient_id);
 			st.setString(2, start_date);
-			if (end_date.isEmpty())
+			if (end_date == null || end_date.isEmpty())
 				st.setNull(3, java.sql.Types.VARCHAR);
 			else
 				st.setString(3, end_date);
@@ -239,11 +271,10 @@ public final class MedicalRecordCRUD {
 	 * This functionality is used to end a treatment
 	 * @param recordId
 	 * @return true if successful else false
+	 * @throws SQLException 
 	 */
-	public static Boolean updateMedicalRecordEndTime(Integer recordId) {
+	public static Boolean updateMedicalRecordEndTime(Integer recordId) throws SQLException {
 		// Update the end time to the current time stamp through SQL
-		
-		try {
 			Connection conn = DatabaseConnection.getConnection();
 			
 		    Statement st = conn.createStatement();
@@ -251,11 +282,6 @@ public final class MedicalRecordCRUD {
 		    st.executeUpdate("UPDATE MedicalRecords SET end_date = NOW() WHERE record_id = " + recordId );
 		    
 		    return true;
-	    }
-	    catch (SQLException ex) {
-	    	ex.printStackTrace();
-	    	return false;
-	    }
 		
 		
 	}

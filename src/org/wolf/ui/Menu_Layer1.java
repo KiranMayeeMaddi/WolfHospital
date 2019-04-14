@@ -33,7 +33,7 @@ public class Menu_Layer1 {
 		}
 	}
 
-	public static void undergoTests(BufferedReader reader) throws IOException {
+	public static void undergoTests(BufferedReader reader) throws IOException, SQLException {
 		System.out.println("Please | space separated recordId, testId, test_date and result");
 		String input = reader.readLine();
 		String[] args = input.split("[|]");
@@ -48,19 +48,18 @@ public class Menu_Layer1 {
 		}
 	}
 
-	public static void createTreatment(BufferedReader reader) throws IOException{
-		System.out.println("Enter | separated patient_id, start_date, diagnosis, prescription, responsible_doctor, treatment_plan, reg_fee, medical_fee");
+	public static void createTreatment(BufferedReader reader) throws IOException, SQLException{
+		System.out.println("Enter | separated patient_id, diagnosis, prescription, responsible_doctor, treatment_plan, reg_fee, medical_fee");
 		String input = reader.readLine();
 		String[] args = input.split("[|]");
 		Integer patient_id = Integer.parseInt(args[0]);
-		String start_date = args[1];
-		String diagnosis = args[2]; 
-		String prescription = args[3]; 
-		Integer responsible_doctor = Integer.parseInt(args[4]);
-		Integer process_treatment_plan = Integer.parseInt(args[5]);
-		Double reg_fee = Double.parseDouble(args[6]); 
-		Double medical_fee = Double.parseDouble(args[7]);
-		if(Operations.createTreatment(patient_id, start_date, diagnosis, prescription, responsible_doctor,process_treatment_plan, reg_fee, medical_fee)){
+		String diagnosis = args[1]; 
+		String prescription = args[2]; 
+		Integer responsible_doctor = Integer.parseInt(args[3]);
+		Integer process_treatment_plan = Integer.parseInt(args[4]);
+		Double reg_fee = Double.parseDouble(args[5]); 
+		Double medical_fee = Double.parseDouble(args[6]);
+		if(Operations.createTreatment(patient_id, diagnosis, prescription, responsible_doctor,process_treatment_plan, reg_fee, medical_fee)){
 			System.out.println("Operation Successful");
 		} else{
 			System.out.println("Operation Failed");
@@ -68,6 +67,18 @@ public class Menu_Layer1 {
 		
 	}
 
+	public static void endTreatment(BufferedReader reader) throws IOException, SQLException{
+		System.out.println("Enter | separated med.recordId and treatment fee");
+		String input = reader.readLine();
+		String[] args = input.split("[|]");
+		Integer record_id = Integer.parseInt(args[0]);
+		Double treatment_fee = Double.parseDouble(args[1]);
+		if(Operations.endTreatment(record_id, treatment_fee)){
+			System.out.println("Operation Successful");
+		} else{
+			System.out.println("Operation Failed");
+		}
+	}
 	public static void pay(BufferedReader reader) throws IOException {
 		System.out.println("Enter | separated billId, payer_ssn, bill_address, amountPaying");
 		String input = reader.readLine();

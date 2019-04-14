@@ -2,12 +2,13 @@ package org.wolf.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.wolf.crud.MedicalRecordCRUD;
 
 public class MedicalRecordUI {
 
-	public static void medicalRecordUI(BufferedReader reader) throws IOException {
+	public static void medicalRecordUI(BufferedReader reader) throws IOException, SQLException {
 		System.out.println("1.viewAllMedicalRecords");
 		System.out.println("2.viewMedicalRecords");
 		System.out.println("3.getMedicalRecordsForPatient");

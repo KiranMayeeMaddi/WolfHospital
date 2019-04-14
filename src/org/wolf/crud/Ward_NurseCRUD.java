@@ -10,7 +10,7 @@ import org.wolf.config.DatabaseConnection;
 public class Ward_NurseCRUD {
 
 	/**
-	 * viewShift function displays all the ward ans nurse details
+	 * viewShift function displays all the ward and nurse details
 	 * @return all the shifts
 	 */
 	

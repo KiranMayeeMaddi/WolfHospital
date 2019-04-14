@@ -76,7 +76,6 @@ public final class Ward_PatientCRUD {
 			System.out.println("This bed is not available");
 			return null;
 		}
-		WardCRUD.occupyBed(ward_id, bed_id);
 		
 		//Put the start time as the current  timestamp
 		Connection conn = DatabaseConnection.getConnection();
@@ -84,7 +83,15 @@ public final class Ward_PatientCRUD {
 			//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			//LocalDateTime localDate = LocalDateTime.now();
 			//String start_time = dtf.format(localDate);
-			
+		
+		// check whether this patient is already checked in
+		Statement ps = conn.createStatement();
+		ResultSet r = ps.executeQuery("select * from Ward_Patient_checks_in where patient_id="+patient_id+" and (end_time is null or NOW()<end_time)");
+		if (r.next()) {
+			System.out.println("Patient is already checked in");
+			return null;
+		}
+		
 		String query = "insert into Ward_Patient_checks_In (patient_id, end_time, start_time, ward_id, bed_id)"
 				+ " values (?,?,NOW(),?,?)";
 		PreparedStatement st = conn.prepareStatement(query);
@@ -97,6 +104,7 @@ public final class Ward_PatientCRUD {
 		st.setInt(4, bed_id);
 		//st.setString(4, start_time);
 		st.executeUpdate();
+		WardCRUD.occupyBed(ward_id, bed_id);
 			
 		ResultSet rs = st.executeQuery("select checkin_id from Ward_Patient_checks_In order by checkin_id desc limit 1");
 		int shift_id = 0;

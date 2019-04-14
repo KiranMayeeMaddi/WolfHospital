@@ -39,9 +39,9 @@ public class WardPatientUI {
 			System.out.println("Enter patient_id, end_time, ward_id, bed_id separated by |");
 			args = reader.readLine().split("[|]");
 			patient_id = Integer.parseInt(args[0]);
-			end_time = args[2];
-			ward_id = Integer.parseInt(args[3]);
-			bed_id = Integer.parseInt(args[4]);
+			end_time = args[1];
+			ward_id = Integer.parseInt(args[2]);
+			bed_id = Integer.parseInt(args[3]);
 			System.out.println("New checkinId is");
 			System.out.println(Ward_PatientCRUD.insertWardPatient(patient_id, end_time, ward_id, bed_id));
 			break;

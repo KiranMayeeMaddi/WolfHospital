@@ -53,6 +53,7 @@ public class Operations {
 			String end_time = "";
 			Integer checkinId = Ward_PatientCRUD.insertWardPatient(patientId, end_time, ward_id, bed_id);
 			if(checkinId == null){
+				conn.rollback();
 				return false;
 			}
 			WardCRUD.occupyBed(ward_id, bed_id);

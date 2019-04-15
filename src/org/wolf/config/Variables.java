@@ -4,14 +4,14 @@
 package org.wolf.config;
 
 /**
- * @author Anjali
- *
+ * Variables class helps to load MariaDB Connector and allow it to be used as jdbc driver
+ * Helps to set user name and password
  */
 public class Variables {
 	
-	private final String url = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/asaxena6";
-	private final String user = "asaxena6";
-	private final String password = "200262043";
+	private final String url = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/";
+	private final String user = "";
+	private final String password = "";
 	
 	public String getUrl() {
 		return url;

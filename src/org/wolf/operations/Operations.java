@@ -233,7 +233,7 @@ public class Operations {
 		Test_MedicalRecordsCRUD.insertTest_MedicalRecords(recordId, testId, test_date, result);
 		Test t = TestCRUD.viewTest(testId);
 		BillingAccountCRUD.updateMedicalFee(recordId, t.fees);
-		return null;
+		return true;
 	}
 	
 	public static Boolean endTreatment(Integer recordId, Double treatmentFee) throws SQLException{
@@ -276,10 +276,10 @@ public class Operations {
 		try {
 		
 			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
-			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,null, amountPaid);
+			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, "", "", amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
-			Double paid = (double) 0;
+			Double paid = 0.0;
 			
 			for (Payments payment:p){
 				paid += payment.amountPaid;
@@ -288,7 +288,7 @@ public class Operations {
 			Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
 			
 			//Bill completely Paid
-			if(amountDue - amountPaid <= 0){
+			if(amountDue <= 0){
 				BillingAccountCRUD.updateBillingAccount(billId, bill.patient_id, bill.record_id, "Y", bill.reg_fee, bill.accom_fee, bill.medical_fee);
 			}
 			
@@ -303,10 +303,10 @@ public class Operations {
 	public static Boolean payInsurance(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String policy_no) {
 		try {
 			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
-			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, policy_no,null, amountPaid);
+			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, policy_no, "", amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
-			Double paid = (double) 0;
+			Double paid = 0.0;
 			
 			for (Payments payment:p){
 				paid += payment.amountPaid;
@@ -315,7 +315,7 @@ public class Operations {
 			Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
 			
 			//Bill completely Paid
-			if(amountDue - amountPaid <= 0){
+			if(amountDue <= 0){
 				BillingAccountCRUD.updateBillingAccount(billId, bill.patient_id, bill.record_id, "Y", bill.reg_fee, bill.accom_fee, bill.medical_fee);
 			}
 			
@@ -330,19 +330,19 @@ public class Operations {
 	public static Boolean payCard(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String card_no) {
 		try {
 			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
-			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,card_no, amountPaid);
+			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, "",card_no, amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
-			Double paid = (double) 0;
+			Double paid = 0.0;
 			
 			for (Payments payment:p){
 				paid += payment.amountPaid;
 			}
-				
+			
 			Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
 			
 			//Bill completely Paid
-			if(amountDue - amountPaid <= 0){
+			if(amountDue <= 0){
 				BillingAccountCRUD.updateBillingAccount(billId, bill.patient_id, bill.record_id, "Y", bill.reg_fee, bill.accom_fee, bill.medical_fee);
 			}
 			

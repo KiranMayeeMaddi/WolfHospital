@@ -77,7 +77,7 @@ public class Operations {
 			}
 			return false;
 		} catch(Exception excp) {
-			// In case of any SQLException print the stack trace.
+			// In case of any other Exception print the stack trace.
 			excp.printStackTrace();
 			if(conn != null) {
 				try {
@@ -153,7 +153,7 @@ public class Operations {
 			}
 			return false;
 		} catch(Exception excp) {
-			// In case of any SQLException print the stack trace.
+			// In case of any other Exception print the stack trace.
 			excp.printStackTrace();
 			if(conn != null) {
 				try {

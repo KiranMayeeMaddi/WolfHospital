@@ -81,7 +81,7 @@ public class Operations {
 			excp.printStackTrace();
 			if(conn != null) {
 				try {
-					// In case of any other SQLException than connection establishment, rollback the transaction.
+					// In case of any Exception than connection establishment, rollback the transaction.
 	                System.err.print("Transaction is being rolled back");
 	                conn.rollback();
 	            } catch(SQLException excep) {
@@ -133,7 +133,7 @@ public class Operations {
 			Double b = (bill.accom_fee==null)?accomFee:(bill.accom_fee+accomFee);
 			//Update the bill with this fee
 			BillingAccountCRUD.updateBillingAccount(bill.bill_id, bill.patient_id, bill.record_id, bill.payment_status, bill.reg_fee, b,bill.medical_fee);
-			
+			//If everything goes okay, commit the changes
 			conn.commit();
 			return true;
 			
@@ -157,7 +157,7 @@ public class Operations {
 			excp.printStackTrace();
 			if(conn != null) {
 				try {
-					// In case of any other SQLException than connection establishment, rollback the transaction.
+					// In case of any Exception than connection establishment, rollback the transaction.
 	                System.err.print("Transaction is being rolled back");
 	                conn.rollback();
 	            } catch(SQLException excep) {

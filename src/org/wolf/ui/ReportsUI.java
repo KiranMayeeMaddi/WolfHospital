@@ -27,10 +27,8 @@ public class ReportsUI {
 		String endTime;
 		String startDate;
 		String endDate;
-		Integer bedId;
 		Integer wardId;
 		Integer responsibleDoc;
-		String jobTitle;
 		String input = reader.readLine();
 		switch(input){
 		

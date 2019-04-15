@@ -76,6 +76,19 @@ public class Operations {
 	            }
 			}
 			return false;
+		} catch(Exception excp) {
+			// In case of any SQLException print the stack trace.
+			excp.printStackTrace();
+			if(conn != null) {
+				try {
+					// In case of any other SQLException than connection establishment, rollback the transaction.
+	                System.err.print("Transaction is being rolled back");
+	                conn.rollback();
+	            } catch(SQLException excep) {
+	                excep.printStackTrace();
+	            }
+			}
+			return false;
 		} finally {
 			//Finally set the auto commit to true
 			conn.setAutoCommit(true);
@@ -129,6 +142,19 @@ public class Operations {
 			// In case of any SQLException print the stack trace.
 			ex.printStackTrace();
 			
+			if(conn != null) {
+				try {
+					// In case of any other SQLException than connection establishment, rollback the transaction.
+	                System.err.print("Transaction is being rolled back");
+	                conn.rollback();
+	            } catch(SQLException excep) {
+	                excep.printStackTrace();
+	            }
+			}
+			return false;
+		} catch(Exception excp) {
+			// In case of any SQLException print the stack trace.
+			excp.printStackTrace();
 			if(conn != null) {
 				try {
 					// In case of any other SQLException than connection establishment, rollback the transaction.

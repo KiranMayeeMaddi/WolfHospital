@@ -10,6 +10,7 @@ import java.util.Date;
 
 import org.wolf.config.DatabaseConnection;
 import org.wolf.baseclasses.PatientMedicalHistory;
+import org.wolf.baseclasses.Staff;
 import org.wolf.baseclasses.StaffGroupedDetails;
 
 
@@ -305,18 +306,25 @@ public class Reports {
 	/**
 	 * @return staff details grouped by their job role
 	 */
-	public static ArrayList<StaffGroupedDetails> getStaffByJobtitle() {
+	public static ArrayList<Staff> getStaffByJobtitle() {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT job_title, COUNT(*) AS count_staff, SUM(salary) AS Total_salary, "
-					+ "AVG(salary) AS Average_salary, MAX(salary) AS Max_salary, MIN(salary) AS Min_salary FROM Staff "
-					+ " GROUP BY job_title");
-			ArrayList<StaffGroupedDetails> staffList = new ArrayList <> ();
-			StaffGroupedDetails s = null;
-		    while(rs.next()) {
-		    	s = new StaffGroupedDetails(rs.getString("job_title"), rs.getInt("count_staff"), rs.getDouble("Total_salary"), rs.getDouble("Average_salary"),
-		    			rs.getDouble("Average_salary"), rs.getDouble("Min_salary"));
+			ResultSet rs = st.executeQuery("SELECT * FROM Staff GROUP BY job_title");
+			ArrayList<Staff> staffList = new ArrayList <> ();
+			Staff s = null;
+			while(rs.next()) {
+			    s = new Staff();
+			    s.setAddress(rs.getString("address"));
+		    	s.setDept(rs.getString("dept"));
+				s.setDob(rs.getString("date_of_birth"));
+				s.setGender(rs.getString("gender"));
+				s.setId(rs.getInt("staff_id"));
+				s.setName(rs.getString("name"));
+				s.setPno(rs.getString("phone_no"));
+				s.setProfTitle(rs.getString("prof_title"));
+				s.setSal(rs.getDouble("salary"));
+				s.setJobTitle(rs.getString("job_title"));
 				staffList.add(s);
 		    }
 		    return staffList;

@@ -89,7 +89,6 @@ public class TreatmentPlanCRUD {
 			Connection conn = DatabaseConnection.getConnection();
 		    Statement st = conn.createStatement();
 		    
-		    st.executeQuery("Select max(id) from TreatmentPlan");
 		    ResultSet rs = st.executeQuery("SELECT MAX(id) as treatmentId FROM TreatmentPlan");
 		    int id = 0;
 		    if(rs.next()) {

@@ -33,7 +33,7 @@ public class WardNurseUI {
 			System.out.println(Ward_NurseCRUD.viewShift(shiftId));
 			break;
 		case "3":
-			System.out.println("Enter | separated  wardId,  staffId,  start_time,  end_time");
+			System.out.println("Enter | separated  wardId,  staffId,  start_time(YYYY-MM-DD HH:MM:SS),  end_time(YYYY-MM-DD HH:MM:SS)");
 			args = reader.readLine().split("[|]");
 			wardId = Integer.parseInt(args[0]);
 			staffId = Integer.parseInt(args[1]);
@@ -43,7 +43,7 @@ public class WardNurseUI {
 			System.out.println(Ward_NurseCRUD.insertWardNurse(wardId, staffId, start_time, end_time));
 			break;
 		case "4":
-			System.out.println("Enter | separated  shiftId, wardId,  staffId,  start_time,  end_time");
+			System.out.println("Enter | separated  shiftId, wardId,  staffId,  start_time(YYYY-MM-DD HH:MM:SS),  end_time(YYYY-MM-DD HH:MM:SS)");
 			args = reader.readLine().split("[|]");
 			shiftId = Integer.parseInt(args[0]);
 			wardId = Integer.parseInt(args[1]);

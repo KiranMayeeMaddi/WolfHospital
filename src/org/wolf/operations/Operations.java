@@ -53,6 +53,7 @@ public class Operations {
 			String end_time = "";
 			Integer checkinId = Ward_PatientCRUD.insertWardPatient(patientId, end_time, ward_id, bed_id);
 			if(checkinId == null){
+				conn.rollback();
 				return false;
 			}
 			WardCRUD.occupyBed(ward_id, bed_id);
@@ -69,6 +70,19 @@ public class Operations {
 			if(conn != null) {
 				try {
 					// In case of any other SQLException than connection establishment, rollback the transaction.
+	                System.err.print("Transaction is being rolled back");
+	                conn.rollback();
+	            } catch(SQLException excep) {
+	                excep.printStackTrace();
+	            }
+			}
+			return false;
+		} catch(Exception excp) {
+			// In case of any other Exception print the stack trace.
+			excp.printStackTrace();
+			if(conn != null) {
+				try {
+					// In case of any Exception than connection establishment, rollback the transaction.
 	                System.err.print("Transaction is being rolled back");
 	                conn.rollback();
 	            } catch(SQLException excep) {
@@ -120,7 +134,7 @@ public class Operations {
 			Double b = (bill.accom_fee==null)?accomFee:(bill.accom_fee+accomFee);
 			//Update the bill with this fee
 			BillingAccountCRUD.updateBillingAccount(bill.bill_id, bill.patient_id, bill.record_id, bill.payment_status, bill.reg_fee, b,bill.medical_fee);
-			
+			//If everything goes okay, commit the changes
 			conn.commit();
 			return true;
 			
@@ -132,6 +146,19 @@ public class Operations {
 			if(conn != null) {
 				try {
 					// In case of any other SQLException than connection establishment, rollback the transaction.
+	                System.err.print("Transaction is being rolled back");
+	                conn.rollback();
+	            } catch(SQLException excep) {
+	                excep.printStackTrace();
+	            }
+			}
+			return false;
+		} catch(Exception excp) {
+			// In case of any other Exception print the stack trace.
+			excp.printStackTrace();
+			if(conn != null) {
+				try {
+					// In case of any Exception than connection establishment, rollback the transaction.
 	                System.err.print("Transaction is being rolled back");
 	                conn.rollback();
 	            } catch(SQLException excep) {
@@ -207,7 +234,7 @@ public class Operations {
 		Test_MedicalRecordsCRUD.insertTest_MedicalRecords(recordId, testId, test_date, result);
 		Test t = TestCRUD.viewTest(testId);
 		BillingAccountCRUD.updateMedicalFee(recordId, t.fees);
-		return null;
+		return true;
 	}
 	
 	public static Boolean endTreatment(Integer recordId, Double treatmentFee) throws SQLException{
@@ -250,10 +277,10 @@ public class Operations {
 		try {
 		
 			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
-			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,null, amountPaid);
+			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, "", "", amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
-			Double paid = (double) 0;
+			Double paid = 0.0;
 			
 			for (Payments payment:p){
 				paid += payment.amountPaid;
@@ -262,7 +289,7 @@ public class Operations {
 			Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
 			
 			//Bill completely Paid
-			if(amountDue - amountPaid <= 0){
+			if(amountDue <= 0){
 				BillingAccountCRUD.updateBillingAccount(billId, bill.patient_id, bill.record_id, "Y", bill.reg_fee, bill.accom_fee, bill.medical_fee);
 			}
 			
@@ -277,10 +304,10 @@ public class Operations {
 	public static Boolean payInsurance(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String policy_no) {
 		try {
 			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
-			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, policy_no,null, amountPaid);
+			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, policy_no, "", amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
-			Double paid = (double) 0;
+			Double paid = 0.0;
 			
 			for (Payments payment:p){
 				paid += payment.amountPaid;
@@ -289,7 +316,7 @@ public class Operations {
 			Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
 			
 			//Bill completely Paid
-			if(amountDue - amountPaid <= 0){
+			if(amountDue <= 0){
 				BillingAccountCRUD.updateBillingAccount(billId, bill.patient_id, bill.record_id, "Y", bill.reg_fee, bill.accom_fee, bill.medical_fee);
 			}
 			
@@ -304,19 +331,19 @@ public class Operations {
 	public static Boolean payCard(Integer billId, String payer_ssn, String bill_address, Double amountPaid, String card_no) {
 		try {
 			BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(billId);
-			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, null,card_no, amountPaid);
+			PaymentsCRUD.insertPayment(billId, payer_ssn, bill_address, "",card_no, amountPaid);
 			
 			ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(billId);
-			Double paid = (double) 0;
+			Double paid = 0.0;
 			
 			for (Payments payment:p){
 				paid += payment.amountPaid;
 			}
-				
+			
 			Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
 			
 			//Bill completely Paid
-			if(amountDue - amountPaid <= 0){
+			if(amountDue <= 0){
 				BillingAccountCRUD.updateBillingAccount(billId, bill.patient_id, bill.record_id, "Y", bill.reg_fee, bill.accom_fee, bill.medical_fee);
 			}
 			

@@ -9,7 +9,7 @@ package org.wolf.config;
  */
 public class Variables {
 	
-	private final String url = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/";
+	private final String url = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/asmalunj";
 	private final String user = "asmalunj";
 	private final String password = "200220219";
 	

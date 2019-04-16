@@ -10,8 +10,8 @@ package org.wolf.config;
 public class Variables {
 	
 	private final String url = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/";
-	private final String user = "";
-	private final String password = "";
+	private final String user = "asmalunj";
+	private final String password = "200220219";
 	
 	public String getUrl() {
 		return url;
@@ -22,5 +22,4 @@ public class Variables {
 	public String getPassword() {
 		return password;
 	}
-
 }

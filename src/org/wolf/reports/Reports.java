@@ -11,7 +11,6 @@ import java.util.Date;
 import org.wolf.config.DatabaseConnection;
 import org.wolf.baseclasses.PatientMedicalHistory;
 import org.wolf.baseclasses.Staff;
-import org.wolf.baseclasses.StaffGroupedDetails;
 
 
 public class Reports {

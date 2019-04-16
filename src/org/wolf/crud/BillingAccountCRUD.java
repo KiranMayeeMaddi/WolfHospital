@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.wolf.baseclasses.BillingAccount;
 import org.wolf.baseclasses.BillingAccountView;
+import org.wolf.baseclasses.Payments;
 import org.wolf.config.DatabaseConnection;
 
 
@@ -408,4 +409,54 @@ public final class BillingAccountCRUD {
 	    	return false;
 	    }
 	}
+	
+	/**
+	 * Get amount due for a given bill id
+	 * @param bill_id
+	 * @return - amount due
+	 */
+	public static Double amountDue(Integer bill_id) {
+		BillingAccountView bill = BillingAccountCRUD.viewBillingAccountsByBill(bill_id);
+		ArrayList<Payments> p = PaymentsCRUD.getPaymentsForBill(bill_id);
+		Double paid = 0.0;
+		if(p==null) {
+			System.out.println("Error");
+			return -1.0;
+		}
+		if(p.size()!=0) {
+			for (Payments payment:p){
+				paid += payment.amountPaid;
+			}
+		}
+		
+			
+		Double amountDue = (bill.accom_fee+bill.reg_fee+bill.medical_fee - paid);
+		
+		return amountDue;
+	}
+	
+	/**
+	 * Get payment status for a bill_id
+	 * @param bill_id
+	 * @return - 'Y' or 'N'
+	 */
+	public static String getPaymentStatus(Integer bill_id) {
+		try {
+			Connection conn = DatabaseConnection.getConnection();
+		    Statement st = conn.createStatement();
+		    
+		    String payment_status = "";
+		    ResultSet rs = st.executeQuery("select payment_status from BillingAccounts where bill_id="+bill_id);
+		    
+		    while (rs.next())
+		    	payment_status = rs.getString("payment_status");
+		    
+		    return payment_status;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

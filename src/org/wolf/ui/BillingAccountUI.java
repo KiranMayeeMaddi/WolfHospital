@@ -2,6 +2,7 @@ package org.wolf.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.sql.SQLException;
 
 import org.wolf.crud.BillingAccountCRUD;
@@ -19,7 +20,9 @@ public class BillingAccountUI {
 		System.out.println("8.insertBillingAccount");
 		System.out.println("9.updateBillingAccount");
 		System.out.println("10.deleteBillingAccount");
-		System.out.println("11.exit");
+		System.out.println("11.amountDue");
+		System.out.println("12.getPaymentStatus");
+		System.out.println("13.exit");
 		String input = reader.readLine();
 
 		Integer billId;
@@ -117,6 +120,16 @@ public class BillingAccountUI {
 			}
 			break;
 		case "11":
+			System.out.println("Enter bill_id");
+			billId = Integer.parseInt(reader.readLine());
+			System.out.println("Amount due = "+BillingAccountCRUD.amountDue(billId));
+			break;
+		case "12":
+			System.out.println("Enter bill_id");
+			billId = Integer.parseInt(reader.readLine());
+			System.out.println("Payment status = "+BillingAccountCRUD.getPaymentStatus(billId));
+			break;
+		case "13":
 			return;
 		default:
 			System.out.println("Please enter valid value");

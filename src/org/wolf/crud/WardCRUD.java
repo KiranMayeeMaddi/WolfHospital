@@ -27,7 +27,7 @@ public final class WardCRUD {
 		    String out = "";
 
 		    ResultSet rs = st.executeQuery("SELECT Ward.ward_id, capacity, charges_per_day, GROUP_CONCAT(patient_id) AS patients FROM Ward "
-		    		+ "LEFT JOIN Ward_Patient_checks_In ON Ward.ward_id = Ward_Patient_checks_In.ward_id WHERE Ward.ward_id = "+ward_id+" GROUP BY Ward.ward_id ");
+		    		+ "LEFT JOIN Ward_Patient_checks_In ON Ward.ward_id = Ward_Patient_checks_In.ward_id WHERE Ward.ward_id = "+ward_id+" AND (ward_patient_checks_in.end_time IS NULL OR end_time >= NOW()) GROUP BY Ward.ward_id ");
 		    if(rs.isBeforeFirst()) {
 			    while(rs.next()) {
 			    	out += "ward_id = " + rs.getInt("ward_id");
@@ -62,7 +62,7 @@ public final class WardCRUD {
 		    String out = null;
 		    
 		    ResultSet rs = st.executeQuery("SELECT Ward.ward_id, capacity, charges_per_day, GROUP_CONCAT(patient_id) AS patients FROM Ward "
-		    		+ "LEFT JOIN Ward_Patient_checks_In ON Ward.ward_id = Ward_Patient_checks_In.ward_id  GROUP BY Ward.ward_id ");
+		    		+ "LEFT JOIN Ward_Patient_checks_In ON Ward.ward_id = Ward_Patient_checks_In.ward_id  AND (ward_patient_checks_in.end_time IS NULL OR end_time >= NOW()) GROUP BY Ward.ward_id ");
 		    while(rs.next()) {
 		    	out = "";
 		    	out += "ward_id = " + rs.getInt("ward_id");

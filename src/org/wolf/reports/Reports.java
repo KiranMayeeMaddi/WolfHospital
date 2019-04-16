@@ -132,12 +132,11 @@ public class Reports {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			String start_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 			ResultSet rs = st.executeQuery("SELECT 100 * t2.count2/t1.count1 AS BedUsage" + 
 					" FROM (SELECT COUNT(*) AS count1 FROM Bed) AS t1" + 
 					" CROSS JOIN (SELECT COUNT(DISTINCT ward_id, bed_id)  AS count2 FROM" + 
-					" Ward_Patient_checks_In WHERE start_time <= '"+ start_date +"' AND" + 
-					" (end_time > '"+ start_date +"' OR end_time IS NULL)) AS t2");
+					" Ward_Patient_checks_In WHERE start_time <= NOW() AND" + 
+					" (end_time > NOW() OR end_time IS NULL)) AS t2");
 			Double bedUsage = null;
 			while(rs.next()) {
 				bedUsage = rs.getDouble("BedUsage");
@@ -260,7 +259,7 @@ public class Reports {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT COUNT(*) AS TotalPatients FROM MedicalRecords WHERE" + 
+			ResultSet rs = st.executeQuery("SELECT COUNT(*)/TIMESTAMPDIFF(MONTH, '"+startDate+"', '"+endDate+"') AS TotalPatients FROM MedicalRecords WHERE" + 
 					" start_date >= '"+ startDate +"' AND start_date < '"+ endDate +"' ");
 			Integer TotalPatients = null;
 			while(rs.next()) {

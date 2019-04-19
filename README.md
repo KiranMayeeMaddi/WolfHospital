@@ -8,9 +8,10 @@ Hospital Management  System : DBMS  Project
 * Sai Kiran Mayee Maddi
 
 **Setup:**
-1. Go to Variables.java file in org.wolf.config package
-2. Enter url based on which DBMS software is being used (MariaDB or MySQL).
-3. Enter username and password.
+1. **Required:** mysql or mariadb jdbc connector. (Check build path once before running the project).
+2. Go to Variables.java file in org.wolf.config package
+3. Enter url based on which DBMS software is being used (MariaDB or MySQL).
+4. Enter username and password.
 
 **Run program:**
 Run the project from an IDE like Eclipse or create a runnable jar.

@@ -9,9 +9,16 @@ package org.wolf.config;
  */
 public class Variables {
 	
-	private final String url = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/asmalunj";
-	private final String user = "asmalunj";
-	private final String password = "200220219";
+	// MySql url
+	//private final String url = "jdbc:mysql://localhost/<dbname>";
+	
+	// MariaDB url
+	// enter url
+	private final String url = "jdbc:mariadb://<url>";
+	// enter username
+	private final String user = "";
+	// enter password
+	private final String password = "";
 	
 	public String getUrl() {
 		return url;
